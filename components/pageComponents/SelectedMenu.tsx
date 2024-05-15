@@ -19,7 +19,7 @@ export const SelectedMenu = () => {
 
   if (!component)
     return (
-      <div className={`flex flex-col w-80 gap-2 justify-center items-center`} style={{ height: 'calc(100vh - 60px)' }}>
+      <div className={`flex flex-col w-full gap-2 justify-center items-center`} style={{ height: 'calc(100vh - 60px)' }}>
         <p className="text-lg font-bold">Style Menu</p>
         <p className="text-sm text-muted-foreground">No Component Selected</p>
       </div>
@@ -27,14 +27,14 @@ export const SelectedMenu = () => {
 
   if (!("children" in component))
     return (
-      <div className={`flex flex-col w-80 gap-2 justify-center items-center`} style={{ height: 'calc(100vh - 60px)' }}>
+      <div className={`flex flex-col w-full gap-2 justify-center items-center`} style={{ height: 'calc(100vh - 60px)' }}>
         <p className="text-lg font-bold">Style Menu</p>
         <p className="text-sm text-muted-foreground">Can't change imported component's style</p>
       </div>
     )
 
   return (
-    <ScrollArea className='w-80 p-4' style={{ height: 'calc(100vh - 60px)' }}>
+    <ScrollArea className='w-full p-4' style={{ height: 'calc(100vh - 60px)' }}>
       <Tabs defaultValue='style' className='w-full'>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value='style'>Style</TabsTrigger>
