@@ -32,6 +32,12 @@ export const getRootComponent = (rootID: string): ComponentType => ({
     className: "",
     styleOptions: [
       {
+        label: "Aspect Ratio",
+        tailwind: "aspect-video",
+        CSSKey: 'aspectRatio',
+        CSSValue: '16 / 9'
+      },
+      {
         label: "rounded",
         tailwind: "rounded-sm",
         CSSKey: 'borderRadius',
