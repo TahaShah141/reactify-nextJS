@@ -1,5 +1,7 @@
+"use client"
+
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import componentReducer from './slices/componentSlice'
+import componentReducer from './slices/componentsSlice'
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from 'redux-persist'
 
@@ -15,7 +17,10 @@ const reducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, reducer)
 
 export const store = configureStore({
-  reducer: persistedReducer
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  })
 })
 
 export const persistor = persistStore(store)
