@@ -2,14 +2,14 @@
 
 import { DndContext, pointerWithin } from '@dnd-kit/core'
 import { useDragAndDrop } from '@/lib/hooks/useDragAndDrop';
-import { useSelector } from 'react-redux';
 import { selectComponents } from '@/lib/redux/store';
 import { ScrollArea } from '../ui/scroll-area';
 import { Layer } from '../Layer';
+import { useAppSelector } from '@/lib/redux/hooks';
 
 export const Layers = () => {
 
-  const { tabs, currentTab } = useSelector(selectComponents)
+  const { tabs, currentTab } = useAppSelector(selectComponents)
   const { sensors, handleDragEnd } = useDragAndDrop()
 
   return (

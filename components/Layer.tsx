@@ -3,14 +3,14 @@ import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion'
 import { CSSProperties, useCallback } from "react";
 import { useControlPressed } from "@/lib/hooks/useControlPressed";
-import { useDispatch } from "react-redux";
 import { updateSelected } from "@/lib/redux/slices/componentsSlice";
 import { ForeignLayer } from "./ForeignLayer";
+import { useAppDispatch } from "@/lib/redux/hooks";
 
 
 export const Layer: React.FC<{component: ComponentType}> = ({component}) => {
   const {id, tag, children, data} = component
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   
   const { rootID, tabID } = data
   const { controlPressed } = useControlPressed()
