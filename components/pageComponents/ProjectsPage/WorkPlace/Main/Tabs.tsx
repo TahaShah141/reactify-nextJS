@@ -1,6 +1,6 @@
 import { selectComponents } from "@/lib/redux/store"
 
-import { ScrollArea, ScrollBar } from "./ui/scroll-area"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { switchTab } from "@/lib/redux/slices/componentsSlice"
 import { AddComponent } from "./AddComponent"
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks"

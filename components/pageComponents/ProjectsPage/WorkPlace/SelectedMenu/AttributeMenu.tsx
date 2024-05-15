@@ -1,6 +1,6 @@
 import { ComponentType, getParentChild } from "@/lib/componentType"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { setSelectedInnerText } from "@/lib/redux/slices/componentsSlice"
 import { selectComponents } from "@/lib/redux/store"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"

@@ -3,10 +3,10 @@
 import { getParentChild } from '@/lib/componentType'
 import { selectComponents } from '@/lib/redux/store'
 import { useSelectedListeners } from '@/lib/hooks/useSelectedListeners'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { ScrollArea } from '../ui/scroll-area'
-import { StyleMenu } from '../StyleMenu'
-import { AttributeMenu } from '../AttributeMenu'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { StyleMenu } from './StyleMenu'
+import { AttributeMenu } from './AttributeMenu'
 import { useAppSelector } from '@/lib/redux/hooks'
 
 export const SelectedMenu = () => {

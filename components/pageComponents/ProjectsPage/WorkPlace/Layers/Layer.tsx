@@ -1,6 +1,6 @@
 import { ComponentType, ForeignComponentType } from "@/lib/componentType";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { CSSProperties, useCallback } from "react";
 import { useControlPressed } from "@/lib/hooks/useControlPressed";
 import { updateSelected } from "@/lib/redux/slices/componentsSlice";

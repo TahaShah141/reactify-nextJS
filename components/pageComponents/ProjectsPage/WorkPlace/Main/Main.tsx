@@ -4,9 +4,9 @@ import { useDragAndDrop } from "@/lib/hooks/useDragAndDrop"
 import { useAppSelector } from "@/lib/redux/hooks"
 import { selectComponents } from "@/lib/redux/store"
 import { DndContext, pointerWithin } from "@dnd-kit/core"
-import { Component } from "../Component"
-import { ComponentList } from "../ComponentList"
-import { Tabs } from "../Tabs"
+import { Component } from "@/components/Component"
+import { ComponentList } from "./ComponentList"
+import { Tabs } from "./Tabs"
 
 export const Main = () => {
 
