@@ -1,9 +1,12 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react"
 
 type AuthCardProps = {
   title: string
@@ -26,11 +29,11 @@ export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altT
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-2 gap-6">
-            <Button variant="outline">
+            <Button variant="outline" onClick={() => signIn("github")}>
               <GitHubLogoIcon className="mr-2 h-4 w-4" />
               Github
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" onClick={() => signIn("google")}>
               <svg role="img" viewBox="0 0 24 24" className="mr-2 h-4 w-4">
                 <path
                   fill="currentColor"
@@ -60,7 +63,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altT
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
-          <Button className="w-full">{buttonText}</Button>
+          <Button className="w-full" onClick={() => signIn("credentials", {email: "TahaShah@mail.com", password: "123456"})}>{buttonText}</Button>
           <div className="flex gap-2 text-sm items-center">
             <p className="text-muted-foreground">{altText}</p>
             <Link href={altLink} className="underline">{altLinkText}</Link>  
