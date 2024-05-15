@@ -11,7 +11,7 @@ const websiteName = "Reactify"
 
 const routes: NavLinksType[] = [
   { name: "Templates", href: "/templates" },
-  { name: "Workplace", href: "/workplace" },
+  { name: "Project", href: "/project" },
 ]
 
 export const mainHeightClass = "h-[calc(100vh-4rem)]"
