@@ -2,18 +2,18 @@ import { useEffect, useMemo, useState } from "react"
 import { Button } from "./ui/button"
 import { Card } from "./ui/card"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { useSelector } from "react-redux"
 import { selectComponents } from "@/lib/redux/store"
 import { ComponentType } from "@/lib/componentType"
 import { mod } from "@/lib/utils"
 import { SupplyComponent } from "./SupplyComponent"
 import { Tab } from "./Tab"
+import { useAppSelector } from "@/lib/redux/hooks"
 
 const maxListWidth = `max-w-[calc(100vw-40rem-40px)]`
 
 export const ComponentList = () => {
 
-  const { supply , tabs } = useSelector(selectComponents)
+  const { supply, tabs } = useAppSelector(selectComponents)
 
   const tabList: Record<string, JSX.Element[]> = useMemo(() => ({
     "Basic": (supply.children[0] as ComponentType).children.map(child => <SupplyComponent component={child as ComponentType} />),

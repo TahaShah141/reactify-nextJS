@@ -1,8 +1,8 @@
 import { ComponentType, ForeignComponentType, getCSSStyle } from "@/lib/componentType"
 import { componentsToClone } from "@/lib/componentsToClone"
+import { useAppSelector } from "@/lib/redux/hooks"
 import { selectComponents } from "@/lib/redux/store"
 import React from "react"
-import { useSelector } from "react-redux"
 
 
 type PseudoComponentProps = {
@@ -11,7 +11,7 @@ type PseudoComponentProps = {
 
 export const PseudoComponent: React.FC<PseudoComponentProps> = ({ component }) => {
 
-  const { tabs } = useSelector(selectComponents)
+  const { tabs } = useAppSelector(selectComponents)
 
   if (!('children' in component)) {
     return <PseudoComponent component={tabs[component.data.tabID].root} />

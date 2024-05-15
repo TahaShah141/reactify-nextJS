@@ -2,9 +2,9 @@ import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { ComponentType, ForeignComponentType, getCSSStyle } from "../lib/componentType";
 import React from "react"
 import { componentsToClone } from "@/lib/componentsToClone";
-import { useDispatch } from "react-redux";
 import { updateSelected } from "@/lib/redux/slices/componentsSlice";
 import { ForeignComponent } from "./ForeignComponent";
+import { useAppDispatch } from "@/lib/redux/hooks";
 
 type ComponentProps = {
   component: ComponentType;
@@ -14,7 +14,7 @@ export const verbosity = false;
 
 export const Component: React.FC<ComponentProps> = ({ component }) => {
   
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const { id, tag, children, className, data, styleOptions, innerText} = component;
 

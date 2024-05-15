@@ -1,16 +1,16 @@
-import { useDispatch, useSelector } from "react-redux"
 import { selectComponents } from "@/lib/redux/store"
 
 import { ScrollArea, ScrollBar } from "./ui/scroll-area"
 import { switchTab } from "@/lib/redux/slices/componentsSlice"
 import { AddComponent } from "./AddComponent"
+import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks"
 
 const maxWorkTabsWidth = `max-w-[calc(100vw-40rem-40px)]`
 
 export const Tabs = () => {
 
-  const { tabs, currentTab } = useSelector(selectComponents)
-  const dispatch = useDispatch()
+  const { tabs, currentTab } = useAppSelector(selectComponents)
+  const dispatch = useAppDispatch()
 
   return (
     <div className="flex w-full justify-center gap-2">
