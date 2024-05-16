@@ -4,6 +4,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import * as React from "react"
 import { ModeToggle } from "./themeToggle"
+import { Button } from "../ui/button"
+import { signOut, useSession } from "next-auth/react"
 
 export type NavLinksType = {
   name: string
@@ -18,6 +20,9 @@ type NavbarProps = {
 export const Navbar: React.FC<NavbarProps> = ({name, routes}) => {
 
   const pathname = usePathname()
+
+  const { data } = useSession()
+  console.log(data)
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -39,7 +44,10 @@ export const Navbar: React.FC<NavbarProps> = ({name, routes}) => {
             ))}
           </nav>
         </div>
-        <ModeToggle />
+        <div className="flex gap-2">
+          <ModeToggle />
+          <Button variant={"outline"} onClick={() => signOut()}>Logout</Button>
+        </div>
       </div>
     </header>
   )
