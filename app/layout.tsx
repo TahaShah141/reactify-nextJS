@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 const websiteName = "Reactify"
 
 const routes: NavLinksType[] = [
-  { name: "Templates", href: "/templates" },
-  { name: "Project", href: "/project" },
+  { name: "Snippets", href: "/snippets", isProtected: false },
+  { name: "Project", href: "/project", isProtected: true },
 ]
 
 export const mainHeightClass = "h-[calc(100vh-4rem)]"

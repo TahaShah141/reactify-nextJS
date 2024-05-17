@@ -7,12 +7,10 @@ export const authOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? "",
       clientSecret: process.env.GITHUB_SECRET ?? "",
-      profile(profile) {
+      profile: async (profile) => {
         return {
           id: profile.id.toString(),
-          name: profile.name ?? profile.login,
           email: profile.email,
-          image: profile.avatar_url
         }
       }
     }),
@@ -22,9 +20,7 @@ export const authOptions = {
       profile(profile) {
         return {
           id: profile.sub,
-          name: profile.name ?? profile.login,
           email: profile.email,
-          image: profile.avatar_url
         }
       },
     })

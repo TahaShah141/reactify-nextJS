@@ -1,7 +1,8 @@
 "use client"
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import componentReducer from './slices/componentsSlice'
+import componentsReducer from './slices/componentsSlice'
+import userReducer from './slices/userSlice'
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from 'redux-persist'
 
@@ -11,7 +12,8 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-  components: componentReducer
+  components: componentsReducer,
+  user: userReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
@@ -30,3 +32,4 @@ export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
 
 export const selectComponents = (state: RootState) => state.components
+export const selectUser = (state: RootState) => state.user

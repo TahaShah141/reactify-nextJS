@@ -2,7 +2,7 @@ import { CustomStyleType } from "@/lib/componentType"
 import mongoose from "mongoose"
 
 export type UserType = {
-  id: string
+  _id: string
   email: string
   customClasses: CustomStyleType[] 
 }

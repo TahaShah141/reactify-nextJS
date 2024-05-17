@@ -6,8 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import { useState } from "react";
+import { UserType } from "@/models/UserModel";
+import { useAppDispatch } from "@/lib/redux/hooks";
+import { SignIn } from "@/lib/redux/slices/userSlice";
 
 type AuthCardProps = {
   title: string
@@ -16,7 +19,10 @@ type AuthCardProps = {
   altText: string
   altLinkText: string
   altLink: string
-  credentialsCallback: (credentials: {email: string, password: string}) => void
+  credentialsCallback: (credentials: {email: string, password: string}) => Promise<{
+    user?: UserType,
+    error?: string
+  }>
 }
 
 export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altText, altLinkText, altLink, credentialsCallback}) => {
@@ -27,6 +33,37 @@ export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altT
   })
 
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const dispatch = useAppDispatch()
+
+  const authenticate = async () => {
+    const {user, error} = await credentialsCallback(credentials)
+    setError(error || "")
+    setLoading(false)
+
+    if (user) {
+      console.log("LOGGING IN", {user})
+      dispatch(SignIn({user}))
+    }
+  }
+
+  const updateError = () => {
+
+    if (credentials.email === "" || credentials.password === "") {
+      setError("All fields are required")
+      return true
+    } else if (credentials.email.match(/^\S+@\S+$/g) === null) {
+      setError("Invalid email")
+      return true
+    } else if (credentials.password.length < 6) {
+      setError("Password must be at least 6 characters")
+      return true
+    } else {
+      setError("")
+      return false
+    }
+  }
 
   return (
     <Card className="max-w-sm w-full">
@@ -64,16 +101,16 @@ export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altT
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input onChange={(e) => setCredentials({...credentials, email: e.target.value})} id="email" type="email" placeholder="m@example.com" />
+            <Input onChange={(e) => {updateError(); setCredentials({...credentials, email: e.target.value})}} id="email" type="email" placeholder="m@example.com" />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input onChange={(e) => setCredentials({...credentials, password: e.target.value})} id="password" type="password" />
+            <Input onChange={(e) => {updateError(); setCredentials({...credentials, password: e.target.value})}} id="password" type="password" />
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
-          <Button className="w-full" disabled={error !== ""} onClick={() => credentialsCallback(credentials)}>{buttonText}</Button>
+          <Button className="w-full" disabled={loading || !!error} onClick={() => {setLoading(true); if (!updateError()) authenticate(); else setLoading(false)}}>{loading ? "Loading..." : buttonText}</Button>
           <div className="flex gap-2 text-sm items-center">
             <p className="text-muted-foreground">{altText}</p>
             <Link href={altLink} className="underline">{altLinkText}</Link>  
