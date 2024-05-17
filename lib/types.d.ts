@@ -81,3 +81,12 @@ export type UserType = {
   email: string
   customClasses: CustomStyleType[] 
 }
+
+export type SnippetType = {
+  _id: string
+  name: string
+  description: string
+  creator: string
+  lastUpdated: Date
+  favorites: number
+}
