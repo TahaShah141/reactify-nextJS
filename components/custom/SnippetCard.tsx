@@ -5,22 +5,13 @@ import { Separator } from "../ui/separator"
 import { CopyIcon, Pencil2Icon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
 import { Button } from "../ui/button"
 
-const dummySnippet: SnippetType = {
-  _id: "dkj9wsks8989HBHs",
-  name: "Dummy Snippet",
-  creator: "tahashah411@gmail.com".split("@")[0],
-  lastUpdated: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
-  description: "This is a dummy snippet to see how to snippet card looks",
-  favorites: 101
-}
-
 type SnippetCardProps = {
   snippet: SnippetType
 }
 
-export const SnippetCard: React.FC<SnippetCardProps> = ({snippet=dummySnippet}) => {
+export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
   return (
-    <Card className="flex flex-col rounded-sm gap-4 p-4 w-96">
+    <Card className="flex flex-col rounded-sm gap-4 p-6 w-full max-w-md">
       <div className="flex justify-between gap-2">
         <div className="flex flex-1 flex-col gap-2">
           <h3 className="text-xl font-semibold">{snippet.name}</h3>
@@ -36,8 +27,7 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet=dummySnippet}) 
         </div>
       </div>
       <Separator />
-      <p className="text-sm text-muted-foreground">{snippet.description}</p>
-      {/* <Separator /> */}
+      <p className="text-sm text-muted-foreground">{snippet.description.substring(0, 100) + (snippet.description.length > 100 ? "..." : "")}</p>
       <div className="flex gap-2">
         <Button variant={"outline"} className="flex items-center gap-2 flex-1">
           <Pencil2Icon />
