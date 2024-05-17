@@ -1,11 +1,12 @@
 import { useCallback } from "react";
-import { ComponentType, ForeignComponentType, getNewChild, getParentChild, isImportAllowed } from "../componentType";
+import { getNewChild, getParentChild, isImportAllowed } from "../componentType";
 import { DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { selectComponents } from "../redux/store";
 import { useControlPressed } from "./useControlPressed";
 import { v4 as randomID } from "uuid"
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { addForeignComponent, moveChildToIndex, moveComponent } from "../redux/slices/componentsSlice";
+import { ComponentType, ForeignComponentType } from "@/lib/types";
 
 export type DragAndDropType = {  
   sensors: ReturnType<typeof useSensors>,

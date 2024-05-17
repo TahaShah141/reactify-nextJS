@@ -1,4 +1,4 @@
-import { StyleType } from "@/lib/componentType"
+import { StyleType } from "@/lib/types"
 
  export const trackings: Record<string, string> = {
   "tighter": "-0.5em",

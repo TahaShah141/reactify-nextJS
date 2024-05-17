@@ -10,12 +10,7 @@ import { selectUser } from "@/lib/redux/store"
 import { useEffect } from "react"
 import { signOut } from "next-auth/react"
 import { EnterIcon } from "@radix-ui/react-icons"
-
-export type NavLinksType = {
-  name: string
-  href: string
-  isProtected: boolean
-}
+import { NavLinksType } from "@/lib/types"
 
 type NavbarProps = {
   name: string

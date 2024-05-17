@@ -1,7 +1,8 @@
-import { ComponentType, ForeignComponentType, getCSSStyle } from "@/lib/componentType"
+import { getCSSStyle } from "@/lib/componentType"
 import { componentsToClone } from "@/lib/componentsToClone"
 import { useAppSelector } from "@/lib/redux/hooks"
 import { selectComponents } from "@/lib/redux/store"
+import { ComponentType, ForeignComponentType } from "@/lib/types"
 import React from "react"
 
 

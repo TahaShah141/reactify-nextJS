@@ -1,4 +1,4 @@
-import { StyleType } from "@/lib/componentType"
+import { StyleType } from "@/lib/types"
 
 export const fontSizes: Record<string, [string, string]> = {
   "xs": ["0.75rem", "1rem"],

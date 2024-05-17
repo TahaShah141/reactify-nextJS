@@ -3,9 +3,10 @@ import { Button } from "../ui/button"
 import { Label } from "../ui/label"
 import { useDispatch, useSelector } from "react-redux"
 import { selectComponents } from "@/lib/redux/store"
-import { ComponentType, StyleType, getParentChild } from "@/lib/componentType"
+import { getParentChild } from "@/lib/componentType"
 import { getSingularValue } from "@/lib/utils"
 import { updateSelectedStyle } from "@/lib/redux/slices/componentsSlice"
+import { ComponentType, StyleType } from "@/lib/types"
 
 export const TailwindFlexRatio = () => {
 

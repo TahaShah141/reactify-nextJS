@@ -1,4 +1,4 @@
-import { StyleType } from "../../componentType"
+import { StyleType } from "@/lib/types"
 
 export const colors: string[] = [ "slate", "gray", "zinc", "neutral", "stone", "red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose"]
 export const shades: number[] = [950, 900, 800, 700, 600, 500, 400, 300, 200, 100, 50]

@@ -1,4 +1,4 @@
-import { StyleType } from "@/lib/componentType"
+import { StyleType } from "@/lib/types"
 
 export const fontFamilies: Record<string, string> = {
   "sans": 'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',

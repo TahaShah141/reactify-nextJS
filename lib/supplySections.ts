@@ -1,4 +1,4 @@
-import { ComponentType } from "./componentType";
+import { ComponentType } from "@/lib/types";
 
 
 export const BasicSection: ComponentType = 

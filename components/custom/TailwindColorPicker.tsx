@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedStyle } from '@/lib/redux/slices/componentsSlice'
 import { getSingularValue } from '@/lib/utils'
 import { selectComponents } from '@/lib/redux/store'
-import { ComponentType, StyleType, getParentChild } from '@/lib/componentType'
+import { getParentChild } from '@/lib/componentType'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
+import { StyleType, ComponentType } from '@/lib/types'
 
 type TailwindColorPickerProps = {
   label: string

@@ -8,9 +8,9 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { signIn } from "next-auth/react"
 import { useState } from "react";
-import { UserType } from "@/models/UserModel";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { SignIn } from "@/lib/redux/slices/userSlice";
+import { UserType } from "@/lib/types";
 
 type AuthCardProps = {
   title: string

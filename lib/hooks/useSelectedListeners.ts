@@ -1,4 +1,4 @@
-import { ComponentType, ForeignComponentType } from "../componentType"
+import { ComponentType, ForeignComponentType } from "@/lib/types"
 import { useEffect } from "react"
 import { useAppDispatch } from "../redux/hooks"
 import { copySelected, deleteSelected, pasteIntoSelected } from "../redux/slices/componentsSlice"

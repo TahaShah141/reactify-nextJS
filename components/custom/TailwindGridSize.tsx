@@ -4,8 +4,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedStyle } from '@/lib/redux/slices/componentsSlice'
 import { selectComponents } from '@/lib/redux/store'
-import { ComponentType, getParentChild } from '@/lib/componentType'
+import { getParentChild } from '@/lib/componentType'
 import { Label } from '../ui/label'
+import { ComponentType } from '@/lib/types'
 
 export const TailwindGridSize = () => {
   const [hoverIndex, setHoverIndex] = useState<[number, number]>([-1, -1])

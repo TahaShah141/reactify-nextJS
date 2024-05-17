@@ -1,4 +1,4 @@
-import { ComponentType, StyleType, getParentChild } from '@/lib/componentType'
+import { getParentChild } from '@/lib/componentType'
 import React from 'react'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import { Label } from '../ui/label'
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedStyle } from '@/lib/redux/slices/componentsSlice'
 import { getSingularValue } from '@/lib/utils'
 import { selectComponents } from '@/lib/redux/store'
+import { ComponentType, StyleType } from '@/lib/types'
 
 type RadioProps = {
   label: string

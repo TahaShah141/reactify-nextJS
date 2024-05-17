@@ -1,4 +1,4 @@
-import { ComponentType } from "./componentType"
+import { ComponentType } from "@/lib/types"
 import { BasicSection, ShadCnSection, TypographySection } from "./supplySections"
 
 //hard coded place to get the components from

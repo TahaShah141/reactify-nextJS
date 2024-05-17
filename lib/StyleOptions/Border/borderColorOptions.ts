@@ -1,4 +1,4 @@
-import { StyleType } from "@/lib/componentType";
+import { StyleType } from "@/lib/types";
 import { HexColors, colors, getAllColorStyleTypes, shades } from "../Colors/getColorStyleType";
 
 

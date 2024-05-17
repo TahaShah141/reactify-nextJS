@@ -1,11 +1,5 @@
-import { CustomStyleType } from "@/lib/componentType"
+import { CustomStyleType } from "@/lib/types"
 import mongoose from "mongoose"
-
-export type UserType = {
-  _id: string
-  email: string
-  customClasses: CustomStyleType[] 
-}
 
 const UserSchema = new mongoose.Schema({
   email: {

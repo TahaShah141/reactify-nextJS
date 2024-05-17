@@ -1,10 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "@/components/storeProvider";
-import { NavLinksType, Navbar } from "@/components/custom/navbar";
+import { Navbar } from "@/components/custom/navbar";
 import { ThemeProvider } from "@/components/custom/themeProvider";
 import SessionProvider from "@/components/SessionProvider"
 import { getServerSession } from "next-auth";
+import { NavLinksType } from "@/lib/types";
 
 const inter = Inter({ subsets: ["latin"] });
 

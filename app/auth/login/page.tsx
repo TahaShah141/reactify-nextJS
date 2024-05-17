@@ -1,6 +1,6 @@
 "use client"
 import { AuthCard } from "@/components/custom/AuthCard";
-import { UserType } from "@/models/UserModel";
+import { UserType } from "@/lib/types";
 
 export default function Login() {
 

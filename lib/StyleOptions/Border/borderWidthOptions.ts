@@ -1,4 +1,4 @@
-import { StyleType } from "@/lib/componentType"
+import { StyleType } from "@/lib/types"
 
 const borderSizing: Record<string, string> = {
   "0": "0px",

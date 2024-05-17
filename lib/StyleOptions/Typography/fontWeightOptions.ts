@@ -1,4 +1,4 @@
-import { StyleType } from "@/lib/componentType"
+import { StyleType } from "@/lib/types"
 
 export const fontWeights: Record<string, string> = {
   "thin": "100",

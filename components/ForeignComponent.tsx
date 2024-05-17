@@ -1,4 +1,4 @@
-import { ForeignComponentType, getCSSStyle } from "@/lib/componentType"
+import { getCSSStyle } from "@/lib/componentType"
 import { componentsToClone } from "@/lib/componentsToClone"
 import { selectComponents } from "@/lib/redux/store"
 import { useDraggable, useDroppable } from "@dnd-kit/core"
@@ -7,6 +7,7 @@ import { verbosity } from "./Component"
 import { updateSelected } from "@/lib/redux/slices/componentsSlice"
 import { PseudoComponent } from "./PseudoComponent"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { ForeignComponentType } from "@/lib/types"
 
 type ForeignComponentProps = {
   foreignComponent: ForeignComponentType

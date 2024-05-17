@@ -1,6 +1,6 @@
-import { ComponentType } from "@/lib/componentType"
 import { useDraggable } from "@dnd-kit/core";
 import { Button } from "./ui/button";
+import { ComponentType } from "@/lib/types";
 
 type SupplyComponentProps = {
   component: ComponentType

@@ -1,5 +1,5 @@
-import { Section, getStylingSections } from "@/lib/StyleOptions/getStylingSections"
-import { ComponentType, getParentChild } from "@/lib/componentType"
+import { getStylingSections } from "@/lib/StyleOptions/getStylingSections"
+import { getParentChild } from "@/lib/componentType"
 import { selectComponents } from "@/lib/redux/store"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { useMemo } from "react"
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { removeFromSelectedStyle, updateSelectedStyle } from "@/lib/redux/slices/componentsSlice"
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { ComponentType, Section } from "@/lib/types"
 
 export const StyleMenu = () => {
   

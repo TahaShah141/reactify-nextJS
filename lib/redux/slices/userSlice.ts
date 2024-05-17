@@ -1,4 +1,4 @@
-import { UserType } from "@/models/UserModel";
+import { UserType } from "@/lib/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 

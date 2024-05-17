@@ -1,9 +1,9 @@
-import { ComponentType, CustomStyleType, ForeignComponentType, StyleType, fixPathAndSelected, getNewChild, getParentChild } from '@/lib/componentType'
+import { fixPathAndSelected, getNewChild, getParentChild } from '@/lib/componentType'
+import { ComponentType, CustomStyleType, ForeignComponentType, StyleType, TabType } from '@/lib/types'
 import { getRootComponent, supplyComponent } from '@/lib/defaultComponents'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import { createSlice } from '@reduxjs/toolkit'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { TabType } from '../../componentType'
 import { deepCopy, getSingularValue, sameCSSKey } from '@/lib/utils'
 
 export interface ComponentsState {

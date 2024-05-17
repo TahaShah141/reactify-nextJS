@@ -24,17 +24,8 @@ import { TailwindMargin } from "@/components/custom/TailwindMargin"
 import { trackingOptions } from "./Typography/trackingOptions"
 import { TailwindFlexRatio } from "@/components/custom/TailwindFlexRatio"
 import { aspectRatioOptions } from "./Sizing/aspectRatioOptions"
-import { ComponentType } from "../componentType"
 import { getSingularValue } from "../utils"
-
-export type Section = {
-  title: string
-  items: ({
-    CSSKeys?: string[] | (string | string[])[], 
-    node: React.ReactNode
-  } | undefined)[]
-  showCards: boolean
-} 
+import { ComponentType, Section } from "@/lib/types"
 
 export const getStylingSections = (component: ComponentType, customClasses: React.ReactNode[]): Section[] => {
 

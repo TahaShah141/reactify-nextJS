@@ -1,7 +1,7 @@
-import { ForeignComponentType } from "@/lib/componentType";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { CSSProperties } from "react";
+import { ForeignComponentType } from "@/lib/types";
 
 
 export const ForeignLayer: React.FC<{component: ForeignComponentType}> = ({component}) => {

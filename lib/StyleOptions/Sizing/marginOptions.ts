@@ -1,4 +1,4 @@
-import { StyleType } from "@/lib/componentType";
+import { StyleType } from "@/lib/types";
 import { getAllSizingOptions, sizing } from "./getSpacingStyleType";
 
 export const marginOptions: StyleType[] = getAllSizingOptions("m", "margin")
