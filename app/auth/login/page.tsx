@@ -1,3 +1,4 @@
+"use client"
 import { AuthCard } from "@/components/custom/AuthCard";
 
 export default function Login() {
@@ -9,7 +10,9 @@ export default function Login() {
       buttonText="Login"
       altText="Don't Have an Account?"
       altLink="/auth/signup"
-      altLinkText="Sign Up."/>
+      altLinkText="Sign Up."
+      credentialsCallback={(credentials) => console.log("Login", credentials)}
+      />
     </div>
   )
 }

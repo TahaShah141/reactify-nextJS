@@ -1,4 +1,5 @@
 import { CustomStyleType } from "@/lib/componentType"
+import mongoose from "mongoose"
 
 export type UserType = {
   id: string
@@ -9,7 +10,8 @@ export type UserType = {
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,

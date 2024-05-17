@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react"
+import { useState } from "react";
 
 type AuthCardProps = {
   title: string
@@ -15,9 +16,17 @@ type AuthCardProps = {
   altText: string
   altLinkText: string
   altLink: string
+  credentialsCallback: (credentials: {email: string, password: string}) => void
 }
 
-export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altText, altLinkText, altLink}) => {
+export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altText, altLinkText, altLink, credentialsCallback}) => {
+
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: ""
+  })
+
+  const [error, setError] = useState("")
 
   return (
     <Card className="max-w-sm w-full">
@@ -55,15 +64,16 @@ export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altT
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" />
+            <Input onChange={(e) => setCredentials({...credentials, email: e.target.value})} id="email" type="email" placeholder="m@example.com" />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" />
+            <Input onChange={(e) => setCredentials({...credentials, password: e.target.value})} id="password" type="password" />
           </div>
+          {error && <p className="text-sm text-red-500">{error}</p>}
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
-          <Button className="w-full" onClick={() => signIn("credentials", {email: "TahaShah@mail.com", password: "123456"})}>{buttonText}</Button>
+          <Button className="w-full" disabled={error !== ""} onClick={() => credentialsCallback(credentials)}>{buttonText}</Button>
           <div className="flex gap-2 text-sm items-center">
             <p className="text-muted-foreground">{altText}</p>
             <Link href={altLink} className="underline">{altLinkText}</Link>  
