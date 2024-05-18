@@ -7,13 +7,21 @@ import { useState } from "react"
 import { addNewTab } from "@/lib/redux/slices/componentsSlice"
 import { selectComponents } from "@/lib/redux/store"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { ComponentType } from "@/lib/types"
 
 export const AddComponent = () => {
 
-  const { tabs } = useAppSelector(selectComponents)
+  const { tabs, supply } = useAppSelector(selectComponents)
   const dispatch = useAppDispatch()
   const [componentName, setComponentName] = useState<string>("")
-  const isNameAvailable = (componentName !== "" && !(componentName in tabs) && !(componentName === "SUPPLY"))
+  const isNameAvailable = 
+  (componentName !== "" && 
+  !(componentName in tabs) && 
+  !(componentName === "SUPPLY") && 
+  !(supply.children.some(child => 
+    (child as ComponentType).children.some(grandChild => 
+      (grandChild as ComponentType).tag === componentName)
+  )))
 
   return (
     
@@ -28,12 +36,12 @@ export const AddComponent = () => {
               Please enter the name of the component
             </p>
           </div>
-          <div className="flex gap-2">
+          <form className="flex gap-2">
             <Input value={componentName} onChange={(e) => setComponentName(e.target.value)} placeholder="Component Name" />
             <PopoverClose>  
               <Button disabled={!isNameAvailable} onClick={() => {setComponentName(""); dispatch(addNewTab({newTab: componentName}))}} >Add</Button>
             </PopoverClose>
-          </div>
+          </form>
         </PopoverContent>
       </Popover>
   )

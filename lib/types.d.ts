@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 export type NavLinksType = {
   name: string
   href: string
@@ -34,6 +36,12 @@ export type TabType = {
   root: ComponentType
   imports: string[]
 }
+
+export type SideBarTabType = {
+  name: string
+  icon: ReactNode
+  toRender: ReactNode
+} 
 
 // Define a type for a component, which has the following fields
 export type ComponentType = {

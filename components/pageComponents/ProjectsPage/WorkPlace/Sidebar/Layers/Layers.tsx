@@ -18,9 +18,7 @@ export const Layers = () => {
     onDragEnd={handleDragEnd}
     collisionDetection={pointerWithin}
     >
-      <ScrollArea className='w-full p-2' style={{ height: 'calc(100vh - 60px)' }}>
-          <Layer component={tabs[currentTab].root} />
-      </ScrollArea>
+      <Layer component={tabs[currentTab].root} />
     </DndContext>
   )
 }

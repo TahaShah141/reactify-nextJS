@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 import { selectComponents } from "@/lib/redux/store"
-import { ComponentType } from "@/lib/componentType"
 import { mod } from "@/lib/utils"
 import { SupplyComponent } from "@/components/SupplyComponent"
 import { Tab } from "./Tab"
 import { useAppSelector } from "@/lib/redux/hooks"
+import { ComponentType } from "@/lib/types"
 
 const maxListWidth = `max-w-[calc(100vw-40rem-40px)]`
 

@@ -1,7 +1,6 @@
 import { UniqueIdentifier } from "@dnd-kit/core"
-import { ComponentType } from "react"
 import { v4 as randomID } from "uuid"
-import { StyleType, ComponentChildren, ForeignComponentType, TabType } from "./types"
+import { ComponentType, StyleType, ComponentChildren, ForeignComponentType, TabType } from "@/lib/types"
 
 export const getCSSStyle = (options: StyleType[]): Record<string, string> => {
 
