@@ -53,7 +53,7 @@ const sidebarTabs: SideBarTabType[] = [
 
 export const Sidebar = () => {
 
-  const [currSidebarTab, setCurrSidebarTab] = useState(2)
+  const [currSidebarTab, setCurrSidebarTab] = useState(3)
 
   return (
     <div className="w-full h-full flex">

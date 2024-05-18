@@ -27,7 +27,8 @@ export const getSingularValue = <T>(value: T | T[]): T => {
 };
 
 function getTabs(n: number) {
-  return Array(n).fill("\t").join("");
+  return Array(n).fill("  ").join("");
+  // return Array(n).fill("\t").join("");
 }
 
 export const generateCode = (component: ComponentType | ForeignComponentType, indentCount: number = 0): string => {
@@ -37,6 +38,25 @@ export const generateCode = (component: ComponentType | ForeignComponentType, in
   return `${tabs}<${component.tag} className="${classes}">
 ${component.innerText ? component.innerText + "\n" : ""}${component.children.map((child) => generateCode(child, indentCount + 1)).join("\n")}
 ${tabs}</${component.tag}>`
+};
+
+
+function captilizeFirstLetter(x: string) {
+  if (x.length == 0) return x;
+  return x[0].toUpperCase() + x.substring(1);
+}
+
+export const generateComponentCode = (component: ComponentType, name: string): string => {
+  const upperCaseName = captilizeFirstLetter(name);
+  return `
+
+function ${upperCaseName}() {
+  return (
+${generateCode(component, 2)}
+  );
+}
+
+export default ${upperCaseName};`
 };
 
 export const generateRootString = async (root: ComponentType): Promise<string> => {
