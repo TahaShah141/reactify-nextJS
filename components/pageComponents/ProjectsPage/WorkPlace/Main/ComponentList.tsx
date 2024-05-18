@@ -16,9 +16,9 @@ export const ComponentList = () => {
   const { supply, tabs } = useAppSelector(selectComponents)
 
   const tabList: Record<string, JSX.Element[]> = useMemo(() => ({
-    "Basic": (supply.children[0] as ComponentType).children.map(child => <SupplyComponent component={child as ComponentType} />),
-    "Typography": (supply.children[1] as ComponentType).children.map(child => <SupplyComponent component={child as ComponentType} />),
-    "ShadCN": (supply.children[2] as ComponentType).children.map(child => <SupplyComponent component={child as ComponentType} />),
+    "Basic": (supply.children[0] as ComponentType).children.map(child => <SupplyComponent key={child.id} component={child as ComponentType} />),
+    "Typography": (supply.children[1] as ComponentType).children.map(child => <SupplyComponent key={child.id} component={child as ComponentType} />),
+    "ShadCN": (supply.children[2] as ComponentType).children.map(child => <SupplyComponent key={child.id} component={child as ComponentType} />),
     "Custom": Object.keys(tabs).map(tab => <Tab key={tab} id={tab} />),
     "Snippets": [] 
   }), [tabs])
@@ -49,8 +49,6 @@ export const ComponentList = () => {
   const decrementIndex = () => {
     setStartIndex(mod((startIndex - 1), tabList[tab].length))
   }
-
-
 
   return (
     <div className={`w-full ${maxListWidth} h-24 flex justify-center items-center`}>
