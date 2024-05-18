@@ -16,7 +16,7 @@ import { useState } from "react";
 export const CodePreview = () => {
   const [selected, setSelected] = useState("App");
   const { tabs } = useAppSelector(selectComponents);
-  
+
   const tabNames = Object.keys(tabs);
   const codes = tabNames.map(name => generateComponentCode(tabs[name].root, name));
   const index = tabNames.findIndex(name => name === selected);
@@ -32,11 +32,11 @@ export const CodePreview = () => {
         {tabNames.map((name) =>
           <button
             onClick={() => setSelected(name)}
-            className={`${className} ${selected === name ? "text-primary bg-foreground/5" : "text-muted-foreground"}`}  >{name}.jsx</button>
+            className={`${className} ${selected === name ? "text-primary bg-foreground/5" : "text-muted-foreground"}`}>{name}.jsx</button>
         )}
         <button
           onClick={() => downloadZip(tabNames, codes)}
-          className={`${className} text-muted-foreground`}  >Download as Zip</button>
+          className={`${className} text-muted-foreground`}>Download as Zip</button>
       </div>
       <div className="  flex-1 flex items-stretch">
 
