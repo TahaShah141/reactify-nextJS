@@ -2,11 +2,12 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Layers } from "./Layers/Layers"
-import { AvatarIcon, CodeIcon, CopyIcon, DashboardIcon, GearIcon, Pencil2Icon, PersonIcon, StackIcon } from "@radix-ui/react-icons"
+import { AvatarIcon, CodeIcon, CopyIcon, DashboardIcon, GearIcon, Pencil2Icon, StackIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 import { SideBarTabType } from "@/lib/types"
 import { useState } from "react"
 import { CodePreview } from "./CodePreview/CodePreview"
+import { SaveMenu } from "./SaveMenu/SaveMenu"
 
 const LogoClassName = "size-8"
 
@@ -17,9 +18,9 @@ const sidebarTabs: SideBarTabType[] = [
     toRender: <>Projects</>
   },
   {
-    name: "Templates",
+    name: "Snippets",
     icon: <CopyIcon className={LogoClassName} />,
-    toRender: <>Templates</>
+    toRender: <>Snippets</>
   },
   {
     name: "Layers",
@@ -34,7 +35,7 @@ const sidebarTabs: SideBarTabType[] = [
   {
     name: "Save",
     icon: <Pencil2Icon className={LogoClassName} />,
-    toRender: <>Save</>
+    toRender: <SaveMenu />
   },
   
   
@@ -56,7 +57,7 @@ export const Sidebar = () => {
 
   return (
     <div className="w-full h-full flex">
-      <div className="w-14 py-2 flex flex-col items-center justify-between h-full border-r">
+      <div className="w-14 py-2 flex flex-col items-center justify-between h-full">
         <div className="flex flex-col items-center">
           {sidebarTabs.slice(0, 5).map((tab, i) => (
             <Button onClick={() => setCurrSidebarTab(i)} variant={"ghost"} size={"icon"} 

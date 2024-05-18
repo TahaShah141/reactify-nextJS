@@ -32,6 +32,8 @@ export const ForeignComponent: React.FC<ForeignComponentProps> = ({ foreignCompo
     ...componentStyle,
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     backgroundColor: isOver ? "#1f1f1f" : undefined,
+    borderColor: data.selected ? "#0ea5e9" : componentStyle?.borderColor,
+    borderWidth: data.selected ? "4px" : componentStyle?.borderWidth,
   };
 
   const onClick = (e: React.MouseEvent<HTMLElement>) => {

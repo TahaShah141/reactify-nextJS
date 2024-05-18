@@ -29,6 +29,8 @@ export const Component: React.FC<ComponentProps> = ({ component }) => {
     ...componentStyle,
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     backgroundColor: isOver ? "#1f1f1f" : componentStyle?.backgroundColor,
+    borderColor: data.selected ? "#ef4444" : componentStyle?.borderColor,
+    borderWidth: data.selected ? "4px" : componentStyle?.borderWidth,
   };
   
   const onClick = (e: React.MouseEvent<HTMLElement>) => {

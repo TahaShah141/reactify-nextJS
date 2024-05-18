@@ -1,4 +1,3 @@
-import { CustomStyleType } from "@/lib/types"
 import mongoose from "mongoose"
 
 const UserSchema = new mongoose.Schema({
@@ -12,6 +11,10 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   customClasses: {
+    type: Array,
+    default: []
+  },
+  favoriteSnippets: {
     type: Array,
     default: []
   }

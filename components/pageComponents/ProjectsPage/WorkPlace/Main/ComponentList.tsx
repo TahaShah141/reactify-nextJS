@@ -20,7 +20,7 @@ export const ComponentList = () => {
     "Typography": (supply.children[1] as ComponentType).children.map(child => <SupplyComponent component={child as ComponentType} />),
     "ShadCN": (supply.children[2] as ComponentType).children.map(child => <SupplyComponent component={child as ComponentType} />),
     "Custom": Object.keys(tabs).map(tab => <Tab key={tab} id={tab} />),
-    "Templates": [] 
+    "Snippets": [] 
   }), [tabs])
 
   const [tab, setTab] = useState<string>("Basic")

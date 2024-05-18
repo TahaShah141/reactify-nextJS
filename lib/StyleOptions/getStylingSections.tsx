@@ -71,7 +71,7 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
           (displayType === "flex" ? {CSSKeys: ["flexDirection"], node: <StyleRadio rows={2} cols={2} label='Flex Direction' options={flexDirectionOptions} />} : undefined),
           (displayType === "flex" ? {CSSKeys: ["flex"], node: <TailwindFlexRatio />} : undefined),
           (displayType === "grid" ? {CSSKeys: [["gridTemplateRows", "gridTemplateColumns"]], node: <TailwindGridSize />} : undefined),
-          {CSSKeys: ["justifyContent"], node: <StyleRadio rows={1} cols={3} label='Justify Content' options={justifyContentOptions} />},
+          {CSSKeys: ["justifyContent"], node: <StyleRadio rows={2} cols={3} label='Justify Content' options={justifyContentOptions} />},
           {CSSKeys: ["alignItems"], node: <StyleRadio rows={1} cols={3} label='Align Items' options={alignItemsOptions} />},
           {CSSKeys: ["alignSelf"], node: <StyleRadio rows={1} cols={3} label='Align Self' options={alignSelfOptions} />},
         ]

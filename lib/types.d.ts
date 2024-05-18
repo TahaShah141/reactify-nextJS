@@ -87,7 +87,8 @@ export type Section = {
 export type UserType = {
   _id: string
   email: string
-  customClasses: CustomStyleType[] 
+  customClasses: CustomStyleType[]
+  favoriteSnippets: SnippetType[] 
 }
 
 export type SnippetType = {
@@ -95,6 +96,7 @@ export type SnippetType = {
   name: string
   description: string
   creator: string
-  lastUpdated: Date
+  updatedAt: Date
   favorites: number
+  root: ComponentType
 }
