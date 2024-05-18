@@ -34,9 +34,12 @@ export const SaveSnippet = () => {
     
     if (error) {
       setState({...state, error})
+      setLoading(false)
+      return;
     } 
     
     setLoading(false)
+    setState({name: "", description: "", error: ""})
   }
 
   return (

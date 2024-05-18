@@ -15,7 +15,8 @@ export const AddComponent = () => {
   const dispatch = useAppDispatch()
   const [componentName, setComponentName] = useState<string>("")
   const isNameAvailable = 
-  (componentName !== "" && 
+  (componentName !== "" &&
+  !componentName.includes(" ") && 
   !(componentName in tabs) && 
   !(componentName === "SUPPLY") && 
   !(supply.children.some(child => 

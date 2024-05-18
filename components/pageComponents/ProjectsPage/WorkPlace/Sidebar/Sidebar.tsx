@@ -8,6 +8,7 @@ import { SideBarTabType } from "@/lib/types"
 import { useState } from "react"
 import { CodePreview } from "./CodePreview/CodePreview"
 import { SaveMenu } from "./SaveMenu/SaveMenu"
+import { Snippets } from "./Snippets/Snippets"
 
 const LogoClassName = "size-8"
 
@@ -20,7 +21,7 @@ const sidebarTabs: SideBarTabType[] = [
   {
     name: "Snippets",
     icon: <CopyIcon className={LogoClassName} />,
-    toRender: <>Snippets</>
+    toRender: <Snippets />
   },
   {
     name: "Layers",

@@ -8,9 +8,8 @@ export async function GET() {
     await connectMongo()
 
     const snippets = await Snippet.find().sort({updatedAt: -1 })
-
+    
     return NextResponse.json({snippets})
-
   } catch (error) {
     console.log({error})
     return NextResponse.json({error: "Cant Send Snippets"})

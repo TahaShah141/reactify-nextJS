@@ -57,7 +57,7 @@ export const generateRootString = async (root: ComponentType): Promise<string> =
   const newRoot = {
     ...root,
     children: newChildren,
-    styleOptions: newStyleOptions
+    styleOptions: newStyleOptions,
   }
 
   return JSON.stringify(newRoot)
@@ -66,6 +66,7 @@ export const generateRootString = async (root: ComponentType): Promise<string> =
 export const recursiveParse = async (root: string): Promise<ComponentType> => {
 
   const parsedRoot = JSON.parse(root)
+  parsedRoot.data.tabID = "SNIPPETS"
   const childrenPromises = parsedRoot.children.map((child: string) => recursiveParse(child))
   parsedRoot.children = await Promise.all(childrenPromises)
 

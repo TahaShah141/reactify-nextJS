@@ -213,6 +213,17 @@ export const componentsSlice = createSlice({
         state.clipboard.data.draggable = true
       }
     },
+
+    copyIntoClipboard: (state, action: PayloadAction<{root: ComponentType}>) => {
+      const {root} = action.payload
+      console.log("COPIED", root)
+      state.clipboard = deepCopy(root)
+      if (state.clipboard) {
+        state.clipboard.data.selected = false
+        state.clipboard.data.draggable = true
+      }
+    },
+
     pasteIntoSelected: (state) => {
       const { selectedPath, currentTab, tabs, clipboard } = state
       const root = tabs[currentTab].root
@@ -303,6 +314,7 @@ export const {
   deleteSelected, 
 
   copySelected,
+  copyIntoClipboard,
   pasteIntoSelected,
 
   moveChildToIndex, 

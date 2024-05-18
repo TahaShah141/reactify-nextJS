@@ -2,7 +2,8 @@ import mongoose from "mongoose"
 
 const SnippetSchema = new mongoose.Schema({
   creator: {
-    type: mongoose.Types.ObjectId,
+    type: String,
+    index: true,
     required: true
   },
   name: {

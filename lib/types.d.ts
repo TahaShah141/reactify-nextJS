@@ -96,7 +96,7 @@ export type SnippetType = {
   name: string
   description: string
   creator: string
-  updatedAt: Date
+  updatedAt: Date | string
   favorites: number
-  root: ComponentType
+  root: ComponentType | string
 }
