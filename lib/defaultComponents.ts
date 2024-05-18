@@ -44,36 +44,6 @@ export const getRootComponent = (rootID: string): ComponentType => ({
         CSSValue: '2px'
       },
       {
-        label: "Display",
-        tailwind: "flex",
-        CSSKey: "display",
-        CSSValue: "flex",
-      },
-      {
-        label: "Flex Direction",
-        tailwind: "flex-col",
-        CSSKey: "flexDirection",
-        CSSValue: "column",
-      },
-      {
-        label: "Justify Content",
-        tailwind: "justify-center",
-        CSSKey: "justifyContent",
-        CSSValue: "center",
-      },
-      {
-        label: "Align Items",
-        tailwind: "items-center",
-        CSSKey: "alignItems",
-        CSSValue: "center",
-      },
-      {
-        label: "Gap",
-        tailwind: "gap-2",
-        CSSKey: "gap",
-        CSSValue: "0.5rem",
-      },
-      {
         label: "Padding",
         tailwind: "p-8",
         CSSKey: "padding",

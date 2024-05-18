@@ -24,46 +24,10 @@ export const BasicSection: ComponentType =
       className: ``,
       styleOptions: [
         {
-          label: 'border-black',
-          tailwind: 'border-black',
-          CSSKey: 'borderColor',
-          CSSValue: '#000000'
-        },
-        {
-          label: 'border',
-          tailwind: 'border',
-          CSSKey: 'borderWidth',
-          CSSValue: '1px'
-        },
-        {
-          label: "rounded",
-          tailwind: "rounded-sm",
-          CSSKey: 'borderRadius',
-          CSSValue: '2px'
-        },
-        {
-          label: "Height",
-          tailwind: "h-full",
-          CSSKey: "height",
-          CSSValue: "100%",
-        },
-        {
-          label: "Width",
-          tailwind: "w-full",
-          CSSKey: "width",
-          CSSValue: "100%",
-        },
-        {
-          label: "Background Color",
-          tailwind: "bg-white",
-          CSSKey: "backgroundColor",
-          CSSValue: "#ffffff",
-        }, 
-        {
           label: "Padding",
-          tailwind: "p-1",
+          tailwind: "p-2",
           CSSKey: "padding",
-          CSSValue: "0.25rem",
+          CSSValue: "0.5rem",
         }
       ],
       children: [],
@@ -80,8 +44,8 @@ export const BasicSection: ComponentType =
     {
       id: "button",
       tag: "button",
-      className: `min-w-32`,
-      innerText: "Button",
+      className: ``,
+      innerText: "button",
       styleOptions: [
         {
           label: "Background Color",
@@ -124,14 +88,7 @@ export const BasicSection: ComponentType =
       tag: "input",
       className: ``,
       innerText: "",
-      styleOptions: [
-        {
-          label: "Text Color",
-          tailwind: "text-black",
-          CSSKey: "color",
-          CSSValue: "#000000",
-        }
-      ],
+      styleOptions: [],
       children: [],
       data: {
         rootID: "SUPPLY",
@@ -148,14 +105,7 @@ export const BasicSection: ComponentType =
       tag: "textarea",
       className: ``,
       innerText: "",
-      styleOptions: [
-        {
-          label: "Text Color",
-          tailwind: "text-black",
-          CSSKey: "color",
-          CSSValue: "#000000",
-        }
-      ],
+      styleOptions: [],
         children: [],
       data: {
         rootID: "SUPPLY",
@@ -361,7 +311,7 @@ export const ShadCnSection: ComponentType =
     {
       id: "Button",
       tag: "Button",
-      className: `min-w-48`,
+      className: ``,
       innerText: "Click Me!!",
       styleOptions: [],
       children: [],
@@ -397,30 +347,12 @@ export const ShadCnSection: ComponentType =
       tag: "Card",
       innerText:"",
       className: ``,
-      styleOptions: [
-        {
-          label: "rounded",
-          tailwind: "rounded-sm",
-          CSSKey: 'borderRadius',
-          CSSValue: '2px'
-        },
-        {
-          label: "Height",
-          tailwind: "h-full",
-          CSSKey: "height",
-          CSSValue: "100%",
-        },
-        {
-          label: "Width",
-          tailwind: "w-full",
-          CSSKey: "width",
-          CSSValue: "100%",
-        }, 
+      styleOptions: [ 
         {
           label: "Padding",
-          tailwind: "p-1",
+          tailwind: "p-2",
           CSSKey: "padding",
-          CSSValue: "0.25rem",
+          CSSValue: "0.5rem",
         }
       ],
       children: [],
