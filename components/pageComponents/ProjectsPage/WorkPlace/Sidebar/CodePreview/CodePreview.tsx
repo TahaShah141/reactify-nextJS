@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 import JSzip from "jszip"
+import { cardJSX, eslintrcCJS, gitignore, indexHTML, mainJSX, packageJSON, postcssConfigJS, tailwindConfigJS, viteConfigJS, viteSVG } from "./fileConstants";
 
 
 
@@ -42,7 +43,18 @@ export const CodePreview = () => {
     codes.forEach((code, i) => {
       srcZip.file(`${tabNames[i]}.jsx`, code);
     })
-    zip.file('src/index.css', "@tailwind base;\n@tailwind components;\n@tailwind utilities;\n")
+    zip.file('public/vite.svg', viteSVG);
+    zip.file('src/index.css', "@tailwind base;\n@tailwind components;\n@tailwind utilities;\n");
+    zip.file('src/main.jsx', mainJSX);
+    zip.file('src/card.jsx', cardJSX);
+    zip.file('package.json', packageJSON);
+    zip.file('index.html', indexHTML);
+    zip.file('postcss.config.js', postcssConfigJS);
+    zip.file('tailwind.config.js', tailwindConfigJS);
+    zip.file('vite.config.js', viteConfigJS);
+    zip.file('.gitignore', gitignore);
+    zip.file('.eslintrc.cjs', eslintrcCJS);
+
     zip.generateAsync({ type: 'blob' }).then(blob => {
       downlaodBlob(blob);
       console.log(blob)

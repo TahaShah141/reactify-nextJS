@@ -76,11 +76,11 @@ export const generateComponentCode = (
   console.log(foreignComponents);
   const foreignComponentTabs = foreignComponents.map(
     (component) => component.data.tabID
-  );
+  ).concat(['card']);
   const imports = Array.from(new Set(foreignComponentTabs))
     .map(
       (tab) =>
-        `import { ${captilizeFirstLetter(tab)} } from "./components/${tab}";`
+        `import ${captilizeFirstLetter(tab)} from "./${tab}";`
     )
     .join("\n");
 
