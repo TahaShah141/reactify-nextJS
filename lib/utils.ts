@@ -40,14 +40,30 @@ export const generateCode = (
   indentCount: number = 0
 ): string => {
   const tabs = getTabs(indentCount);
+
   if (!("children" in component))
     return `${tabs}<${capitalizeFirstLetter(component.data.tabID)} />`;
+
+  const childrenCode =
+    component.children
+      .map((child) => generateCode(child, indentCount + 1))
+      .join("\n") + (component.children.length ? "\n" : "");
+
+  const innerTextCode = component.innerText
+    ? getTabs(indentCount + 1) + component.innerText + "\n"
+    : "";
+
+  // if (component.children)
+
   const classes = component.styleOptions.map((c) => `${c.tailwind}`).join(" ");
+  
+  if (!innerTextCode && !childrenCode) {
+    return `${tabs}<${component.tag} className="${classes}" />`;
+    // ${innerTextCode}${childrenCode}${tabs}</${component.tag}>`;
+  }
+
   return `${tabs}<${component.tag} className="${classes}">
-${component.innerText ? component.innerText + "\n" : ""}${component.children
-    .map((child) => generateCode(child, indentCount + 1))
-    .join("\n")}
-${tabs}</${component.tag}>`;
+${innerTextCode}${childrenCode}${tabs}</${component.tag}>`;
 };
 
 function capitalizeFirstLetter(x: string) {
@@ -73,14 +89,11 @@ export const generateComponentCode = (
 ): string => {
   const upperCaseName = capitalizeFirstLetter(name);
   const foreignComponents = findForeignComponents(component);
-  const foreignComponentTabs = foreignComponents.map(
-    (component) => component.data.tabID
-  ).concat(['card']);
+  const foreignComponentTabs = foreignComponents
+    .map((component) => component.data.tabID)
+    .concat(["card"]);
   const imports = Array.from(new Set(foreignComponentTabs))
-    .map(
-      (tab) =>
-        `import ${capitalizeFirstLetter(tab)} from "./${tab}";`
-    )
+    .map((tab) => `import ${capitalizeFirstLetter(tab)} from "./${tab}";`)
     .join("\n");
 
   return `
@@ -123,55 +136,70 @@ export const generateRootString = async (
     ...root,
     children: newChildren,
     styleOptions: newStyleOptions,
-  }
+  };
 
   return JSON.stringify(newRoot);
 };
 
-export const recursiveParse = async (root: string, memo: Record<string, StyleType> = {}): Promise<{component: ComponentType, newMemos: Record<string, StyleType>}> => {
+export const recursiveParse = async (
+  root: string,
+  memo: Record<string, StyleType> = {}
+): Promise<{
+  component: ComponentType;
+  newMemos: Record<string, StyleType>;
+}> => {
+  const parsedRoot = JSON.parse(root);
 
-  const parsedRoot = JSON.parse(root)
-
-  const {
-    memoizedStyles, 
-    stylesToFetch
-  } = (parsedRoot.styleOptions as Array<string>).reduce(
-    ({memoizedStyles, stylesToFetch}, styleOption) => {
-      const style = memo[styleOption]
-      if (!style) stylesToFetch.push(styleOption)
-      else memoizedStyles.push(style)
-      return {memoizedStyles, stylesToFetch}
+  const { memoizedStyles, stylesToFetch } = (
+    parsedRoot.styleOptions as Array<string>
+  ).reduce(
+    ({ memoizedStyles, stylesToFetch }, styleOption) => {
+      const style = memo[styleOption];
+      if (!style) stylesToFetch.push(styleOption);
+      else memoizedStyles.push(style);
+      return { memoizedStyles, stylesToFetch };
     },
-    {memoizedStyles: [] as StyleType[], stylesToFetch: [] as string[]}
-  )
+    { memoizedStyles: [] as StyleType[], stylesToFetch: [] as string[] }
+  );
 
-  let newMemos: Record<string, StyleType> = {}
+  let newMemos: Record<string, StyleType> = {};
 
-  const styleOptionPromises = stylesToFetch.map((styleOption: string) => fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/styleoption/${styleOption}`))
-  const styleOptionResponses = await Promise.all(styleOptionPromises)
-  const styleOptionJSONs = await Promise.all(styleOptionResponses.map(option => option.json()))
-  
-  parsedRoot.styleOptions = [...styleOptionJSONs.map(obj => {
-    const {_id, ...style} = obj.style;
-    newMemos[_id] = style
-    memo[_id] = style
-    if (style.CSSKey.length === 1 && style.CSSValue.length === 1) {
-      style.CSSKey = style.CSSKey[0];
-      style.CSSValue = style.CSSValue[0];
+  const styleOptionPromises = stylesToFetch.map((styleOption: string) =>
+    fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/styleoption/${styleOption}`)
+  );
+  const styleOptionResponses = await Promise.all(styleOptionPromises);
+  const styleOptionJSONs = await Promise.all(
+    styleOptionResponses.map((option) => option.json())
+  );
+
+  parsedRoot.styleOptions = [
+    ...styleOptionJSONs.map((obj) => {
+      const { _id, ...style } = obj.style;
+      newMemos[_id] = style;
+      memo[_id] = style;
+      if (style.CSSKey.length === 1 && style.CSSValue.length === 1) {
+        style.CSSKey = style.CSSKey[0];
+        style.CSSValue = style.CSSValue[0];
+      }
+      return style;
+    }),
+    ...memoizedStyles,
+  ];
+
+  parsedRoot.data.tabID = "SNIPPETS";
+  parsedRoot.data.rootID = "SNIPPETS";
+  const childrenPromises = parsedRoot.children.map((child: string) =>
+    recursiveParse(child, memo)
+  );
+  parsedRoot.children = (await Promise.all(childrenPromises)).map(
+    ({ component, newMemos: newerMemos }) => {
+      newMemos = {
+        ...newMemos,
+        ...newerMemos,
+      };
+      return component;
     }
-    return style
-  }), ...memoizedStyles]
-  
-  parsedRoot.data.tabID = "SNIPPETS"
-  parsedRoot.data.rootID = "SNIPPETS"
-  const childrenPromises = parsedRoot.children.map((child: string) => recursiveParse(child, memo))
-  parsedRoot.children = (await Promise.all(childrenPromises)).map(({component, newMemos: newerMemos}) => {
-    newMemos = {
-      ...newMemos,
-      ...newerMemos
-    }
-    return component
-  })
+  );
 
-  return {component: parsedRoot, newMemos}
-}
+  return { component: parsedRoot, newMemos };
+};
