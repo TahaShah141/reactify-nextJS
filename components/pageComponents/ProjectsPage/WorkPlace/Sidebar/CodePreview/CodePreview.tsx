@@ -3,12 +3,14 @@
 import { useAppSelector } from "@/lib/redux/hooks"
 import { selectComponents } from "@/lib/redux/store"
 import { generateComponentCode } from "@/lib/utils"
-import { downloadZip } from "./codeUtils";
+// import { downloadZip } from "./codeUtils";
 
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { useState } from "react";
+import { downlaodBlob } from "./codeUtils";
+
 
 
 
@@ -22,6 +24,21 @@ export const CodePreview = () => {
   const index = tabNames.findIndex(name => name === selected);
   const code = codes[index];
   const className = `px-4 min-w-48 w-48 h-9 flex items-center justify-center border rounded-sm hover:bg-foreground/10`
+
+  async function downloadZip(filenames: string[], codes: string[]) {
+    const res = await fetch('http://localhost:3000/api/code', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        codes, filenames
+      })
+    })
+    const blob = await res.blob();
+    console.log(blob)
+    downlaodBlob(blob);
+  }
 
 
   return (

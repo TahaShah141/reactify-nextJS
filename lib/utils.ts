@@ -80,7 +80,7 @@ export const generateComponentCode = (
   const imports = Array.from(new Set(foreignComponentTabs))
     .map(
       (tab) =>
-        `import ${captilizeFirstLetter(tab)} from "./${tab}";`
+        `import ${captilizeFirstLetter(tab)} from "@/components/${tab}";`
     )
     .join("\n");
 
