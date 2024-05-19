@@ -1,24 +1,28 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ComponentType, ForeignComponentType, StyleType } from "@/lib/types";
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export const mod = (n: number, d: number): number => {
-  while ( n < 0 ) n += d
-  return n % d
-}
+  while (n < 0) n += d;
+  return n % d;
+};
 
-export const sameCSSKey = (a: string | string[], b: string | string[]): boolean => {
-  if (typeof a === "string" && typeof b === "string") return a === b
+export const sameCSSKey = (
+  a: string | string[],
+  b: string | string[]
+): boolean => {
+  if (typeof a === "string" && typeof b === "string") return a === b;
   if (a instanceof Array && b instanceof Array)
-    return a.length === b.length && a.every((value, index) => value === b[index])
-  else 
-    return false
-}
+    return (
+      a.length === b.length && a.every((value, index) => value === b[index])
+    );
+  else return false;
+};
 
 export const deepCopy = <T>(obj: T) => JSON.parse(JSON.stringify(obj));
 
@@ -27,32 +31,94 @@ export const getSingularValue = <T>(value: T | T[]): T => {
 };
 
 function getTabs(n: number) {
-  return Array(n).fill("\t").join("");
+  return Array(n).fill("  ").join("");
+  // return Array(n).fill("\t").join("");
 }
 
-export const generateCode = (component: ComponentType | ForeignComponentType, indentCount: number = 0): string => {
+export const generateCode = (
+  component: ComponentType | ForeignComponentType,
+  indentCount: number = 0
+): string => {
   const tabs = getTabs(indentCount);
-  if (!("children" in component)) return `${tabs}<${component.data.tabID} />`;
+  if (!("children" in component))
+    return `${tabs}<${captilizeFirstLetter(component.data.tabID)} />`;
   const classes = component.styleOptions.map((c) => `${c.tailwind}`).join(" ");
   return `${tabs}<${component.tag} className="${classes}">
-${component.innerText ? component.innerText + "\n" : ""}${component.children.map((child) => generateCode(child, indentCount + 1)).join("\n")}
-${tabs}</${component.tag}>`
+${component.innerText ? component.innerText + "\n" : ""}${component.children
+    .map((child) => generateCode(child, indentCount + 1))
+    .join("\n")}
+${tabs}</${component.tag}>`;
 };
 
-export const generateRootString = async (root: ComponentType): Promise<string> => {
+function captilizeFirstLetter(x: string) {
+  if (x.length == 0) return x;
+  return x[0].toUpperCase() + x.substring(1);
+}
 
-  const styleOptionPromises = root.styleOptions.map(styleOption => fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/styleoption", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ styleOption })    
-  }))
+function findForeignComponents(component: ComponentType) {
+  let list: ForeignComponentType[] = [];
+  for (let child of component.children) {
+    if ("children" in child) {
+      list = [...list, ...findForeignComponents(child)];
+    } else {
+      list = [...list, child];
+    }
+  }
+  return list;
+}
 
-  const newStyleOptionJSONs = await Promise.all(styleOptionPromises)
-  const newStyleOptionsObjects = await Promise.all(newStyleOptionJSONs.map(option => option.json()))
-  const newStyleOptions = newStyleOptionsObjects.map(obj => obj.style._id as mongoose.Types.ObjectId)
+export const generateComponentCode = (
+  component: ComponentType,
+  name: string
+): string => {
+  const upperCaseName = captilizeFirstLetter(name);
+  const foreignComponents = findForeignComponents(component);
+  console.log(foreignComponents);
+  const foreignComponentTabs = foreignComponents.map(
+    (component) => component.data.tabID
+  ).concat(['card']);
+  const imports = Array.from(new Set(foreignComponentTabs))
+    .map(
+      (tab) =>
+        `import ${captilizeFirstLetter(tab)} from "./${tab}";`
+    )
+    .join("\n");
 
-  const newChildrenPromises = root.children.map(child => generateRootString(child as ComponentType))
-  const newChildren = await Promise.all(newChildrenPromises)
+  return `
+${imports}
+
+function ${upperCaseName}() {
+  return (
+${generateCode(component, 2)}
+  );
+}
+
+export default ${upperCaseName};`;
+};
+
+export const generateRootString = async (
+  root: ComponentType
+): Promise<string> => {
+  const styleOptionPromises = root.styleOptions.map((styleOption) =>
+    fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/styleoption", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ styleOption }),
+    })
+  );
+
+  const newStyleOptionJSONs = await Promise.all(styleOptionPromises);
+  const newStyleOptionsObjects = await Promise.all(
+    newStyleOptionJSONs.map((option) => option.json())
+  );
+  const newStyleOptions = newStyleOptionsObjects.map(
+    (obj) => obj.style._id as mongoose.Types.ObjectId
+  );
+
+  const newChildrenPromises = root.children.map((child) =>
+    generateRootString(child as ComponentType)
+  );
+  const newChildren = await Promise.all(newChildrenPromises);
 
   const newRoot = {
     ...root,
@@ -60,8 +126,8 @@ export const generateRootString = async (root: ComponentType): Promise<string> =
     styleOptions: newStyleOptions,
   }
 
-  return JSON.stringify(newRoot)
-}
+  return JSON.stringify(newRoot);
+};
 
 export const recursiveParse = async (root: string, memo: Record<string, StyleType> = {}): Promise<{component: ComponentType, newMemos: Record<string, StyleType>}> => {
 
@@ -91,8 +157,8 @@ export const recursiveParse = async (root: string, memo: Record<string, StyleTyp
     newMemos[_id] = style
     memo[_id] = style
     if (style.CSSKey.length === 1 && style.CSSValue.length === 1) {
-      style.CSSKey = style.CSSKey[0]
-      style.CSSValue = style.CSSValue[0]
+      style.CSSKey = style.CSSKey[0];
+      style.CSSValue = style.CSSValue[0];
     }
     return style
   }), ...memoizedStyles]

@@ -4,7 +4,8 @@ import { SelectedMenu } from "@/components/pageComponents/ProjectsPage/WorkPlace
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { Sidebar } from "@/components/pageComponents/ProjectsPage/WorkPlace/Sidebar/Sidebar";
 
-export default function WorkPlace() {
+export default function WorkPlace( { searchParams } ) {
+  console.log({searchParams});
   return (
     <ResizablePanelGroup direction={"horizontal"}>
       <ResizablePanel defaultSize={20} >

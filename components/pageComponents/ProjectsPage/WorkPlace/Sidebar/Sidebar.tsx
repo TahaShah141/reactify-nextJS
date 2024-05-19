@@ -54,7 +54,7 @@ const sidebarTabs: SideBarTabType[] = [
 
 export const Sidebar = () => {
 
-  const [currSidebarTab, setCurrSidebarTab] = useState(2)
+  const [currSidebarTab, setCurrSidebarTab] = useState(3)
 
   return (
     <div className="w-full h-full flex">
@@ -62,8 +62,9 @@ export const Sidebar = () => {
         <div className="flex flex-col items-center">
           {sidebarTabs.slice(0, 5).map((tab, i) => (
             <Button onClick={() => setCurrSidebarTab(i)} variant={"ghost"} size={"icon"} 
-            className={`size-14 flex justify-center items-center ${currSidebarTab === i ? "text-primary" : "text-muted-foreground"}`}>
+            className={`size-14 relative flex justify-center group items-center ${currSidebarTab === i ? "text-primary" : "text-muted-foreground"}`}>
               {tab.icon}
+              <span className="absolute bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{tab.name}</span>
             </Button>
           ))}
         </div>
