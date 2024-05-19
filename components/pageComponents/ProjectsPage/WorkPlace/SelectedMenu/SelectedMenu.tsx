@@ -35,18 +35,20 @@ export const SelectedMenu = () => {
 
   return (
     <ScrollArea className='w-full p-4' style={{ height: 'calc(100vh - 60px)' }}>
-      <Tabs defaultValue='style' className='w-full'>
+      {/* <Tabs defaultValue='style' className='w-full'>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value='style'>Style</TabsTrigger>
           <TabsTrigger value='attributes'>Attributes</TabsTrigger>
         </TabsList>
         <TabsContent value='style'>
-          <StyleMenu />
+        <StyleMenu />
         </TabsContent>
         <TabsContent value='attributes'>
-          <AttributeMenu />
+        <AttributeMenu />
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
+      <AttributeMenu />
+      <StyleMenu />
     </ScrollArea>
   )
 }

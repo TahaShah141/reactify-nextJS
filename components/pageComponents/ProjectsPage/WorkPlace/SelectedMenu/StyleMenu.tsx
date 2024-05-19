@@ -51,7 +51,6 @@ export const StyleMenu = () => {
           </AccordionContent>
         </AccordionItem>
       )}
-          <AttributeMenu />
 
       {/* Shortcut not working when Attribute-Menu is not rendered */}
       {/* One fix require this whole component to be Client but I am very against this. */}
@@ -59,7 +58,7 @@ export const StyleMenu = () => {
       {/* <AccordionItem value={"Attributes"} key={"Attributes"}>
         <AccordionTrigger className='text-lg'>Attributes</AccordionTrigger>
         <AccordionContent className="flex w-full h-fit flex-col gap-2">
-          <AttributeMenu />
+        <AttributeMenu />
         </AccordionContent>
       </AccordionItem> */}
 
