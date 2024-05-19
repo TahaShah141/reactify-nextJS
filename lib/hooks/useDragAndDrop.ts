@@ -139,7 +139,7 @@ export const useDragAndDrop: () => DragAndDropType = () => {
       dispatch(moveComponent({oldParentPath: draggedParent.data.path, newParentPath: newParent.data.path, child: newChild, adding, removing}))
     }
     
-  }, [tabs, controlPressed, snippets.children.length])
+  }, [tabs, controlPressed, snippets.children.length, supply])
 
   return {
     sensors,

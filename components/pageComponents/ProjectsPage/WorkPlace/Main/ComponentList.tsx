@@ -45,7 +45,7 @@ export const ComponentList = () => {
       dispatch(addStyleOptions({styleOptions: memosToAdd}))
     }
     fetchSnippets()
-  }, [user])
+  }, [user, user?.favoriteSnippets])
 
   useEffect(() => {
     if (snippets.children.length > 0) {
@@ -78,7 +78,7 @@ export const ComponentList = () => {
       newIndices.push((startIndex + i) % tabList[tab].length)
     }
     setIndices(newIndices)
-  }, [startIndex, tab])
+  }, [startIndex, tab, tabList])
 
   const incrementIndex = () => {
     setStartIndex(mod((startIndex + 1), tabList[tab].length))

@@ -63,7 +63,7 @@ export const Sidebar = ({ tab }: { tab: string }) => {
                 className={` size-14 relative hover:bg-secondary rounded-lg  flex justify-center group items-center ${tab === t.name ? "text-primary" : "text-muted-foreground"}`}
                 href={{ query: { tab: t.name } }}>
                 {t.icon}
-                <span className="absolute min-w-max bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{t.name}</span>
+                <span className="absolute min-w-max bg-background hidden group-hover:inline-block text-foreground px-3 py-1 text-sm rounded left-[110%] z-[100] border border-foreground font-semibold ">{t.name}</span>
               </Link>
           ))}
         </div>
