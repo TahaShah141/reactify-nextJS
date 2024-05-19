@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ComponentType, ForeignComponentType } from "@/lib/types";
+import { ComponentType, ForeignComponentType, StyleType } from "@/lib/types";
 import mongoose from "mongoose"
 
 export function cn(...inputs: ClassValue[]) {
@@ -63,25 +63,49 @@ export const generateRootString = async (root: ComponentType): Promise<string> =
   return JSON.stringify(newRoot)
 }
 
-export const recursiveParse = async (root: string): Promise<ComponentType> => {
+export const recursiveParse = async (root: string, memo: Record<string, StyleType> = {}): Promise<{component: ComponentType, newMemos: Record<string, StyleType>}> => {
 
   const parsedRoot = JSON.parse(root)
-  parsedRoot.data.tabID = "SNIPPETS"
-  const childrenPromises = parsedRoot.children.map((child: string) => recursiveParse(child))
-  parsedRoot.children = await Promise.all(childrenPromises)
 
-  const styleOptionPromises = parsedRoot.styleOptions.map((styleOption: string) => fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/styleoption/${styleOption}`))
+  const {
+    memoizedStyles, 
+    stylesToFetch
+  } = (parsedRoot.styleOptions as Array<string>).reduce(
+    ({memoizedStyles, stylesToFetch}, styleOption) => {
+      const style = memo[styleOption]
+      if (!style) stylesToFetch.push(styleOption)
+      memoizedStyles.push(style)
+      return {memoizedStyles, stylesToFetch}
+    },
+    {memoizedStyles: [] as StyleType[], stylesToFetch: [] as string[]}
+  )
+
+  let newMemos: Record<string, StyleType> = {}
+
+  const styleOptionPromises = stylesToFetch.map((styleOption: string) => fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/styleoption/${styleOption}`))
   const styleOptionResponses = await Promise.all(styleOptionPromises)
   const styleOptionJSONs = await Promise.all(styleOptionResponses.map(option => option.json()))
-
-  parsedRoot.styleOptions = styleOptionJSONs.map(obj => {
+  
+  parsedRoot.styleOptions = [...styleOptionJSONs.map(obj => {
     const {_id, ...style} = obj.style;
+    newMemos[_id] = style
+    memo[_id] = style
     if (style.CSSKey.length === 1 && style.CSSValue.length === 1) {
       style.CSSKey = style.CSSKey[0]
       style.CSSValue = style.CSSValue[0]
     }
     return style
+  }), ...memoizedStyles]
+  
+  parsedRoot.data.tabID = "SNIPPETS"
+  const childrenPromises = parsedRoot.children.map((child: string) => recursiveParse(child, memo))
+  parsedRoot.children = (await Promise.all(childrenPromises)).map(({component, newMemos: newerMemos}) => {
+    newMemos = {
+      ...newMemos,
+      ...newerMemos
+    }
+    return component
   })
 
-  return parsedRoot as ComponentType
+  return {component: parsedRoot, newMemos}
 }

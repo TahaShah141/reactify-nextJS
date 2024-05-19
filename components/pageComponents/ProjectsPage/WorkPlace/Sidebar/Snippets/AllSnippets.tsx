@@ -1,21 +1,30 @@
-import { useMemo } from "react"
+import { useEffect, useState } from "react"
 import { SidebarSnippetCard } from "./SidebarSnippetCard"
+import { SnippetType } from "@/lib/types"
+import { Loading } from "@/components/custom/Loading"
 
 export const AllSnippets = () => {
 
-  const allSnippets = useMemo(() => {
-    return (
-      <>
-      {Array.from(Array(10).keys()).map((i) => (
-        <SidebarSnippetCard key={i} />
-      ))}
-      </>
-    )
+  const [snippets, setSnippets] = useState<SnippetType[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchSnippets = async () => {
+      const {snippets} = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/all", {
+        method: "GET",
+        next: {revalidate: 10}        
+      })).json()
+      setSnippets(snippets)
+      setLoading(false)
+    }
+    fetchSnippets()
   }, [])
+  
 
   return (
     <div className="flex flex-wrap gap-4">
-      {allSnippets}
+      {!loading && snippets.map(snippet => <SidebarSnippetCard key={snippet._id} snippet={snippet} />)}
+      {loading && <Loading />}
     </div>
   )
 }

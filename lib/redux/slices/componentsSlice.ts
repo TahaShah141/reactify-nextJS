@@ -214,10 +214,10 @@ export const componentsSlice = createSlice({
       }
     },
 
-    copyIntoClipboard: (state, action: PayloadAction<{root: ComponentType}>) => {
-      const {root} = action.payload
-      console.log("COPIED", root)
-      state.clipboard = deepCopy(root)
+    copyIntoClipboard: (state, action: PayloadAction<{component: ComponentType}>) => {
+      const {component} = action.payload
+      console.log("COPIED", component)
+      state.clipboard = deepCopy(component)
       if (state.clipboard) {
         state.clipboard.data.selected = false
         state.clipboard.data.draggable = true

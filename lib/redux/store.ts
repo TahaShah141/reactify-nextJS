@@ -3,6 +3,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import componentsReducer from './slices/componentsSlice'
 import userReducer from './slices/userSlice'
+import memoReducer from './slices/memoSlice'
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from 'redux-persist'
 
@@ -13,7 +14,8 @@ const persistConfig = {
 
 const reducer = combineReducers({
   components: componentsReducer,
-  user: userReducer
+  user: userReducer,
+  memo: memoReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
@@ -33,3 +35,4 @@ export type AppDispatch = AppStore['dispatch']
 
 export const selectComponents = (state: RootState) => state.components
 export const selectUser = (state: RootState) => state.user
+export const selectMemo = (state: RootState) => state.memo
