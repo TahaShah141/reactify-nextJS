@@ -24,8 +24,8 @@ export async function POST(request: NextRequest) {
       }).exec()
 
       await Snippet.findByIdAndUpdate(snippetId, {
-        $dec: {
-          favorites: 1
+        $inc: {
+          favorites: -1
         }
       }).exec()
 

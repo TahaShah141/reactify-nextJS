@@ -1,15 +1,45 @@
+"use client"
 import { SnippetType } from "@/lib/types"
-import React from "react"
+import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Separator } from "../ui/separator"
 import { CopyIcon, Pencil2Icon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
 import { Button } from "../ui/button"
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { selectUser } from "@/lib/redux/store"
+import { updateFavorites } from "@/lib/redux/slices/userSlice"
 
 type SnippetCardProps = {
   snippet: SnippetType
 }
 
 export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
+
+  const { user } = useAppSelector(selectUser)
+  const dispatch = useAppDispatch()
+
+  const isFavorite = (user?.favoriteSnippets.findIndex(fav => fav === snippet._id) !== -1) 
+
+  const [loading, setLoading] = useState(false)
+
+  const toggleFavorite = async () => {
+
+    if (!user) return;
+
+    const {error} = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/snippet/favorite`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({user: user._id, snippet: snippet._id}), 
+    })).json()
+
+    if (!error) {
+      dispatch(updateFavorites({snippetID: snippet._id}))
+    } else {
+      console.log(error)
+    }
+
+    setLoading(false)
+  }
 
   return (
     <Card className="flex flex-col rounded-sm gap-4 p-6 w-full max-w-md">
@@ -20,9 +50,8 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
         </div>
         <div className="flex flex-col gap-2 h-full">
           <p className="text-sm flex-1 flex items-center text-muted-foreground">{new Date(snippet.updatedAt).toLocaleDateString()}</p>
-          <button className="p-1 flex flex-1 gap-1 group w-fit items-center justify-end">
-            <StarIcon className="size-5 group-hover:hidden"/>
-            <StarFilledIcon className="size-5 hidden group-hover:flex" />
+          <button className="p-1 flex flex-1 group gap-1 w-fit items-center justify-end" disabled={loading} onClick={() => {setLoading(true); toggleFavorite()}}>
+            {isFavorite ? <StarFilledIcon className="size-5" /> : <StarIcon className="size-5"/>}
             <p className="text-sm text-muted-foreground group-hover:text-foreground">{snippet.favorites}</p>
           </button>
         </div>
