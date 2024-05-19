@@ -37,7 +37,9 @@ const sidebarTabs: SideBarTabType[] = [
     toRender: <SaveMenu />
   },
 
-
+  {
+    name: "gap", icon: undefined, toRender: <div className="flex-1"></div>
+  },
   {
     name: "Settings",
     icon: <GearIcon className={LogoClassName} />,
@@ -55,20 +57,21 @@ export const Sidebar = ({ tab }: { tab: string }) => {
   return (
     <div className="w-full h-full flex">
       <div className="w-14 py-2 flex flex-col items-center justify-between h-full">
-        <div className="flex flex-col items-center">
-          {sidebarTabs.slice(0, 5).map((t, i) => (
-            <Link
-              className={` size-14 relative hover:bg-secondary rounded-lg  flex justify-center group items-center ${tab === t.name ? "text-primary" : "text-muted-foreground"}`}
-              href={{ query: { tab: t.name } }}>
-              {t.icon}
-              <span className="absolute min-w-max bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{t.name}</span>
-            </Link>
+        <div className="flex flex-col items-center h-full">
+          {sidebarTabs.map((t, i) => (
+            t.name === "gap" ? t.toRender :
+              <Link
+                className={` size-14 relative hover:bg-secondary rounded-lg  flex justify-center group items-center ${tab === t.name ? "text-primary" : "text-muted-foreground"}`}
+                href={{ query: { tab: t.name } }}>
+                {t.icon}
+                <span className="absolute min-w-max bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{t.name}</span>
+              </Link>
           ))}
         </div>
         {/* <div className="flex flex-col items-center">
           {sidebarTabs.slice(-2).map((tab, i) => (
-            <Button onClick={() => setCurrSidebarTab(i + 5)} variant={"ghost"} size={"icon"}
-              className={`size-14 flex justify-center items-center ${currSidebarTab === (i + 5) ? "text-primary" : "text-muted-foreground"}`}>
+            <Button  variant={"ghost"} size={"icon"}
+              className={`size-14 flex justify-center items-center `}>
               {tab.icon}
             </Button>
           ))}
