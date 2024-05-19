@@ -1,19 +1,12 @@
-// "use client"
-
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Layers } from "./Layers/Layers"
 import { AvatarIcon, CodeIcon, CopyIcon, DashboardIcon, GearIcon, Pencil2Icon, StackIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 import { SideBarTabType } from "@/lib/types"
-// import { useState } from "react"
 import { CodePreview } from "./CodePreview/CodePreview"
 import { SaveMenu } from "./SaveMenu/SaveMenu"
-<<<<<<< HEAD
 import { Snippets } from "./Snippets/Snippets"
-=======
-// import { Query } from "mongoose"
 import Link from "next/link"
->>>>>>> fixing-tabs
 
 const LogoClassName = "size-8"
 
@@ -57,13 +50,7 @@ const sidebarTabs: SideBarTabType[] = [
   },
 ]
 
-<<<<<<< HEAD
-export const Sidebar = () => {
-
-  const [currSidebarTab, setCurrSidebarTab] = useState(1)
-=======
 export const Sidebar = ({ tab }: { tab: string }) => {
->>>>>>> fixing-tabs
 
   return (
     <div className="w-full h-full flex">
