@@ -24,6 +24,25 @@ export const supplyComponent: ComponentType = {
   ],
 }
 
+//hard coded place to get the snippets from
+export const snippetComponent: ComponentType = {
+  id: "SNIPPETS",
+  tag: "div",
+  className: "",
+  innerText:"",
+  styleOptions: [],
+  data: {
+    rootID: "SNIPPETS",
+    tabID: "SNIPPETS",
+    path: [],
+    selected: false,
+    draggable: false,
+    droppable: false,
+    canHaveChildren: true
+  },
+  children: [],
+}
+
 //The default workplace for DnD
 export const getRootComponent = (rootID: string): ComponentType => ({
   id: rootID,

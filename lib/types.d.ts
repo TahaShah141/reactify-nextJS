@@ -100,3 +100,8 @@ export type SnippetType = {
   favorites: number
   root: ComponentType | string
 }
+
+export type SnippetComponentType = {
+  name: string,
+  root: ComponentType
+}

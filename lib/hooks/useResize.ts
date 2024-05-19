@@ -9,11 +9,9 @@ export function useResize(tab: string) {
   const [saved, setSaved] = useState([20, 60]);
 
   useEffect(() => {
-    // console.log({groupRef, sidebarRef})
     if (!selectMenuRef.current || !mainRef.current) return;
 
     const needsFullWidth = fullWidthTabs.includes(tab);
-    console.log({ needsFullWidth });
     if (needsFullWidth) {
       setSaved([selectMenuRef.current.getSize(), mainRef.current.getSize()]);
       sidebarRef.current?.resize(100);

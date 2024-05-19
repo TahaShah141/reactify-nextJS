@@ -15,9 +15,11 @@ export type DragAndDropType = {
 
 export const useDragAndDrop: () => DragAndDropType = () => {
   
-  const { tabs, supply, currentTab } = useAppSelector(selectComponents)
+  const { tabs, supply, snippets, currentTab } = useAppSelector(selectComponents)
   const dispatch = useAppDispatch()
   const { controlPressed } = useControlPressed()
+
+  const supplies = ["SNIPPETS", "SUPPLY"]
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -31,18 +33,19 @@ export const useDragAndDrop: () => DragAndDropType = () => {
 
     const {active, over} = e
 
-    const droppedIntoSupply = over?.id === "SUPPLY" || over?.data.current?.rootID === "SUPPLY"
+    if (!over) return;
+
+    const droppedIntoSupply = supplies.includes(over?.id.toString()) || supplies.includes(over?.data.current?.rootID) 
 
     //if not over anything or dropping into supply
-    if (!over || droppedIntoSupply) {
-      return
-    }
+    if (droppedIntoSupply) return;
 
     // Check if the active item is being supplied
     const supplying = active.data.current?.rootID === "SUPPLY"
+    const importingSnippet = active.data.current?.rootID === "SNIPPETS"
 
     const {path: activePath, rootID: activeRoot, isTab: importingForeign, tabID} = active.data.current || {}
-    const activeRootComponent = supplying ? supply : tabs[activeRoot].root
+    const activeRootComponent = supplying ? supply : importingSnippet ? snippets : tabs[activeRoot].root
     
     const {path: overPath, rootID: overRoot} = over.data.current || {}
     const overRootComponent = tabs[overRoot].root
@@ -76,7 +79,7 @@ export const useDragAndDrop: () => DragAndDropType = () => {
     const {parent: draggedParent, child: draggedComponent } = getParentChild(activeRootComponent, activePath)
     const {parent: droppedParent, child: droppedChild } = getParentChild(overRootComponent, overPath)
 
-    if (!controlPressed && droppedChild.data.rootID !== droppedChild.data.tabID && droppedChild.data.tabID !== "SUPPLY") {
+    if (!controlPressed && droppedChild.data.rootID !== droppedChild.data.tabID && !(supplies.includes(droppedChild.data.tabID))) {
       console.log("NOT ALLOWED")
       return;
     }
@@ -120,11 +123,14 @@ export const useDragAndDrop: () => DragAndDropType = () => {
     const newParent = controlPressed ? droppedParent : droppedInto 
     
     const newChild = getNewChild(newParent, draggedComponent, index)
+    console.log({draggedComponent})
     const parentCanHaveChildren = newParent.data.canHaveChildren
     
     if (parentCanHaveChildren) {
-      const removing = (!supplying || (activeRoot !== "SUPPLY"))
+      const removing = (!supplying || !(supplies.includes(activeRoot)))
       const adding = true
+
+      console.log("ADDING")
 
       dispatch(moveComponent({oldParentPath: draggedParent.data.path, newParentPath: newParent.data.path, child: newChild, adding, removing}))
     }

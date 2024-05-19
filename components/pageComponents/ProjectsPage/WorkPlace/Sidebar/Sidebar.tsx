@@ -1,12 +1,12 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Layers } from "./Layers/Layers"
 import { AvatarIcon, CodeIcon, CopyIcon, DashboardIcon, GearIcon, Pencil2Icon, StackIcon } from "@radix-ui/react-icons"
-import { Button } from "@/components/ui/button"
 import { SideBarTabType } from "@/lib/types"
 import { CodePreview } from "./CodePreview/CodePreview"
 import { SaveMenu } from "./SaveMenu/SaveMenu"
 import { Snippets } from "./Snippets/Snippets"
 import Link from "next/link"
+import { DebugView } from "./DebugView/DebugView"
 
 const LogoClassName = "size-8"
 
@@ -36,7 +36,6 @@ const sidebarTabs: SideBarTabType[] = [
     icon: <Pencil2Icon className={LogoClassName} />,
     toRender: <SaveMenu />
   },
-
   {
     name: "gap", icon: undefined, toRender: <div className="flex-1"></div>
   },
@@ -48,7 +47,7 @@ const sidebarTabs: SideBarTabType[] = [
   {
     name: "Profile",
     icon: <AvatarIcon className={LogoClassName} />,
-    toRender: <>Profile</>
+    toRender: <DebugView />
   },
 ]
 

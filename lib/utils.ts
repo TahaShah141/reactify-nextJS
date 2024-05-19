@@ -41,7 +41,7 @@ export const generateCode = (
 ): string => {
   const tabs = getTabs(indentCount);
   if (!("children" in component))
-    return `${tabs}<${captilizeFirstLetter(component.data.tabID)} />`;
+    return `${tabs}<${capitalizeFirstLetter(component.data.tabID)} />`;
   const classes = component.styleOptions.map((c) => `${c.tailwind}`).join(" ");
   return `${tabs}<${component.tag} className="${classes}">
 ${component.innerText ? component.innerText + "\n" : ""}${component.children
@@ -50,7 +50,7 @@ ${component.innerText ? component.innerText + "\n" : ""}${component.children
 ${tabs}</${component.tag}>`;
 };
 
-function captilizeFirstLetter(x: string) {
+function capitalizeFirstLetter(x: string) {
   if (x.length == 0) return x;
   return x[0].toUpperCase() + x.substring(1);
 }
@@ -71,16 +71,15 @@ export const generateComponentCode = (
   component: ComponentType,
   name: string
 ): string => {
-  const upperCaseName = captilizeFirstLetter(name);
+  const upperCaseName = capitalizeFirstLetter(name);
   const foreignComponents = findForeignComponents(component);
-  console.log(foreignComponents);
   const foreignComponentTabs = foreignComponents.map(
     (component) => component.data.tabID
   ).concat(['card']);
   const imports = Array.from(new Set(foreignComponentTabs))
     .map(
       (tab) =>
-        `import ${captilizeFirstLetter(tab)} from "@/components/${tab}";`
+        `import ${capitalizeFirstLetter(tab)} from "./${tab}";`
     )
     .join("\n");
 
@@ -140,7 +139,7 @@ export const recursiveParse = async (root: string, memo: Record<string, StyleTyp
     ({memoizedStyles, stylesToFetch}, styleOption) => {
       const style = memo[styleOption]
       if (!style) stylesToFetch.push(styleOption)
-      memoizedStyles.push(style)
+      else memoizedStyles.push(style)
       return {memoizedStyles, stylesToFetch}
     },
     {memoizedStyles: [] as StyleType[], stylesToFetch: [] as string[]}
@@ -164,6 +163,7 @@ export const recursiveParse = async (root: string, memo: Record<string, StyleTyp
   }), ...memoizedStyles]
   
   parsedRoot.data.tabID = "SNIPPETS"
+  parsedRoot.data.rootID = "SNIPPETS"
   const childrenPromises = parsedRoot.children.map((child: string) => recursiveParse(child, memo))
   parsedRoot.children = (await Promise.all(childrenPromises)).map(({component, newMemos: newerMemos}) => {
     newMemos = {

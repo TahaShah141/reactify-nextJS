@@ -1,6 +1,6 @@
 import { fixPathAndSelected, getNewChild, getParentChild } from '@/lib/componentType'
 import { ComponentType, CustomStyleType, ForeignComponentType, StyleType, TabType } from '@/lib/types'
-import { getRootComponent, supplyComponent } from '@/lib/defaultComponents'
+import { getRootComponent, snippetComponent, supplyComponent } from '@/lib/defaultComponents'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import { createSlice } from '@reduxjs/toolkit'
 import { PayloadAction } from '@reduxjs/toolkit'
@@ -9,6 +9,7 @@ import { deepCopy, getSingularValue, sameCSSKey } from '@/lib/utils'
 export interface ComponentsState {
   tabs: Record<string, TabType>
   supply: ComponentType
+  snippets: ComponentType
   currentTab: string
   clipboard?: ComponentType
   selectedID?: UniqueIdentifier
@@ -26,6 +27,7 @@ const initialState: ComponentsState = {
   },
   //constants
   supply: supplyComponent,
+  snippets: snippetComponent,
   currentTab: "App",
   customClasses: [],
 }
@@ -68,6 +70,13 @@ export const componentsSlice = createSlice({
 
       //switch tabs
       state.currentTab = newTab
+    },
+
+    upsertSnippets: (state, action: PayloadAction<{ newSnippets: ComponentType[] }>) => {
+      state.snippets = {
+        ...state.snippets,
+        children: fixPathAndSelected([] , action.payload.newSnippets, () => {}, undefined)
+      }
     },
 
     //SELECTED COMPONENT
@@ -305,6 +314,8 @@ export const componentsSlice = createSlice({
 export const { 
   addNewTab,
   switchTab,
+
+  upsertSnippets,
 
   updateSelected, 
   updateSelectedStyle,

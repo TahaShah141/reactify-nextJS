@@ -6,10 +6,10 @@ import { copyIntoClipboard } from "@/lib/redux/slices/componentsSlice"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { updateFavorites } from "@/lib/redux/slices/userSlice"
 import { selectMemo, selectUser } from "@/lib/redux/store"
-import { ComponentType, SnippetType } from "@/lib/types"
+import { SnippetType } from "@/lib/types"
 import { deepCopy, recursiveParse } from "@/lib/utils"
 import { CopyIcon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 
 type Props = {
   snippet: SnippetType

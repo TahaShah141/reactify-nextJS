@@ -2,11 +2,11 @@ import { useDraggable } from "@dnd-kit/core";
 import { Button } from "./ui/button";
 import { ComponentType } from "@/lib/types";
 
-type SupplyComponentProps = {
+type SnippetComponentProps = {
   component: ComponentType
 }
 
-export const SupplyComponent: React.FC<SupplyComponentProps> = ({component}) => {
+export const SnippetComponent: React.FC<SnippetComponentProps> = ({component}) => {
 
   const { id, data} = component;
 
@@ -27,7 +27,7 @@ export const SupplyComponent: React.FC<SupplyComponentProps> = ({component}) => 
     }
 
   return (
-    <Button onClick={() => console.log(component)} variant="outline" className="flex-1" {...props}>
+    <Button variant="outline" className="flex-1" {...props}>
       {id}
     </Button>
   );
