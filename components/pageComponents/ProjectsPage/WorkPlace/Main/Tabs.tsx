@@ -1,7 +1,7 @@
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { switchTab } from "@/lib/redux/slices/componentsSlice"
+import { switchTab } from "@/lib/redux/slices/projectSlice"
 import { AddComponent } from "./AddComponent"
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks"
 
@@ -9,7 +9,7 @@ const maxWorkTabsWidth = `max-w-[calc(100vw-40rem-40px)]`
 
 export const Tabs = () => {
 
-  const { tabs, currentTab } = useAppSelector(selectComponents)
+  const { tabs, currentTab } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   return (

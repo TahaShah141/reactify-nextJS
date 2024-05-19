@@ -2,15 +2,15 @@ import { MinusIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Button } from "../ui/button"
 import { Label } from "../ui/label"
 import { useDispatch, useSelector } from "react-redux"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 import { getParentChild } from "@/lib/componentType"
 import { getSingularValue } from "@/lib/utils"
-import { updateSelectedStyle } from "@/lib/redux/slices/componentsSlice"
+import { updateSelectedStyle } from "@/lib/redux/slices/projectSlice"
 import { ComponentType, StyleType } from "@/lib/types"
 
 export const TailwindFlexRatio = () => {
 
-  const { tabs, currentTab, selectedPath } = useSelector(selectComponents)
+  const { tabs, currentTab, selectedPath } = useSelector(selectProject)
 
   const component = getParentChild(tabs[currentTab].root, selectedPath!).child as ComponentType
 

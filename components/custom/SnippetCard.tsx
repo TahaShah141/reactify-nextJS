@@ -10,7 +10,7 @@ import { selectMemo, selectUser } from "@/lib/redux/store"
 import { updateFavorites } from "@/lib/redux/slices/userSlice"
 import { deepCopy, recursiveParse } from "@/lib/utils"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
-import { openSnippetAsProject } from "@/lib/redux/slices/componentsSlice"
+import { openSnippetAsProject } from "@/lib/redux/slices/projectSlice"
 import { useRouter } from "next/navigation"
 
 type SnippetCardProps = {

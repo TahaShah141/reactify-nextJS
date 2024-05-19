@@ -1,7 +1,7 @@
 "use client"
 
 import { getParentChild } from '@/lib/componentType'
-import { selectComponents } from '@/lib/redux/store'
+import { selectProject } from '@/lib/redux/store'
 import { useSelectedListeners } from '@/lib/hooks/useSelectedListeners'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { StyleMenu } from './StyleMenu'
@@ -10,7 +10,7 @@ import { useAppSelector } from '@/lib/redux/hooks'
 
 export const SelectedMenu = () => {
 
-  const { tabs, selectedPath, currentTab } = useAppSelector(selectComponents)
+  const { tabs, selectedPath, currentTab } = useAppSelector(selectProject)
 
   const component = selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child : undefined
 

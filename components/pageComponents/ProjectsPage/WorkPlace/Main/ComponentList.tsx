@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { selectComponents, selectMemo, selectUser } from "@/lib/redux/store"
+import { selectProject, selectMemo, selectUser } from "@/lib/redux/store"
 import { deepCopy, mod, recursiveParse } from "@/lib/utils"
 import { SupplyComponent } from "@/components/SupplyComponent"
 import { Tab } from "./Tab"
@@ -10,13 +10,13 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType } from "@/lib/types"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { Loading } from "@/components/custom/Loading"
-import { upsertSnippets } from "@/lib/redux/slices/componentsSlice"
+import { upsertSnippets } from "@/lib/redux/slices/projectSlice"
 
 const maxListWidth = `max-w-[calc(100vw-40rem-40px)]`
 
 export const ComponentList = () => {
 
-  const { supply, tabs, snippets } = useAppSelector(selectComponents)
+  const { supply, tabs, snippets } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const { user } = useAppSelector(selectUser)

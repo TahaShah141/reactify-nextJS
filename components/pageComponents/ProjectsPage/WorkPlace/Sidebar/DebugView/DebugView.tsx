@@ -1,10 +1,10 @@
 import { getParentChild } from "@/lib/componentType"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 
 export const DebugView = () => {
 
-  const {tabs, currentTab, selectedPath} = useAppSelector(selectComponents)
+  const {tabs, currentTab, selectedPath} = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const component = selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child : undefined

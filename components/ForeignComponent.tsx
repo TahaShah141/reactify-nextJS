@@ -1,10 +1,10 @@
 import { getCSSStyle } from "@/lib/componentType"
 import { componentsToClone } from "@/lib/componentsToClone"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 import { useDraggable, useDroppable } from "@dnd-kit/core"
 import React from "react"
 import { verbosity } from "./Component"
-import { updateSelected } from "@/lib/redux/slices/componentsSlice"
+import { updateSelected } from "@/lib/redux/slices/projectSlice"
 import { PseudoComponent } from "./PseudoComponent"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ForeignComponentType } from "@/lib/types"
@@ -15,7 +15,7 @@ type ForeignComponentProps = {
 
 export const ForeignComponent: React.FC<ForeignComponentProps> = ({ foreignComponent }) => {
   
-  const { tabs } = useAppSelector(selectComponents)
+  const { tabs } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const { id, data } = foreignComponent

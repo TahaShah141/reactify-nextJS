@@ -1,18 +1,18 @@
 import { getStylingSections } from "@/lib/StyleOptions/getStylingSections"
 import { getParentChild } from "@/lib/componentType"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { useMemo } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { removeFromSelectedStyle, updateSelectedStyle } from "@/lib/redux/slices/componentsSlice"
+import { removeFromSelectedStyle, updateSelectedStyle } from "@/lib/redux/slices/projectSlice"
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType, Section } from "@/lib/types"
 
 export const StyleMenu = () => {
 
-  const { tabs, selectedPath, currentTab, customClasses } = useAppSelector(selectComponents)
+  const { tabs, selectedPath, currentTab, customClasses } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const component = getParentChild(tabs[currentTab].root, selectedPath!).child as ComponentType

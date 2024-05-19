@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppSelector } from "@/lib/redux/hooks"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 import { generateComponentCode } from "@/lib/utils"
 // import { downloadZip } from "./codeUtils";
 
@@ -13,7 +13,7 @@ import { downloadBlob } from "./codeUtils";
 
 export const CodePreview = () => {
   const [selected, setSelected] = useState("App");
-  const { tabs } = useAppSelector(selectComponents);
+  const { tabs } = useAppSelector(selectProject);
 
   const tabNames = Object.keys(tabs);
   const codes = tabNames.map(name => generateComponentCode(tabs[name].root, name));

@@ -4,14 +4,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Input } from "@/components/ui/input"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { useState } from "react"
-import { addNewTab } from "@/lib/redux/slices/componentsSlice"
-import { selectComponents } from "@/lib/redux/store"
+import { addNewTab } from "@/lib/redux/slices/projectSlice"
+import { selectProject } from "@/lib/redux/store"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType } from "@/lib/types"
 
 export const AddComponent = () => {
 
-  const { tabs, supply } = useAppSelector(selectComponents)
+  const { tabs, supply } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
   const [componentName, setComponentName] = useState<string>("")
   const isNameAvailable = 

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateSelectedStyle } from '@/lib/redux/slices/componentsSlice'
+import { updateSelectedStyle } from '@/lib/redux/slices/projectSlice'
 import { getSingularValue } from '@/lib/utils'
-import { selectComponents } from '@/lib/redux/store'
+import { selectProject } from '@/lib/redux/store'
 import { getParentChild } from '@/lib/componentType'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
@@ -17,7 +17,7 @@ type TailwindColorPickerProps = {
 
 export const TailwindColorPicker: React.FC<TailwindColorPickerProps> = ({label, options, minimal=false}) => {
 
-  const { tabs, currentTab, selectedPath } = useSelector(selectComponents)
+  const { tabs, currentTab, selectedPath } = useSelector(selectProject)
 
   const component = getParentChild(tabs[currentTab].root, selectedPath!).child as ComponentType
 

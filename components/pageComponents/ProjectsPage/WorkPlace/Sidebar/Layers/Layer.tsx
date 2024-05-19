@@ -2,7 +2,7 @@ import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { CSSProperties, useCallback } from "react";
 import { useControlPressed } from "@/lib/hooks/useControlPressed";
-import { updateSelected } from "@/lib/redux/slices/componentsSlice";
+import { updateSelected } from "@/lib/redux/slices/projectSlice";
 import { ForeignLayer } from "./ForeignLayer";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { ComponentType, ForeignComponentType } from "@/lib/types";

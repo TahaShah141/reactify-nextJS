@@ -2,7 +2,7 @@ import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { getCSSStyle } from "../lib/componentType";
 import React from "react"
 import { componentsToClone } from "@/lib/componentsToClone";
-import { updateSelected } from "@/lib/redux/slices/componentsSlice";
+import { updateSelected } from "@/lib/redux/slices/projectSlice";
 import { ForeignComponent } from "./ForeignComponent";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { ComponentType, ForeignComponentType } from "@/lib/types";
