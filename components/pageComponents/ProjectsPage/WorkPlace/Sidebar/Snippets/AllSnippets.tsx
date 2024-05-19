@@ -12,7 +12,7 @@ export const AllSnippets = () => {
     const fetchSnippets = async () => {
       const {snippets} = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/all", {
         method: "GET",
-        next: {revalidate: 10}        
+        // next: {revalidate: 10}        
       })).json()
       setSnippets(snippets)
       setLoading(false)

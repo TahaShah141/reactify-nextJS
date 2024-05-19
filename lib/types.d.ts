@@ -88,7 +88,7 @@ export type UserType = {
   _id: string
   email: string
   customClasses: CustomStyleType[]
-  favoriteSnippets: SnippetType[] 
+  favoriteSnippets: string[] 
 }
 
 export type SnippetType = {

@@ -19,11 +19,26 @@ export const UserSlice = createSlice({
     },
     SignOut: (state) => {
       state.user = undefined
+    },
+    updateFavorites: (state, action: PayloadAction<{snippetID: string}>) => {
+      const { user } = state
+      const { snippetID } = action.payload
+      if (!user) return;
+
+      const { favoriteSnippets } = user
+
+      if (favoriteSnippets.includes(snippetID)) {
+        user.favoriteSnippets = user.favoriteSnippets.filter(id => id !== snippetID)
+      } else {
+        user.favoriteSnippets.push(snippetID)
+      }
+
+      state.user = user
     }
   }
 })
 
 
-export const { SignIn, SignOut } = UserSlice.actions
+export const { SignIn, SignOut, updateFavorites } = UserSlice.actions
 
 export default UserSlice.reducer
