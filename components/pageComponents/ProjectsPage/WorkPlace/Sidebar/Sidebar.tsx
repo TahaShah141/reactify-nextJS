@@ -60,18 +60,12 @@ export const Sidebar = ({ tab }: { tab: string }) => {
       <div className="w-14 py-2 flex flex-col items-center justify-between h-full">
         <div className="flex flex-col items-center">
           {sidebarTabs.slice(0, 5).map((t, i) => (
-            // <Button onClick={() => setCurrSidebarTab(i)} variant={"ghost"} size={"icon"} 
-            // className={`size-14 relative flex justify-center group items-center ${currSidebarTab === i ? "text-primary" : "text-muted-foreground"}`}>
-            //   {tab.icon}
-            //   <span className="absolute bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{tab.name}</span>
-            // </Button>
-            <Button variant={"ghost"} size={"icon"}
-              className={` size-14 relative flex justify-center group items-center ${tab === t.name ? "text-primary" : "text-muted-foreground"}`}>
-              <Link href={{ query: { tab: t.name } }}>
-                {t.icon}
-                <span className="absolute bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{t.name}</span>
-              </Link>
-            </Button>
+            <Link
+              className={` size-14 relative hover:bg-secondary rounded-lg  flex justify-center group items-center ${tab === t.name ? "text-primary" : "text-muted-foreground"}`}
+              href={{ query: { tab: t.name } }}>
+              {t.icon}
+              <span className="absolute min-w-max bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{t.name}</span>
+            </Link>
           ))}
         </div>
         {/* <div className="flex flex-col items-center">
