@@ -55,12 +55,6 @@ const sidebarTabs: SideBarTabType[] = [
 
 export const Sidebar = ({ tab }: { tab: string }) => {
 
-  // const [currSidebarTab, setCurrSidebarTab] = useState(3)
-  
-  // if 
-  console.log({tab}, "Sidebar")
-
-
   return (
     <div className="w-full h-full flex">
       <div className="w-14 py-2 flex flex-col items-center justify-between h-full">
@@ -73,7 +67,7 @@ export const Sidebar = ({ tab }: { tab: string }) => {
             // </Button>
             <Button variant={"ghost"} size={"icon"}
               className={` size-14 relative flex justify-center group items-center ${tab === t.name ? "text-primary" : "text-muted-foreground"}`}>
-              <Link href={{ query: { tab } }}>
+              <Link href={{ query: { tab: t.name } }}>
                 {t.icon}
                 <span className="absolute bg-[#262626] opacity-0  group-hover:opacity-100 transition-opacity text-white px-3 py-1 text-sm rounded-md left-[110%] z-[100] border-2 border-white font-semibold ">{t.name}</span>
               </Link>
