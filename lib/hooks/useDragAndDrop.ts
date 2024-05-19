@@ -76,6 +76,10 @@ export const useDragAndDrop: () => DragAndDropType = () => {
       return;
     }
     
+    if (activePath.length > 0 && activeRootComponent.children.length === 0) {
+      console.error("How! Not Allowed");
+      // console.log({activeRootComponent, activePath})
+    }
     const {parent: draggedParent, child: draggedComponent } = getParentChild(activeRootComponent, activePath)
     const {parent: droppedParent, child: droppedChild } = getParentChild(overRootComponent, overPath)
 
@@ -135,7 +139,7 @@ export const useDragAndDrop: () => DragAndDropType = () => {
       dispatch(moveComponent({oldParentPath: draggedParent.data.path, newParentPath: newParent.data.path, child: newChild, adding, removing}))
     }
     
-  }, [tabs, controlPressed])
+  }, [tabs, controlPressed, snippets.children.length])
 
   return {
     sensors,
