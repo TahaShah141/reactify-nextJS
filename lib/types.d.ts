@@ -107,6 +107,8 @@ export type SnippetComponentType = {
 }
 
 export type ProjectType = {
+  name: string
+  description: string
   tabs: Record<string, TabType>
   supply: ComponentType
   snippets: ComponentType
