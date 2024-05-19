@@ -6,16 +6,19 @@ import userReducer from './slices/userSlice'
 import memoReducer from './slices/memoSlice'
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from 'redux-persist'
+import snippetsReducer from './slices/snippetsSlice'
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: ['snippets'],
 }
 
 const reducer = combineReducers({
   components: componentsReducer,
   user: userReducer,
-  memo: memoReducer
+  memo: memoReducer,
+  snippets: snippetsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
