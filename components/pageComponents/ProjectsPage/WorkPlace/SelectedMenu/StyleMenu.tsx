@@ -9,7 +9,6 @@ import { removeFromSelectedStyle, updateSelectedStyle } from "@/lib/redux/slices
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType, Section } from "@/lib/types"
-import { AttributeMenu } from "./AttributeMenu"
 
 export const StyleMenu = () => {
 
@@ -51,17 +50,6 @@ export const StyleMenu = () => {
           </AccordionContent>
         </AccordionItem>
       )}
-
-      {/* Shortcut not working when Attribute-Menu is not rendered */}
-      {/* One fix require this whole component to be Client but I am very against this. */}
-
-      {/* <AccordionItem value={"Attributes"} key={"Attributes"}>
-        <AccordionTrigger className='text-lg'>Attributes</AccordionTrigger>
-        <AccordionContent className="flex w-full h-fit flex-col gap-2">
-        <AttributeMenu />
-        </AccordionContent>
-      </AccordionItem> */}
-
     </Accordion>
   )
 }

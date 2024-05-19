@@ -9,11 +9,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { useState } from "react";
-import { downlaodBlob } from "./codeUtils";
-
-
-
-
+import { downloadBlob } from "./codeUtils";
 
 export const CodePreview = () => {
   const [selected, setSelected] = useState("App");
@@ -25,7 +21,7 @@ export const CodePreview = () => {
   const code = codes[index];
   const className = `px-4 min-w-48 w-48 h-9 flex items-center justify-center border rounded-sm hover:bg-foreground/10`
 
-  async function downloadZip(filenames: string[], codes: string[]) {
+  async function DownloadZip(filenames: string[], codes: string[]) {
     const res = await fetch('http://localhost:3000/api/code', {
       method: "POST",
       headers: {
@@ -37,7 +33,7 @@ export const CodePreview = () => {
     })
     const blob = await res.blob();
     console.log(blob)
-    downlaodBlob(blob);
+    downloadBlob(blob);
   }
 
 
@@ -52,7 +48,7 @@ export const CodePreview = () => {
             className={`${className} ${selected === name ? "text-primary bg-foreground/5" : "text-muted-foreground"}`}>{name}.jsx</button>
         )}
         <button
-          onClick={() => downloadZip(tabNames, codes)}
+          onClick={() => DownloadZip(tabNames, codes)}
           className={`${className} text-muted-foreground`}>Download as Zip</button>
       </div>
       <div className="  flex-1 flex items-stretch">
@@ -61,17 +57,14 @@ export const CodePreview = () => {
           className={`text-lg w-full  overflow-auto`}
           value={code}
           theme={vscodeDark}
-          // onChange={(code) =>
-          //   // dispatch(updateCode({ code, problemId: problem._id }))
-          // }
           height="100%"
           extensions={[javascript({
             jsx: true,
             typescript: true,
           })]}
+          readOnly
         />
       </div>
     </div>
-    // <p className="">{code}</p>
   )
 }
