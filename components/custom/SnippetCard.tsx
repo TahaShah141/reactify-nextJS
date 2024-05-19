@@ -6,8 +6,12 @@ import { Separator } from "../ui/separator"
 import { CopyIcon, Pencil2Icon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
 import { Button } from "../ui/button"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
-import { selectUser } from "@/lib/redux/store"
+import { selectMemo, selectUser } from "@/lib/redux/store"
 import { updateFavorites } from "@/lib/redux/slices/userSlice"
+import { deepCopy, recursiveParse } from "@/lib/utils"
+import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
+import { openSnippetAsProject } from "@/lib/redux/slices/componentsSlice"
+import { useRouter } from "next/navigation"
 
 type SnippetCardProps = {
   snippet: SnippetType
@@ -16,9 +20,12 @@ type SnippetCardProps = {
 export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
 
   const { user } = useAppSelector(selectUser)
+  const { styleOptionsMemo } = useAppSelector(selectMemo)
   const dispatch = useAppDispatch()
 
-  const isFavorite = (user?.favoriteSnippets.findIndex(fav => fav === snippet._id) !== -1) 
+  const router = useRouter()
+
+  const isFavorite = (user?.favoriteSnippets.findIndex((fav: string) => fav === snippet._id) !== -1) 
 
   const [loading, setLoading] = useState(false)
 
@@ -41,8 +48,16 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
     setLoading(false)
   }
 
+  const openInEditor = async () => {
+    const {component, newMemos} = await recursiveParse(snippet.root as string, deepCopy(styleOptionsMemo))
+    dispatch(addStyleOptions({styleOptions: newMemos}))
+    dispatch(openSnippetAsProject({snippet: component}))
+    setLoading(false)
+    router.push("/project?tab=Layers")
+  }
+
   return (
-    <Card className="flex flex-col rounded-sm gap-4 p-6 w-full max-w-md">
+    <Card className="flex flex-col rounded-sm gap-4 p-6 h-full w-full max-w-md">
       <div className="flex justify-between gap-2">
         <div className="flex flex-1 flex-col gap-2">
           <h3 className="text-xl font-semibold">{snippet.name}</h3>
@@ -57,12 +72,12 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
         </div>
       </div>
       <Separator />
-      <p className="text-sm text-muted-foreground">{snippet.description.substring(0, 100) + (snippet.description.length > 100 ? "..." : "")}</p>
+      <p className="text-sm text-muted-foreground flex-1">{snippet.description.substring(0, 100) + (snippet.description.length > 100 ? "..." : "")}</p>
       <div className="flex gap-2">
-        <Button variant={"outline"} className="flex items-center gap-2 flex-1">
+        {user && <Button onClick={() => {setLoading(true); openInEditor()}} disabled={loading} variant={"outline"} className="flex items-center gap-2 flex-1">
           <Pencil2Icon />
           <p>Open in Editor</p>
-        </Button>
+        </Button>}
         <Button variant={"outline"} className="flex items-center gap-2 flex-1">
           <CopyIcon />
           <p>Copy Code</p>

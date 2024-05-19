@@ -17,7 +17,20 @@ export interface ComponentsState {
   customClasses: CustomStyleType[]
 }
 
-const initialState: ComponentsState = {
+const resetState = (state: ComponentsState) => {
+  state.tabs = {
+    "App": {
+      root: getRootComponent("App"),
+      imports: [],
+    },
+  }
+  state.currentTab = "App"
+  state.customClasses = []
+  state.selectedPath = undefined
+  state.selectedID = undefined
+}
+
+const initialState = (): ComponentsState => (deepCopy({
   //holds all components of the project
   tabs: {
     "App": {
@@ -30,7 +43,7 @@ const initialState: ComponentsState = {
   snippets: snippetComponent,
   currentTab: "App",
   customClasses: [],
-}
+}))
 
 export const componentsSlice = createSlice({
   name: "components",
@@ -77,6 +90,27 @@ export const componentsSlice = createSlice({
         ...state.snippets,
         children: fixPathAndSelected([] , action.payload.newSnippets, () => {}, undefined)
       }
+    },
+
+    openSnippetAsProject: (state, action: PayloadAction<{snippet: ComponentType}>) => {
+      resetState(state)
+      const { currentTab, tabs } = state
+      const root = tabs[currentTab].root
+
+      const { snippet } = action.payload
+
+      const child = getNewChild(root, snippet, -1)
+
+      console.log({child})
+
+      root.children.push(child)
+
+      const setSelected = (selectedPath?: number[], selectedID?: UniqueIdentifier) => {
+        state.selectedPath = selectedPath
+        state.selectedID = selectedID
+      }
+
+      root.children = fixPathAndSelected([] , root.children, setSelected, child.id) 
     },
 
     //SELECTED COMPONENT
@@ -315,6 +349,7 @@ export const {
   addNewTab,
   switchTab,
 
+  openSnippetAsProject,
   upsertSnippets,
 
   updateSelected, 

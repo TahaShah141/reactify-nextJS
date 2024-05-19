@@ -33,6 +33,8 @@ export const ComponentList = () => {
         // next: {revalidate: 10}        
       })).json()
 
+      if (!snippets) return;
+
       let memosToAdd = {}
       const newSnippets: ComponentType[] = []
       for (const fetchedSnippet of fetchedSnippets) {

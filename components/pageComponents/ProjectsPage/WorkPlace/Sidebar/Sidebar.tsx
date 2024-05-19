@@ -69,7 +69,7 @@ export const Sidebar = ({ tab }: { tab: string }) => {
         </div>
       </div>
       <ScrollArea className='flex-1 p-2' style={{ height: 'calc(100vh - 60px)' }}>
-        {(sidebarTabs.find(t => t.name === tab) ?? sidebarTabs[3]).toRender}
+        {(sidebarTabs.find(t => t.name === tab) ?? sidebarTabs[0]).toRender}
       </ScrollArea>
     </div>
   )
