@@ -382,6 +382,23 @@ export const ShadCnSection: ComponentType =
         droppable: true,
         canHaveChildren: true
       }
+    },
+    {
+      id: "H-Separator",
+      tag: "H-Separator",
+      innerText: "",
+      className: ``,
+      styleOptions: [],
+      children: [],
+      data: {
+        rootID: "SUPPLY",
+        tabID: "SUPPLY",
+        path: [2, 4],
+        selected: false,
+        draggable: true,
+        droppable: true,
+        canHaveChildren: false
+      }
     }
   ],
 }

@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Layers } from "./Layers/Layers"
-import { AvatarIcon, CodeIcon, CopyIcon, DashboardIcon, GearIcon, Pencil2Icon, StackIcon } from "@radix-ui/react-icons"
+import { AvatarIcon, ClipboardIcon, CodeIcon, CopyIcon, DashboardIcon, GearIcon, Pencil2Icon, StackIcon } from "@radix-ui/react-icons"
 import { SideBarTabType } from "@/lib/types"
 import { CodePreview } from "./CodePreview/CodePreview"
 import { SaveMenu } from "./SaveMenu/SaveMenu"
@@ -8,6 +8,7 @@ import { Snippets } from "./Snippets/Snippets"
 import Link from "next/link"
 import { DebugView } from "./DebugView/DebugView"
 import { Projects } from "./ProjectBar/Projects"
+import { Icons } from "./Icons/Icons"
 
 const LogoClassName = "size-8"
 
@@ -28,7 +29,12 @@ const sidebarTabs: SideBarTabType[] = [
     toRender: <Layers />
   },
   {
-    name: "Code Preview",
+    name: "Icons",
+    icon: <ClipboardIcon className={LogoClassName} />,
+    toRender: <Icons />
+  },
+  {
+    name: "Code",
     icon: <CodeIcon className={LogoClassName} />,
     toRender: <CodePreview />
   },
@@ -70,7 +76,7 @@ export const Sidebar = ({ tab }: { tab: string }) => {
         </div>
       </div>
       <ScrollArea className='flex-1 p-2' style={{ height: 'calc(100vh - 60px)' }}>
-        {(sidebarTabs.find(t => t.name === tab) ?? sidebarTabs[0]).toRender}
+        {(sidebarTabs.find(t => t.name === tab) ?? sidebarTabs[2]).toRender}
       </ScrollArea>
     </div>
   )

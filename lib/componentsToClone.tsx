@@ -2,6 +2,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { IconsList } from "./IconsList";
+
+const allIcons = (() => {
+  let icons: Record<string, JSX.Element> = {}
+  for (const letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+    icons = { ...icons, ...IconsList[letter] }
+  }
+  return icons
+})()
 
 export const componentsToClone: Record<string, JSX.Element> = {
   //HTML
@@ -15,8 +25,9 @@ export const componentsToClone: Record<string, JSX.Element> = {
   //ShadCN
   "Button": <Button></Button>,
   "Card": <Card></Card>,
-  "Input": <Input></Input>,
+  "Input": <Input />,
   "Label": <Label></Label>,
+  "H-Separator": <Separator />,
   
   //Typography
   "p": <p></p>,
@@ -28,4 +39,7 @@ export const componentsToClone: Record<string, JSX.Element> = {
   "h6": <h6></h6>,
   "li": <li></li>,
   "ul": <ul></ul>,
+
+  ...allIcons
+
 }
