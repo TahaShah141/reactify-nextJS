@@ -1,5 +1,6 @@
 import { getParentChild } from "@/lib/componentType"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { reset } from "@/lib/redux/slices/projectSlice"
 import { selectMemo, selectProject } from "@/lib/redux/store"
 
 export const DebugView = () => {
@@ -18,7 +19,7 @@ export const DebugView = () => {
       <p>Path [{component.data.path}]</p>
       <p>root {component.data.rootID}</p>
       <p>tab {component.data.tabID}</p>
-      <button onClick={() => {console.log("CLICKED"); }} 
+      <button onClick={() => {console.log("CLICKED"); dispatch(reset())}} 
       className="p-2 bg-red-500 border-2 border-black rounded-sm hover:bg-red-600 text-white">Test</button>
     </div>
   )

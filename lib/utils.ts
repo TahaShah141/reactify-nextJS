@@ -77,7 +77,6 @@ export function findReactComponents(component: ComponentType | ForeignComponentT
   let list = new Set<string>();
   const reactTagRegex = /[A-Z][a-zA-Z0-9]*/;
   if (reactTagRegex.test(component.tag)) {
-    // console.log(component)
     list.add(component.tag);
   }
   component.children.map(findReactComponents).flat().forEach(x => list.add(x));

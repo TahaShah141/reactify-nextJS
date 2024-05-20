@@ -110,6 +110,7 @@ export type SnippetComponentType = {
 
 export type ProjectType = {
   _id?: string
+  name: string
   tabs: Record<string, TabType>
   supply: ComponentType
   snippets: ComponentType

@@ -7,6 +7,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { deepCopy, getSingularValue, sameCSSKey } from '@/lib/utils'
 
 const resetState = (state: ProjectType) => {
+  state.name= "Editor"
   state.tabs = {
     "App": {
       root: getRootComponent("App"),
@@ -14,13 +15,16 @@ const resetState = (state: ProjectType) => {
     },
   }
   state.currentTab = "App"
+  state._id = undefined
   state.customClasses = []
   state.selectedPath = undefined
   state.selectedID = undefined
+  state.clipboard = undefined
 }
 
 const initialState = (): ProjectType => (deepCopy({
   //holds all components of the project
+  name: "Editor",
   tabs: {
     "App": {
       root: getRootComponent("App"),
@@ -38,6 +42,10 @@ export const projectSlice = createSlice({
   name: "project",
   initialState,
   reducers: {
+    reset: (state) => {
+      resetState(state)
+    },
+
     //TABS
     switchTab: (state, action: PayloadAction<{newTab: string}>) => {
       const { currentTab, tabs } = state
@@ -93,9 +101,13 @@ export const projectSlice = createSlice({
       }
     },
 
-    openProject: (state, action: PayloadAction<{ tabs: Record<string, TabType> }>) => {
+    openProject: (state, action: PayloadAction<{ _id: string, name: string, tabs: Record<string, TabType> }>) => {
+      const { _id, name, tabs } = action.payload
       resetState(state)
-      state.tabs = action.payload.tabs
+
+      state.tabs = tabs
+      state._id = _id
+      state.name = name
     },
 
     openSnippetAsProject: (state, action: PayloadAction<{snippet: ComponentType}>) => {
@@ -358,6 +370,8 @@ export const projectSlice = createSlice({
 })
 
 export const { 
+  reset,
+  
   addNewTab,
   switchTab,
   deleteTab,

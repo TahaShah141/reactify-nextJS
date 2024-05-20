@@ -78,7 +78,6 @@ export const useDragAndDrop: () => DragAndDropType = () => {
     
     if (activePath.length > 0 && activeRootComponent.children.length === 0) {
       console.error("How! Not Allowed");
-      // console.log({activeRootComponent, activePath})
     }
     const {parent: draggedParent, child: draggedComponent } = getParentChild(activeRootComponent, activePath)
     const {parent: droppedParent, child: droppedChild } = getParentChild(overRootComponent, overPath)

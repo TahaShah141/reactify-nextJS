@@ -38,13 +38,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
         root
       }
     }
-    dispatch(openProject({tabs: tabsToLoad}))
+    dispatch(openProject({_id: (project as FetchedProjectType)._id, name: (project as FetchedProjectType).name, tabs: tabsToLoad}))
     setLoading(false)
   }
 
   const isFetched = ('description' in project)
 
-  const name = isFetched ? project.name : "Editor"
+  const name = project.name
   const description = isFetched ? project.description : "This is the default editor for unsaved projects"
   const updatedAt = isFetched ? new Date(project.updatedAt).toLocaleDateString() : new Date().toLocaleDateString()
 
@@ -61,7 +61,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
         <p>Save Project</p>
         <Pencil1Icon />
       </Button>:
-      <Button onClick={() => {setLoading(true); openInEditor()}} variant={"outline"} className="flex items-center gap-2 flex-1">
+      <Button disabled={loading} onClick={() => {setLoading(true); openInEditor()}} variant={"outline"} className="flex items-center gap-2 flex-1">
         <p>Open Project</p>
         <OpenInNewWindowIcon />
       </Button>}
