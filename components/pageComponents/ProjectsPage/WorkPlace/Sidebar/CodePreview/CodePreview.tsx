@@ -20,21 +20,28 @@ export const CodePreview = () => {
   const index = tabNames.findIndex(name => name === selected);
   const code = codes[index];
   const className = `px-4 min-w-48 w-48 h-9 flex items-center justify-center border rounded-sm hover:bg-foreground/10`
-  
+
   async function DownloadZip(filenames: string[], codes: string[]) {
-    const shadComponents = Array.from(new Set(tabNames.map(name => findReactComponents(tabs[name].root)).flat()))
-    const res = await fetch('http://localhost:3000/api/code', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        codes, filenames, shadComponents
+    try {
+      const shadComponents = Array.from(new Set(tabNames.map(name => findReactComponents(tabs[name].root)).flat()))
+      const res = await fetch('http://localhost:3000/api/code', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          codes, filenames, shadComponents
+        })
       })
-    })
-    const blob = await res.blob();
-    console.log(blob)
-    downloadBlob(blob);
+      console.log(res);
+      console.log(await res.blob());
+    } catch (e) { console.error(e) }
+    finally {
+      console.log("Done")
+    }
+    // const blob = await res.blob();
+    // console.log(blob)
+    // downloadBlob(blob);
   }
 
 
