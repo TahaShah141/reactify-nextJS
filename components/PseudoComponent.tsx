@@ -18,7 +18,7 @@ export const PseudoComponent: React.FC<PseudoComponentProps> = ({ component }) =
     return <PseudoComponent component={tabs[component.data.tabID].root} />
   }
 
-  const { className, styleOptions, tag, children, data} = component as ComponentType
+  const { className, styleOptions, tag, children, data, innerText} = component as ComponentType
 
   const componentStyle = getCSSStyle(styleOptions)
 
@@ -28,9 +28,12 @@ export const PseudoComponent: React.FC<PseudoComponentProps> = ({ component }) =
   }
 
   const inside = data.canHaveChildren ? 
-  <> {children.map(child => 
+  <>
+  {innerText !== "" && <>{innerText}</>} 
+  {children.map(child => 
     <PseudoComponent component={child} key={child.id} />
-  )} </> : null
+  )} 
+  </> : null
 
   const injected = React.cloneElement(componentsToClone[tag] || <div></div>, props, inside)
 

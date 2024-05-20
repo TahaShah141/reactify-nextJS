@@ -24,7 +24,7 @@ export const ForeignComponent: React.FC<ForeignComponentProps> = ({ foreignCompo
   const { attributes, listeners, setNodeRef: setDragRef, transform, isDragging } = useDraggable({ id, data });
   const { setNodeRef: setDropRef, isOver, active } = useDroppable({ id, data });
   
-  const {className, styleOptions, tag, children, data: componentData} = tabs[tabID].root
+  const {className, styleOptions, tag, children, data: componentData, innerText} = tabs[tabID].root
 
   const componentStyle = getCSSStyle(styleOptions)
   
@@ -60,6 +60,7 @@ export const ForeignComponent: React.FC<ForeignComponentProps> = ({ foreignCompo
   <>
   {selected && <p className="absolute top-0 -translate-y-[calc(100%+6px)] left-1/2 -translate-x-1/2 text-center w-full min-w-fit max-w-20 bg-sky-500 rounded-tl-sm rounded-tr-sm p-0.5 text-white text-sm">{tabID}</p>}
   {verbosity && <>{`FOREIGN ${tabID} ${id.toString().substring(0, 5)} [${path}] ${selected}`}</>}
+  {innerText !== "" && <>{innerText}</>}
   {children.map(child => 
     <PseudoComponent component={child} key={child.id} />
   )}
