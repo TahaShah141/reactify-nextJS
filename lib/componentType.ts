@@ -107,6 +107,13 @@ export const isImportAllowed = (tabs: Record<string, TabType>, hostTab: string, 
   return !found
 }
 
+export const containsTab = (root: ComponentType | ForeignComponentType, tabName: string): boolean => {
+  if (root.data.tabID === tabName) return true;
+  if (!('children' in root)) return false;
+
+  return root.children.some((child) => containsTab(child, tabName))
+}
+
 export const populateComponent = (tabs: Record<string, TabType>, component: ComponentType | ForeignComponentType): ComponentType => {
   
   if (!('children' in component)) {

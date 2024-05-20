@@ -1,4 +1,4 @@
-import { fixPathAndSelected, getNewChild, getParentChild } from '@/lib/componentType'
+import { containsTab, fixPathAndSelected, getNewChild, getParentChild, isImportAllowed } from '@/lib/componentType'
 import { ComponentType, ForeignComponentType, ProjectType, StyleType, TabType } from '@/lib/types'
 import { getRootComponent, snippetComponent, supplyComponent } from '@/lib/defaultComponents'
 import { UniqueIdentifier } from '@dnd-kit/core'
@@ -248,6 +248,15 @@ export const projectSlice = createSlice({
       state.selectedID = undefined
       state.selectedPath = undefined
       root.children = fixPathAndSelected([] , root.children, () => {}, undefined)
+
+      //update imports if ForeignComponent Deleted
+      if (!('children' in child)) {
+        const tabName = child.data.tabID
+        if (!containsTab(root, tabName)) {
+          console.log("REMOVED", tabName)
+          tabs[currentTab].imports = tabs[currentTab].imports.filter((tab) => tab !== tabName)
+        }
+      }
     },
     copySelected: (state) => {
       const { selectedPath, currentTab, tabs } = state
