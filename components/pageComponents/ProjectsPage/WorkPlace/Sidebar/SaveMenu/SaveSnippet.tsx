@@ -7,13 +7,13 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { getParentChild, populateComponent } from "@/lib/componentType"
 import { useAppSelector } from "@/lib/redux/hooks"
-import { selectComponents, selectUser } from "@/lib/redux/store"
+import { selectProject, selectUser } from "@/lib/redux/store"
 import { ComponentType } from "@/lib/types"
 import { useState } from "react"
 
 export const SaveSnippet = () => {
 
-  const {tabs, currentTab, selectedPath} = useAppSelector(selectComponents)
+  const {tabs, currentTab, selectedPath} = useAppSelector(selectProject)
   const component = selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child : undefined
 
   const [loading, setLoading] = useState(false)

@@ -1,7 +1,7 @@
 import { ComponentType, ForeignComponentType } from "@/lib/types"
 import { useEffect } from "react"
 import { useAppDispatch } from "../redux/hooks"
-import { copySelected, deleteSelected, pasteIntoSelected } from "../redux/slices/componentsSlice"
+import { copySelected, deleteSelected, pasteIntoSelected } from "../redux/slices/projectSlice"
 
 export const useSelectedListeners = (component: ComponentType | ForeignComponentType | undefined) => {
 

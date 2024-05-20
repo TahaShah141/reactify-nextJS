@@ -105,3 +105,16 @@ export type SnippetComponentType = {
   name: string,
   root: ComponentType
 }
+
+export type ProjectType = {
+  name: string
+  description: string
+  tabs: Record<string, TabType>
+  supply: ComponentType
+  snippets: ComponentType
+  currentTab: string
+  clipboard?: ComponentType | ForeignComponentType
+  selectedID?: UniqueIdentifier
+  selectedPath?: number[]
+  customClasses: CustomStyleType[]
+}

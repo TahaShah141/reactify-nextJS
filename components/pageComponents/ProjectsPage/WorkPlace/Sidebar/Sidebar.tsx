@@ -7,6 +7,7 @@ import { SaveMenu } from "./SaveMenu/SaveMenu"
 import { Snippets } from "./Snippets/Snippets"
 import Link from "next/link"
 import { DebugView } from "./DebugView/DebugView"
+import { Projects } from "./ProjectBar/Projects"
 
 const LogoClassName = "size-8"
 
@@ -14,7 +15,7 @@ const sidebarTabs: SideBarTabType[] = [
   {
     name: "Projects",
     icon: <DashboardIcon className={LogoClassName} />,
-    toRender: <>Projects</>
+    toRender: <Projects />
   },
   {
     name: "Snippets",

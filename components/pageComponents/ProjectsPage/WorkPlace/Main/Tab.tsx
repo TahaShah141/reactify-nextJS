@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
-import { switchTab } from "@/lib/redux/slices/componentsSlice"
-import { selectComponents } from "@/lib/redux/store"
+import { switchTab } from "@/lib/redux/slices/projectSlice"
+import { selectProject } from "@/lib/redux/store"
 import { useDraggable } from "@dnd-kit/core"
 import React from "react"
 
@@ -10,7 +10,7 @@ type TabProps = {
 }
 
 export const Tab: React.FC<TabProps> = ({ id }) => {
-  const { currentTab } = useAppSelector(selectComponents)
+  const { currentTab } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const { attributes, listeners, setNodeRef: setDragRef, transform, isDragging } = 

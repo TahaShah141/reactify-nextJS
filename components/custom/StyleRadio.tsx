@@ -3,9 +3,9 @@ import React from 'react'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import { Label } from '../ui/label'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateSelectedStyle } from '@/lib/redux/slices/componentsSlice'
+import { updateSelectedStyle } from '@/lib/redux/slices/projectSlice'
 import { getSingularValue } from '@/lib/utils'
-import { selectComponents } from '@/lib/redux/store'
+import { selectProject } from '@/lib/redux/store'
 import { ComponentType, StyleType } from '@/lib/types'
 
 type RadioProps = {
@@ -19,7 +19,7 @@ export const StyleRadio: React.FC<RadioProps> = ({label, options, rows, cols}) =
 
   const dispatch = useDispatch()
 
-  const { tabs, selectedPath, currentTab } = useSelector(selectComponents)
+  const { tabs, selectedPath, currentTab } = useSelector(selectProject)
   
   const component = (selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child as ComponentType : undefined) as ComponentType;
   

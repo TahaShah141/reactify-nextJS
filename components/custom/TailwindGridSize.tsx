@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateSelectedStyle } from '@/lib/redux/slices/componentsSlice'
-import { selectComponents } from '@/lib/redux/store'
+import { updateSelectedStyle } from '@/lib/redux/slices/projectSlice'
+import { selectProject } from '@/lib/redux/store'
 import { getParentChild } from '@/lib/componentType'
 import { Label } from '../ui/label'
 import { ComponentType } from '@/lib/types'
@@ -15,7 +15,7 @@ export const TailwindGridSize = () => {
   const dispatch = useDispatch()
 
 
-  const { tabs, selectedPath, currentTab } = useSelector(selectComponents)
+  const { tabs, selectedPath, currentTab } = useSelector(selectProject)
   // if (!selectedPath) return null;
 
   const component = (selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child as ComponentType : undefined) as ComponentType;

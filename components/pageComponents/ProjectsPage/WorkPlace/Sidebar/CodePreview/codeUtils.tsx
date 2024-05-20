@@ -2,7 +2,7 @@
 import JSzip from "jszip"
 import { cardJSX, eslintrcCJS, gitignore, indexHTML, mainJSX, packageJSON, postcssConfigJS, tailwindConfigJS, viteConfigJS, viteSVG } from "./fileConstants";
 
-export function downlaodBlob(blob: Blob) {
+export function downloadBlob(blob: Blob) {
   var a = document.createElement("a");
   document.body.appendChild(a);
   const url = window.URL.createObjectURL(blob);
@@ -33,7 +33,7 @@ export function downloadZip(tabNames: string[], codes: string[]) {
   zip.file('.eslintrc.cjs', eslintrcCJS);
 
   zip.generateAsync({ type: 'blob' }).then(blob => {
-    downlaodBlob(blob);
+    downloadBlob(blob);
     console.log(blob)
   })
 }

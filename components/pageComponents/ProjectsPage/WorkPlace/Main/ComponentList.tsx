@@ -2,21 +2,21 @@ import { useEffect, useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { selectComponents, selectMemo, selectUser } from "@/lib/redux/store"
-import { deepCopy, mod, recursiveParse } from "@/lib/utils"
+import { selectProject, selectMemo, selectUser } from "@/lib/redux/store"
+import { deepCopy, mod, parseRoot } from "@/lib/utils"
 import { SupplyComponent } from "@/components/SupplyComponent"
 import { Tab } from "./Tab"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType } from "@/lib/types"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { Loading } from "@/components/custom/Loading"
-import { upsertSnippets } from "@/lib/redux/slices/componentsSlice"
+import { upsertSnippets } from "@/lib/redux/slices/projectSlice"
 
 const maxListWidth = `max-w-[calc(100vw-40rem-40px)]`
 
 export const ComponentList = () => {
 
-  const { supply, tabs, snippets } = useAppSelector(selectComponents)
+  const { supply, tabs, snippets } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const { user } = useAppSelector(selectUser)
@@ -38,9 +38,9 @@ export const ComponentList = () => {
       let memosToAdd = {}
       const newSnippets: ComponentType[] = []
       for (const fetchedSnippet of fetchedSnippets) {
-        const {component, newMemos} = await recursiveParse(fetchedSnippet.root, deepCopy(styleOptionsMemo))
-        component.id = fetchedSnippet.name
-        newSnippets.push(component)
+        const {root, newMemos} = await parseRoot(fetchedSnippet.root, true, deepCopy(styleOptionsMemo))
+        root.id = fetchedSnippet.name
+        newSnippets.push(root as ComponentType)
         memosToAdd = {...memosToAdd, ...newMemos}
       }
       dispatch(upsertSnippets({newSnippets}))

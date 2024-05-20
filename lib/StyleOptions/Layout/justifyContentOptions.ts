@@ -39,5 +39,4 @@ export const justifyContentOptions: StyleType[] =
     CSSKey: 'justifyContent',
     CSSValue: 'space-around',
   },
-
 ]

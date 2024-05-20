@@ -1,23 +1,14 @@
 import { fixPathAndSelected, getNewChild, getParentChild } from '@/lib/componentType'
-import { ComponentType, CustomStyleType, ForeignComponentType, StyleType, TabType } from '@/lib/types'
+import { ComponentType, ForeignComponentType, ProjectType, StyleType, TabType } from '@/lib/types'
 import { getRootComponent, snippetComponent, supplyComponent } from '@/lib/defaultComponents'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import { createSlice } from '@reduxjs/toolkit'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { deepCopy, getSingularValue, sameCSSKey } from '@/lib/utils'
 
-export interface ComponentsState {
-  tabs: Record<string, TabType>
-  supply: ComponentType
-  snippets: ComponentType
-  currentTab: string
-  clipboard?: ComponentType
-  selectedID?: UniqueIdentifier
-  selectedPath?: number[]
-  customClasses: CustomStyleType[]
-}
-
-const resetState = (state: ComponentsState) => {
+const resetState = (state: ProjectType) => {
+  state.name = "Editor",
+  state.description = "This is the default project for all users",
   state.tabs = {
     "App": {
       root: getRootComponent("App"),
@@ -30,8 +21,10 @@ const resetState = (state: ComponentsState) => {
   state.selectedID = undefined
 }
 
-const initialState = (): ComponentsState => (deepCopy({
+const initialState = (): ProjectType => (deepCopy({
   //holds all components of the project
+  name: "Editor",
+  description:"This is the default project for all users",
   tabs: {
     "App": {
       root: getRootComponent("App"),
@@ -45,8 +38,8 @@ const initialState = (): ComponentsState => (deepCopy({
   customClasses: [],
 }))
 
-export const componentsSlice = createSlice({
-  name: "components",
+export const projectSlice = createSlice({
+  name: "project",
   initialState,
   reducers: {
     //TABS
@@ -83,6 +76,18 @@ export const componentsSlice = createSlice({
 
       //switch tabs
       state.currentTab = newTab
+    },
+
+    deleteTab: (state, action: PayloadAction<{tab: string}>) => {
+      const { tab: toDelete } = action.payload
+      const {tabs} = state
+
+      if (Object.keys(tabs).length === 1) return;
+
+      for (const tab in tabs) 
+        if (tabs[tab].imports.includes(toDelete)) return;
+
+      delete state.tabs[toDelete]
     },
 
     upsertSnippets: (state, action: PayloadAction<{ newSnippets: ComponentType[] }>) => {
@@ -257,7 +262,7 @@ export const componentsSlice = createSlice({
       }
     },
 
-    copyIntoClipboard: (state, action: PayloadAction<{component: ComponentType}>) => {
+    copyIntoClipboard: (state, action: PayloadAction<{component: ComponentType | ForeignComponentType}>) => {
       const {component} = action.payload
       console.log("COPIED", component)
       state.clipboard = deepCopy(component)
@@ -348,6 +353,7 @@ export const componentsSlice = createSlice({
 export const { 
   addNewTab,
   switchTab,
+  deleteTab,
 
   openSnippetAsProject,
   upsertSnippets,
@@ -366,7 +372,7 @@ export const {
   moveChildToIndex, 
   moveComponent,
   addForeignComponent,
-} = componentsSlice.actions
+} = projectSlice.actions
 
-export default componentsSlice.reducer
+export default projectSlice.reducer
 

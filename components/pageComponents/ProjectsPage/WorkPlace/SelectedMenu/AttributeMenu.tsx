@@ -3,15 +3,15 @@
 import { getParentChild } from "@/lib/componentType"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { setSelectedInnerText } from "@/lib/redux/slices/componentsSlice"
-import { selectComponents } from "@/lib/redux/store"
+import { setSelectedInnerText } from "@/lib/redux/slices/projectSlice"
+import { selectProject } from "@/lib/redux/store"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType } from "@/lib/types"
 import { useEffect, useRef } from "react"
 
 export const AttributeMenu = () => {
 
-  const { tabs, selectedPath, currentTab } = useAppSelector(selectComponents)
+  const { tabs, selectedPath, currentTab } = useAppSelector(selectProject)
 
   const dispatch = useAppDispatch()
 

@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 import { useDispatch, useSelector } from "react-redux"
 import { Button } from "@/components/ui/button"
-import { saveSelectedStyle } from "@/lib/redux/slices/componentsSlice"
+import { saveSelectedStyle } from "@/lib/redux/slices/projectSlice"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { Input } from "@/components/ui/input"
 
 export const AddCustomClass = () => {
 
-  const { customClasses } = useSelector(selectComponents)
+  const { customClasses } = useSelector(selectProject)
   const dispatch = useDispatch()
 
   const [className, setClassName] = useState("")

@@ -1,10 +1,10 @@
 import { getCSSStyle } from "@/lib/componentType"
 import { componentsToClone } from "@/lib/componentsToClone"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 import { useDraggable, useDroppable } from "@dnd-kit/core"
 import React from "react"
 import { verbosity } from "./Component"
-import { updateSelected } from "@/lib/redux/slices/componentsSlice"
+import { updateSelected } from "@/lib/redux/slices/projectSlice"
 import { PseudoComponent } from "./PseudoComponent"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ForeignComponentType } from "@/lib/types"
@@ -15,7 +15,7 @@ type ForeignComponentProps = {
 
 export const ForeignComponent: React.FC<ForeignComponentProps> = ({ foreignComponent }) => {
   
-  const { tabs } = useAppSelector(selectComponents)
+  const { tabs } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const { id, data } = foreignComponent
@@ -32,8 +32,8 @@ export const ForeignComponent: React.FC<ForeignComponentProps> = ({ foreignCompo
     ...componentStyle,
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     backgroundColor: isOver ? "#1f1f1f" : undefined,
-    borderColor: data.selected ? "#0ea5e9" : componentStyle?.borderColor,
-    borderWidth: data.selected ? "4px" : componentStyle?.borderWidth,
+    outline: data.selected ? `4px solid #0ea5e9` : undefined,
+    outlineOffset: data.selected ? "4px" : undefined
   };
 
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -58,7 +58,7 @@ export const ForeignComponent: React.FC<ForeignComponentProps> = ({ foreignCompo
 
   const inside = componentData.canHaveChildren ? 
   <>
-  {selected && <p className="absolute top-0 -translate-y-full left-1/2 -translate-x-1/2 text-center w-full min-w-fit max-w-20 bg-sky-500 rounded-tl-sm rounded-tr-sm p-0.5 text-white text-sm">{tabID}</p>}
+  {selected && <p className="absolute top-0 -translate-y-[calc(100%+6px)] left-1/2 -translate-x-1/2 text-center w-full min-w-fit max-w-20 bg-sky-500 rounded-tl-sm rounded-tr-sm p-0.5 text-white text-sm">{tabID}</p>}
   {verbosity && <>{`FOREIGN ${tabID} ${id.toString().substring(0, 5)} [${path}] ${selected}`}</>}
   {children.map(child => 
     <PseudoComponent component={child} key={child.id} />

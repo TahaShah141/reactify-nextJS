@@ -1,10 +1,10 @@
 import { getParentChild } from "@/lib/componentType"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
-import { selectComponents } from "@/lib/redux/store"
+import { selectProject } from "@/lib/redux/store"
 
 export const DebugView = () => {
 
-  const {tabs, currentTab, selectedPath} = useAppSelector(selectComponents)
+  const {tabs, currentTab, selectedPath} = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
   const component = selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child : undefined
@@ -18,6 +18,11 @@ export const DebugView = () => {
       <p>root {component.data.rootID}</p>
       <p>tab {component.data.tabID}</p>
       <button></button>
+      <div className="bg-black size-20" style={{
+        outline: "1px solid red",
+        outlineOffset: "2px",
+        border: "4px solid yellow",
+      }}></div>
     </div>
   )
 }
