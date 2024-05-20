@@ -52,7 +52,7 @@ export const StyleMenu = () => {
 
   return (
     <div className="">
-      <Input className="text-md my-4" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search ..." />
+      <Input className="text-md my-4" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search Sections ..." />
 
       <div className="flex flex-col gap-6">
         {/* {sections.map(section => */}
@@ -74,43 +74,9 @@ export const StyleMenu = () => {
             </div>
           </div>
         )}
-
-        <AttributeMenu />
-
       </div>
     </div>
 
-    // <Accordion type="single" collapsible className="w-full">
-    //   {sections.map(section =>
-    //     <AccordionItem value={section.title} key={section.title}>
-    //       <AccordionTrigger className='text-lg'>{section.title}</AccordionTrigger>
-    //       <AccordionContent className="flex w-full h-fit flex-col gap-2">
-    //         {section.items.map((item, i) =>
 
-    //           <>
-    //             {item !== undefined && <>
-    //               {section.showCards ?
-    //                 <Card key={i} className="relative group p-3 rounded-sm">
-    //                   {item.node}
-    //                   <Button onClick={() => dispatch(removeFromSelectedStyle({ CSSKeys: item.CSSKeys !== undefined ? item.CSSKeys : [""] }))} className="absolute hidden group-hover:flex top-1 right-1 size-4 p-1 rounded-sm" size={"icon"} variant="destructive"><Cross1Icon /></Button>
-    //                 </Card> : <>{item.node}</>}
-    //             </>}
-    //           </>)}
-    //       </AccordionContent>
-    //     </AccordionItem>
-    //   )}
-    //       <AttributeMenu />
-
-    //   {/* Shortcut not working when Attribute-Menu is not rendered */}
-    //   {/* One fix require this whole component to be Client but I am very against this. */}
-
-    //   {/* <AccordionItem value={"Attributes"} key={"Attributes"}>
-    //     <AccordionTrigger className='text-lg'>Attributes</AccordionTrigger>
-    //     <AccordionContent className="flex w-full h-fit flex-col gap-2">
-    //       <AttributeMenu />
-    //     </AccordionContent>
-    //   </AccordionItem> */}
-
-    // </Accordion>
   )
 }

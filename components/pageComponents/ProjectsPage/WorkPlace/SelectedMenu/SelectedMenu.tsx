@@ -34,7 +34,6 @@ export const SelectedMenu = () => {
 
   return (
     <ScrollArea className='w-full p-4' style={{ height: 'calc(100vh - 60px)' }}>
-      <AttributeMenu />
       <StyleMenu />
     </ScrollArea>
   )
