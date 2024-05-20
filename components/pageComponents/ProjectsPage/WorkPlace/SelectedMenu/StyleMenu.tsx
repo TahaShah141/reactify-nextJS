@@ -3,15 +3,13 @@
 import { getStylingSections } from "@/lib/StyleOptions/getStylingSections"
 import { getParentChild } from "@/lib/componentType"
 import { selectProject } from "@/lib/redux/store"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { removeFromSelectedStyle, updateSelectedStyle } from "@/lib/redux/slices/projectSlice"
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType, Section } from "@/lib/types"
-import { AttributeMenu } from "./AttributeMenu"
 import { Input } from "@/components/ui/input"
 import fuzzysort from 'fuzzysort';
 
@@ -19,6 +17,8 @@ export const StyleMenu = () => {
   const [query, setQuery] = useState('');
   const { tabs, selectedPath, currentTab, customClasses } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
+  const [matchingSections, setMatchingSections] = useState<Section[]>([])
+  const [inputValue, setInputValue] = useState('')
 
   const component = getParentChild(tabs[currentTab].root, selectedPath!).child as ComponentType
 
@@ -35,18 +35,30 @@ export const StyleMenu = () => {
     return component ? getStylingSections(component, customClassButtons) : []
   }, [component, customClasses])
 
-  let matchingSections = sections;
 
-  if (query !== '') {
+  useEffect(() => {
+    if (query === "") {
+      setMatchingSections(sections)
+      return;
+    } 
     const results = fuzzysort.go(query, sections, {
       keys: ['title', obj => obj.items.map(o => o?.tags?.flat().join(' ') || '').join(' ')]
     });
-    matchingSections = results.map(res => res.obj);
-  }
+    setMatchingSections(results.map(res => res.obj))
+  }, [query])
+
+  //add debouncing to query
+  const debouncedSetQuery = useMemo(() => {
+    let timeoutId: NodeJS.Timeout
+    return (value: string) => {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => setQuery(value), 500)
+    }
+  }, [])
 
   return (
     <div className="">
-      <Input className="text-md my-4" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search Sections ..." />
+      <Input className="text-md my-4" value={inputValue} onChange={(e) => {setInputValue(e.target.value); debouncedSetQuery(e.target.value)}} placeholder="Search Sections ..." />
 
       <div className="flex flex-col gap-6">
         {matchingSections.map(section =>

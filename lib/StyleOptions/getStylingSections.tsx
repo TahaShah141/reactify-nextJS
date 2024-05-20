@@ -55,6 +55,14 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         ] 
       },
       {
+        title: "Attributes",
+        showCards: true,
+        items: [
+          {tags: ["inner", "text", 'content'], 
+          node: <AttributeMenu />},
+        ]
+      },
+      {
         title: 'Font',
         showCards: true,
         items: [
@@ -68,10 +76,11 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         title: 'Layout',
         showCards: true,
         items: [
-          {tags: ["display", "layout"], CSSKeys: ["display"], node: <StyleRadio rows={1} cols={2} label='Display' options={displayOptions} />},
+          {tags: ["display", "layout", "flex", "grid"], CSSKeys: ["display"], node: <StyleRadio rows={1} cols={2} label='Display' options={displayOptions} />},
           (displayType === "flex" ? {tags: ["flex", "direction"], CSSKeys: ["flexDirection"], node: <StyleRadio rows={2} cols={2} label='Flex Direction' options={flexDirectionOptions} />} : undefined),
           (displayType === "flex" ? {tags: ["flex", "ratio"], CSSKeys: ["flex"], node: <TailwindFlexRatio />} : undefined),
           (displayType === "grid" ? {tags: ["grid", "size"], CSSKeys: [["gridTemplateRows", "gridTemplateColumns"], 'gridSize'], node: <TailwindGridSize />} : undefined),
+          {tags: ["gap", "spacing"], CSSKeys: ["gap"], node: <StyleRange label="Gap" options={gapOptions} />},
           {tags: ["justify", "content"], CSSKeys: ["justifyContent"], node: <StyleRadio rows={2} cols={3} label='Justify Content' options={justifyContentOptions} />},
           {tags: ["align", "items"], CSSKeys: ["alignItems"], node: <StyleRadio rows={1} cols={3} label='Align Items' options={alignItemsOptions} />},
           {tags: ["align", "self"], CSSKeys: ["alignSelf"], node: <StyleRadio rows={1} cols={3} label='Align Self' options={alignSelfOptions} />},
@@ -81,14 +90,13 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         title: "Sizing",
         showCards: true,
         items: [
-          {tags: ["aspect", "ratio"], CSSKeys: ["aspectRatio"], node: <StyleRadio rows={1} cols={3} label='Aspect Ratio' options={aspectRatioOptions} />},
+          {tags: ["width", "size"], CSSKeys: ["width"], node: <StyleRange label='Width' options={widthOptions} />},
+          {tags: ["height", "size"], CSSKeys: ["height"], node: <StyleRange label='Height' options={heightOptions} />},
           {tags: ["padding", "spacing"], CSSKeys: ["padding", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", ["paddingLeft", "paddingRight"], ["paddingTop", "paddingBottom"]], 
           node: <TailwindPadding />},
           {tags: ["margin", "spacing"], CSSKeys: ["margin", "marginLeft", "marginRight", "marginTop", "marginBottom", ["marginLeft", "marginRight"], ["marginTop", "marginBottom"]], 
           node: <TailwindMargin />},
-          {tags: ["gap", "spacing"], CSSKeys: ["gap"], node: <StyleRange label="Gap" options={gapOptions} />},
-          {tags: ["width", "size"], CSSKeys: ["width"], node: <StyleRange label='Width' options={widthOptions} />},
-          {tags: ["height", "size"], CSSKeys: ["height"], node: <StyleRange label='Height' options={heightOptions} />},
+          {tags: ["aspect", "ratio"], CSSKeys: ["aspectRatio"], node: <StyleRadio rows={1} cols={3} label='Aspect Ratio' options={aspectRatioOptions} />},
         ]
       },
       {
@@ -100,14 +108,7 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
           {tags: ["border", "radius"], CSSKeys: ["borderRadius"], node: <StyleRange label='Border Radius' placeholder="radius" options={borderRadiusOptions} />}
         ]
       },
-      {
-        title: "Attributes",
-        showCards: true,
-        items: [
-          {tags: ["inner", "text", 'content'], 
-          node: <AttributeMenu />},
-        ]
-      },
+      
     ]
   )
 }
