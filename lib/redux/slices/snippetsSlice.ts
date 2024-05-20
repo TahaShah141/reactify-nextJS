@@ -3,15 +3,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSnippets = createAsyncThunk(
   "snippets/fetchSnippets",
-  (_, api) => {
+  async (_, api) => {
     api.dispatch(setLoading(true));
     try {
-      fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/all", {
-        method: "GET",
-        // next: {revalidate: 10}
-      })
-        .then((res) => res.json())
-        .then(({snippets}) => api.dispatch(updateSnippets(snippets)));
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/all"
+      );
+      const { snippets } = await res.json();
+      api.dispatch(updateSnippets(snippets));
     } catch (e) {
       console.error(e);
     } finally {
