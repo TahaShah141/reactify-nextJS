@@ -23,7 +23,7 @@ export const Tabs = () => {
               <button className={`px-4 min-w-48 w-48 h-9 flex items-center justify-center border rounded-sm hover:bg-foreground/10 ${currentTab === tab ? "text-primary bg-foreground/5" : "text-muted-foreground"}`} onClick={() => dispatch(switchTab({newTab: tab}))}>{`${tab.substring(0, 15)}${tab.length >= 15 ? "..." : ""}`}</button>
             </ContextMenuTrigger>
             <ContextMenuContent>
-              <ContextMenuItem disabled={tab === currentTab} onSelect={() => dispatch(deleteTab({tab}))}>
+              <ContextMenuItem disabled={tab === currentTab || tab === "App"} onSelect={() => dispatch(deleteTab({tab}))}>
                 Delete
               </ContextMenuItem>
               <ContextMenuItem>
