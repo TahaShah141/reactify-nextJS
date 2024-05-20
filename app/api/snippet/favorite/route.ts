@@ -6,7 +6,6 @@ import User from "@/models/UserModel"
 export async function POST(request: NextRequest) {
 
   const { user: userId, snippet: snippetId } = await request.json()
-  console.log({userId, snippetId})
 
   try {
     await connectMongo()

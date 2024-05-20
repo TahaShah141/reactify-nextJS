@@ -109,8 +109,7 @@ export type SnippetComponentType = {
 }
 
 export type ProjectType = {
-  name: string
-  description: string
+  _id?: string
   tabs: Record<string, TabType>
   supply: ComponentType
   snippets: ComponentType
@@ -119,4 +118,12 @@ export type ProjectType = {
   selectedID?: UniqueIdentifier
   selectedPath?: number[]
   customClasses: CustomStyleType[]
+}
+
+export type FetchedProjectType = {
+  _id: string
+  name: string
+  description: string
+  tabs: string
+  updatedAt: Date | string
 }

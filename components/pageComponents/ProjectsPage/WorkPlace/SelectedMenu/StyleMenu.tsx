@@ -35,10 +35,6 @@ export const StyleMenu = () => {
     return component ? getStylingSections(component, customClassButtons) : []
   }, [component, customClasses])
 
-  // const matchingSections = sections.filter(section => 
-  //   query == "" || section.title.includes(query) || section.items.some(item => item?.CSSKeys?.flat().some(key => key.includes(query)))
-  // )
-
   let matchingSections = sections;
 
   if (query !== '') {
@@ -48,14 +44,11 @@ export const StyleMenu = () => {
     matchingSections = results.map(res => res.obj);
   }
 
-  // console.log({ query, matchingSections })
-
   return (
     <div className="">
       <Input className="text-md my-4" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search Sections ..." />
 
       <div className="flex flex-col gap-6">
-        {/* {sections.map(section => */}
         {matchingSections.map(section =>
           <div className="">
             <h2 className="text-lg">{section.title}</h2>
