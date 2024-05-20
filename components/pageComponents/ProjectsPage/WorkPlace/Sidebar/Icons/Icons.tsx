@@ -21,20 +21,7 @@ const getComponent = (name: string): ComponentType => {
       path: [],      
     },
     innerText: "",
-    styleOptions: [
-      {
-        label: "Width",
-        tailwind: "w-8",
-        CSSKey: "width",
-        CSSValue: "2rem"
-      },
-      {
-        label: "Height",
-        tailwind: "h-8",
-        CSSKey: "height",
-        CSSValue: "2rem"
-      },
-    ],
+    styleOptions: [],
   }
 }
 

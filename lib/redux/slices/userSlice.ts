@@ -34,11 +34,19 @@ export const UserSlice = createSlice({
       }
 
       state.user = user
+    },
+
+    deleteProject: (state, action: PayloadAction<{projectID: string}>) => {
+      const { user } = state
+      if (!user) return;
+      const { projectID } = action.payload
+      user.projects = user.projects.filter(project => project !== projectID)
+      state.user = user
     }
   }
 })
 
 
-export const { SignIn, SignOut, updateFavorites } = UserSlice.actions
+export const { SignIn, SignOut, updateFavorites, deleteProject } = UserSlice.actions
 
 export default UserSlice.reducer
