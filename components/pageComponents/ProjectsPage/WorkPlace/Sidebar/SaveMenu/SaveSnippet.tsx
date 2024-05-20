@@ -75,7 +75,7 @@ export const SaveSnippet = () => {
           state.name === "" || 
           state.description === ""}>
           
-          Upload
+          Save Snippet
           
         </Button>
       </Card>}

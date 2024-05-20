@@ -1,19 +1,41 @@
 import connectMongo from "@/lib/connectMongo"
 import { NextRequest, NextResponse } from "next/server"
 import { generateRootString } from "@/lib/utils"
-import { TabType } from "@/lib/types"
+import Project from "@/models/ProjectModel"
+import User from "@/models/UserModel"
 
 export async function POST(request: NextRequest) {
 
-  const { name, description, tabs }: {name: string, description: string, tabs: Record<string, TabType>} = await request.json()
+  const { name, description, tabs, _id } = await request.json()
 
   try {
     await connectMongo()
 
-    const newTabs; //recursively navigate through tabs and make all tab roots into strings using generatRootString then upload project as done in snippets
+    const newTabs: Record<string, {imports: string[], root: string}> = {}
+
+    //TODO: change to promise.all for performance
+    for (const key of Object.keys(tabs)) {
+      newTabs[key] = {
+        ...tabs[key],
+        root: await generateRootString(tabs[key].root)
+      }
+    }
+
+    const finalTabs = JSON.stringify(newTabs)
+
+    const project = await Project.create({ name, description, tabs: finalTabs })
+    await project.save()
+
+    await User.findByIdAndUpdate(_id, {
+      $addToSet: {
+        projects: project._id.toString()
+      }
+    }).exec()
+
+    return NextResponse.json({project})
 
   } catch (error) {
     console.log({error})
-    return NextResponse.json({error: "Cant Create Snippet"})
+    return NextResponse.json({error: "Cant Create Project"})
   }
 }

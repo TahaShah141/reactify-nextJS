@@ -7,8 +7,6 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { deepCopy, getSingularValue, sameCSSKey } from '@/lib/utils'
 
 const resetState = (state: ProjectType) => {
-  state.name = "Editor",
-  state.description = "This is the default project for all users",
   state.tabs = {
     "App": {
       root: getRootComponent("App"),
@@ -23,8 +21,6 @@ const resetState = (state: ProjectType) => {
 
 const initialState = (): ProjectType => (deepCopy({
   //holds all components of the project
-  name: "Editor",
-  description:"This is the default project for all users",
   tabs: {
     "App": {
       root: getRootComponent("App"),
@@ -97,6 +93,11 @@ export const projectSlice = createSlice({
       }
     },
 
+    openProject: (state, action: PayloadAction<{ tabs: Record<string, TabType> }>) => {
+      resetState(state)
+      state.tabs = action.payload.tabs
+    },
+
     openSnippetAsProject: (state, action: PayloadAction<{snippet: ComponentType}>) => {
       resetState(state)
       const { currentTab, tabs } = state
@@ -105,8 +106,6 @@ export const projectSlice = createSlice({
       const { snippet } = action.payload
 
       const child = getNewChild(root, snippet, -1)
-
-      console.log({child})
 
       root.children.push(child)
 
@@ -264,7 +263,6 @@ export const projectSlice = createSlice({
 
     copyIntoClipboard: (state, action: PayloadAction<{component: ComponentType | ForeignComponentType}>) => {
       const {component} = action.payload
-      console.log("COPIED", component)
       state.clipboard = deepCopy(component)
       if (state.clipboard) {
         state.clipboard.data.selected = false
@@ -355,6 +353,7 @@ export const {
   switchTab,
   deleteTab,
 
+  openProject,
   openSnippetAsProject,
   upsertSnippets,
 

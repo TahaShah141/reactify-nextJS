@@ -108,7 +108,6 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
           node: <AttributeMenu />},
         ]
       },
-      
     ]
   )
 }
