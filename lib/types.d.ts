@@ -90,6 +90,7 @@ export type UserType = {
   email: string
   customClasses: CustomStyleType[]
   favoriteSnippets: string[] 
+  projects: string[]
 }
 
 export type SnippetType = {

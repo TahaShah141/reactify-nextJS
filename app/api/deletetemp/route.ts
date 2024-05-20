@@ -9,7 +9,7 @@ export async function GET() {
     await connectMongo()
 
     // const snippets = await Snippet.deleteMany({}).exec()
-    const users = await User.updateMany({}, {$set: {favoriteSnippets: []}}, {new: true}).exec()
+    const users = await User.updateMany({}, {$set: {projects: []}}, {new: true}).exec()
 
     return NextResponse.json({users})
 

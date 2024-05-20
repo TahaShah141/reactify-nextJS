@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
   favoriteSnippets: {
     type: Array,
     default: []
+  },
+  projects: {
+    type: Array,
+    default: []
   }
 })
 

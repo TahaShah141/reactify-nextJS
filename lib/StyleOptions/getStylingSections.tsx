@@ -68,7 +68,7 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         title: 'Layout',
         showCards: true,
         items: [
-          {tags: ["display", "layout", 'flex', 'gird'], CSSKeys: ["display"], node: <StyleRadio rows={1} cols={2} label='Display' options={displayOptions} />},
+          {tags: ["display", "layout"], CSSKeys: ["display"], node: <StyleRadio rows={1} cols={2} label='Display' options={displayOptions} />},
           (displayType === "flex" ? {tags: ["flex", "direction"], CSSKeys: ["flexDirection"], node: <StyleRadio rows={2} cols={2} label='Flex Direction' options={flexDirectionOptions} />} : undefined),
           (displayType === "flex" ? {tags: ["flex", "ratio"], CSSKeys: ["flex"], node: <TailwindFlexRatio />} : undefined),
           (displayType === "grid" ? {tags: ["grid", "size"], CSSKeys: [["gridTemplateRows", "gridTemplateColumns"], 'gridSize'], node: <TailwindGridSize />} : undefined),
