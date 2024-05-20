@@ -37,12 +37,12 @@ export const StyleMenu = () => {
 
   let matchingSections = sections;
 
-  if (query !== '') {
-    const results = fuzzysort.go(query, sections, {
-      keys: ['title', obj => obj.items.map(o => o?.tags?.flat().join(' ') || '').join(' ')]
-    });
-    matchingSections = results.map(res => res.obj);
-  }
+  // if (query !== '') {
+  //   const results = fuzzysort.go(query, sections, {
+  //     keys: ['title', obj => obj.items.map(o => o?.tags?.flat().join(' ') || '').join(' ')]
+  //   });
+  //   matchingSections = results.map(res => res.obj);
+  // }
 
   return (
     <div className="">
