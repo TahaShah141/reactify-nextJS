@@ -1,5 +1,5 @@
 "use client"
-import { SnippetType } from "@/lib/types"
+import { ComponentType, SnippetType } from "@/lib/types"
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Separator } from "../ui/separator"
@@ -8,7 +8,7 @@ import { Button } from "../ui/button"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { selectMemo, selectUser } from "@/lib/redux/store"
 import { updateFavorites } from "@/lib/redux/slices/userSlice"
-import { deepCopy, recursiveParse } from "@/lib/utils"
+import { deepCopy, parseRoot } from "@/lib/utils"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { openSnippetAsProject } from "@/lib/redux/slices/projectSlice"
 import { useRouter } from "next/navigation"
@@ -49,9 +49,9 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
   }
 
   const openInEditor = async () => {
-    const {component, newMemos} = await recursiveParse(snippet.root as string, deepCopy(styleOptionsMemo))
+    const {root, newMemos} = await parseRoot(snippet.root as string, true, deepCopy(styleOptionsMemo))
     dispatch(addStyleOptions({styleOptions: newMemos}))
-    dispatch(openSnippetAsProject({snippet: component}))
+    dispatch(openSnippetAsProject({snippet: root as ComponentType}))
     setLoading(false)
     router.push("/project?tab=Layers")
   }

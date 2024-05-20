@@ -7,7 +7,7 @@ import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { updateFavorites } from "@/lib/redux/slices/userSlice"
 import { selectMemo, selectUser } from "@/lib/redux/store"
 import { SnippetType } from "@/lib/types"
-import { deepCopy, recursiveParse } from "@/lib/utils"
+import { deepCopy, parseRoot } from "@/lib/utils"
 import { CopyIcon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
 import { useCallback, useState } from "react"
 
@@ -26,7 +26,7 @@ export const SidebarSnippetCard: React.FC<Props> = ({snippet}) => {
   const isFavorite = (user?.favoriteSnippets.findIndex(fav => fav === snippet._id) !== -1) 
 
   const copyToClipboard = useCallback(async () => {
-      const {component, newMemos} = await recursiveParse(snippet.root as string, deepCopy(styleOptionsMemo))
+      const {root: component, newMemos} = await parseRoot(snippet.root as string, true, deepCopy(styleOptionsMemo))
       dispatch(addStyleOptions({styleOptions: newMemos}))
       dispatch(copyIntoClipboard({component}))
       setLoading(false)

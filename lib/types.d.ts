@@ -113,7 +113,7 @@ export type ProjectType = {
   supply: ComponentType
   snippets: ComponentType
   currentTab: string
-  clipboard?: ComponentType
+  clipboard?: ComponentType | ForeignComponentType
   selectedID?: UniqueIdentifier
   selectedPath?: number[]
   customClasses: CustomStyleType[]

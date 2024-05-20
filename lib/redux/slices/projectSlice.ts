@@ -262,7 +262,7 @@ export const projectSlice = createSlice({
       }
     },
 
-    copyIntoClipboard: (state, action: PayloadAction<{component: ComponentType}>) => {
+    copyIntoClipboard: (state, action: PayloadAction<{component: ComponentType | ForeignComponentType}>) => {
       const {component} = action.payload
       console.log("COPIED", component)
       state.clipboard = deepCopy(component)

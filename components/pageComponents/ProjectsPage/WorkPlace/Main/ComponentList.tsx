@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 import { selectProject, selectMemo, selectUser } from "@/lib/redux/store"
-import { deepCopy, mod, recursiveParse } from "@/lib/utils"
+import { deepCopy, mod, parseRoot } from "@/lib/utils"
 import { SupplyComponent } from "@/components/SupplyComponent"
 import { Tab } from "./Tab"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
@@ -38,9 +38,9 @@ export const ComponentList = () => {
       let memosToAdd = {}
       const newSnippets: ComponentType[] = []
       for (const fetchedSnippet of fetchedSnippets) {
-        const {component, newMemos} = await recursiveParse(fetchedSnippet.root, deepCopy(styleOptionsMemo))
-        component.id = fetchedSnippet.name
-        newSnippets.push(component)
+        const {root, newMemos} = await parseRoot(fetchedSnippet.root, true, deepCopy(styleOptionsMemo))
+        root.id = fetchedSnippet.name
+        newSnippets.push(root as ComponentType)
         memosToAdd = {...memosToAdd, ...newMemos}
       }
       dispatch(upsertSnippets({newSnippets}))

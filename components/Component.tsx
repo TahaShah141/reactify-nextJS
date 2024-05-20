@@ -29,8 +29,8 @@ export const Component: React.FC<ComponentProps> = ({ component }) => {
     ...componentStyle,
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     backgroundColor: isOver ? "#1f1f1f" : componentStyle?.backgroundColor,
-    borderColor: data.selected ? "#ef4444" : componentStyle?.borderColor,
-    borderWidth: data.selected ? "4px" : componentStyle?.borderWidth,
+    outline: data.selected ? `4px solid #ef4444` : undefined,
+    outlineOffset: data.selected ? "4px" : undefined
   };
   
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -64,7 +64,7 @@ export const Component: React.FC<ComponentProps> = ({ component }) => {
 
   const inside = data.canHaveChildren ?
   <>
-    {data.selected && <p className="absolute top-0 -translate-y-full left-1/2 -translate-x-1/2 text-center w-full min-w-fit max-w-20 bg-red-500 rounded-tl-sm rounded-tr-sm p-0.5 text-white text-sm">{data.path.length === 0 ? data.tabID : tag}</p>}
+    {data.selected && <p className="absolute top-0 -translate-y-[calc(100%+6px)] left-1/2 -translate-x-1/2 text-center w-full min-w-fit max-w-20 bg-red-500 rounded-tl-sm rounded-tr-sm p-0.5 text-white text-sm">{data.path.length === 0 ? data.tabID : tag}</p>}
     {verbosity &&
       data.rootID !== "SUPPLY" &&
       `${id.toString().slice(0, 11)} ${data.tabID} [${data.path.toString()}] ${data.selected}`}

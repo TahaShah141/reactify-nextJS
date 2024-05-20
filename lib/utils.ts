@@ -109,8 +109,11 @@ export default ${upperCaseName};`;
 };
 
 export const generateRootString = async (
-  root: ComponentType
+  root: ComponentType | ForeignComponentType
 ): Promise<string> => {
+
+  if (!("styleOptions" in root)) return JSON.stringify(root);
+
   const styleOptionPromises = root.styleOptions.map((styleOption) =>
     fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/styleoption", {
       method: "POST",
@@ -128,7 +131,7 @@ export const generateRootString = async (
   );
 
   const newChildrenPromises = root.children.map((child) =>
-    generateRootString(child as ComponentType)
+    generateRootString(child)
   );
   const newChildren = await Promise.all(newChildrenPromises);
 
@@ -141,14 +144,18 @@ export const generateRootString = async (
   return JSON.stringify(newRoot);
 };
 
-export const recursiveParse = async (
-  root: string,
+
+export const parseRoot = async (
+  root: string, 
+  isSnippet: boolean,
   memo: Record<string, StyleType> = {}
 ): Promise<{
-  component: ComponentType;
-  newMemos: Record<string, StyleType>;
+  root: ComponentType | ForeignComponentType, 
+  newMemos: Record<string, StyleType>
 }> => {
   const parsedRoot = JSON.parse(root);
+
+  if (!('styleOptions' in parsedRoot)) return {root: parsedRoot, newMemos: {}}
 
   const { memoizedStyles, stylesToFetch } = (
     parsedRoot.styleOptions as Array<string>
@@ -186,20 +193,23 @@ export const recursiveParse = async (
     ...memoizedStyles,
   ];
 
-  parsedRoot.data.tabID = "SNIPPETS";
-  parsedRoot.data.rootID = "SNIPPETS";
+  if (isSnippet) {
+    parsedRoot.data.tabID = "SNIPPETS";
+    parsedRoot.data.rootID = "SNIPPETS";
+  }
+
   const childrenPromises = parsedRoot.children.map((child: string) =>
-    recursiveParse(child, memo)
+    parseRoot(child, isSnippet, memo)
   );
   parsedRoot.children = (await Promise.all(childrenPromises)).map(
-    ({ component, newMemos: newerMemos }) => {
+    ({ root, newMemos: newerMemos }) => {
       newMemos = {
         ...newMemos,
         ...newerMemos,
       };
-      return component;
+      return root;
     }
   );
 
-  return { component: parsedRoot, newMemos };
-};
+  return { root: parsedRoot, newMemos };
+}
