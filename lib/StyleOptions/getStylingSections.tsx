@@ -26,6 +26,7 @@ import { TailwindFlexRatio } from "@/components/custom/TailwindFlexRatio"
 import { aspectRatioOptions } from "./Sizing/aspectRatioOptions"
 import { getSingularValue } from "../utils"
 import { ComponentType, Section } from "@/lib/types"
+import { AttributeMenu } from "@/components/pageComponents/ProjectsPage/WorkPlace/SelectedMenu/AttributeMenu"
 
 export const getStylingSections = (component: ComponentType, customClasses: React.ReactNode[]): Section[] => {
 
@@ -49,54 +50,62 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         title: 'Colors',
         showCards: true,
         items: [
-          {CSSKeys: ["backgroundColor"], node: <TailwindColorPicker label="Background Color" options={getAllColorStyleTypes("bg", "backgroundColor")} />},
-          {CSSKeys: ["color"], node: <TailwindColorPicker label="Text Color" options={getAllColorStyleTypes("text", "color")} />},
+          {tags: ["background", "color"], CSSKeys: ["backgroundColor"], node: <TailwindColorPicker label="Background Color" options={getAllColorStyleTypes("bg", "backgroundColor")} />},
+          {tags: ["text", "color"], CSSKeys: ["color"], node: <TailwindColorPicker label="Text Color" options={getAllColorStyleTypes("text", "color")} />},
         ] 
       },
       {
         title: 'Font',
         showCards: true,
         items: [
-          {CSSKeys: ["fontFamily"], node: <StyleRadio rows={1} cols={3} label="Font Family" options={fontFamilyOptions} />},
-          {CSSKeys: ["letterSpacing"], node: <StyleRadio rows={2} cols={3} label="Tracking" options={trackingOptions} />}, 
-          {CSSKeys: ["fontSize"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
-          {CSSKeys: ["fontWeight"], node: <StyleRange label="Font Weight" options={fontWeightOptions} />},
+          {tags: ["font", "family"], CSSKeys: ["fontFamily"], node: <StyleRadio rows={1} cols={3} label="Font Family" options={fontFamilyOptions} />},
+          {tags: ["letter", "spacing"], CSSKeys: ["letterSpacing"], node: <StyleRadio rows={2} cols={3} label="Tracking" options={trackingOptions} />}, 
+          {tags: ["font", "size"], CSSKeys: ["fontSize"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
+          {tags: ["font", "weight"], CSSKeys: ["fontWeight"], node: <StyleRange label="Font Weight" options={fontWeightOptions} />},
         ]
       },
       {
         title: 'Layout',
         showCards: true,
         items: [
-          {CSSKeys: ["display"], node: <StyleRadio rows={1} cols={2} label='Display' options={displayOptions} />},
-          (displayType === "flex" ? {CSSKeys: ["flexDirection"], node: <StyleRadio rows={2} cols={2} label='Flex Direction' options={flexDirectionOptions} />} : undefined),
-          (displayType === "flex" ? {CSSKeys: ["flex"], node: <TailwindFlexRatio />} : undefined),
-          (displayType === "grid" ? {CSSKeys: [["gridTemplateRows", "gridTemplateColumns"], 'gridSize'], node: <TailwindGridSize />} : undefined),
-          {CSSKeys: ["justifyContent"], node: <StyleRadio rows={2} cols={3} label='Justify Content' options={justifyContentOptions} />},
-          {CSSKeys: ["alignItems"], node: <StyleRadio rows={1} cols={3} label='Align Items' options={alignItemsOptions} />},
-          {CSSKeys: ["alignSelf"], node: <StyleRadio rows={1} cols={3} label='Align Self' options={alignSelfOptions} />},
+          {tags: ["display", "layout"], CSSKeys: ["display"], node: <StyleRadio rows={1} cols={2} label='Display' options={displayOptions} />},
+          (displayType === "flex" ? {tags: ["flex", "direction"], CSSKeys: ["flexDirection"], node: <StyleRadio rows={2} cols={2} label='Flex Direction' options={flexDirectionOptions} />} : undefined),
+          (displayType === "flex" ? {tags: ["flex", "ratio"], CSSKeys: ["flex"], node: <TailwindFlexRatio />} : undefined),
+          (displayType === "grid" ? {tags: ["grid", "size"], CSSKeys: [["gridTemplateRows", "gridTemplateColumns"], 'gridSize'], node: <TailwindGridSize />} : undefined),
+          {tags: ["justify", "content"], CSSKeys: ["justifyContent"], node: <StyleRadio rows={2} cols={3} label='Justify Content' options={justifyContentOptions} />},
+          {tags: ["align", "items"], CSSKeys: ["alignItems"], node: <StyleRadio rows={1} cols={3} label='Align Items' options={alignItemsOptions} />},
+          {tags: ["align", "self"], CSSKeys: ["alignSelf"], node: <StyleRadio rows={1} cols={3} label='Align Self' options={alignSelfOptions} />},
         ]
       },
       {
         title: "Sizing",
         showCards: true,
         items: [
-          {CSSKeys: ["aspectRatio"], node: <StyleRadio rows={1} cols={3} label='Aspect Ratio' options={aspectRatioOptions} />},
-          {CSSKeys: ["padding", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", ["paddingLeft", "paddingRight"], ["paddingTop", "paddingBottom"]], 
+          {tags: ["aspect", "ratio"], CSSKeys: ["aspectRatio"], node: <StyleRadio rows={1} cols={3} label='Aspect Ratio' options={aspectRatioOptions} />},
+          {tags: ["padding", "spacing"], CSSKeys: ["padding", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", ["paddingLeft", "paddingRight"], ["paddingTop", "paddingBottom"]], 
           node: <TailwindPadding />},
-          {CSSKeys: ["margin", "marginLeft", "marginRight", "marginTop", "marginBottom", ["marginLeft", "marginRight"], ["marginTop", "marginBottom"]], 
+          {tags: ["margin", "spacing"], CSSKeys: ["margin", "marginLeft", "marginRight", "marginTop", "marginBottom", ["marginLeft", "marginRight"], ["marginTop", "marginBottom"]], 
           node: <TailwindMargin />},
-          {CSSKeys: ["gap"], node: <StyleRange label="Gap" options={gapOptions} />},
-          {CSSKeys: ["width"], node: <StyleRange label='Width' options={widthOptions} />},
-          {CSSKeys: ["height"], node: <StyleRange label='Height' options={heightOptions} />},
+          {tags: ["gap", "spacing"], CSSKeys: ["gap"], node: <StyleRange label="Gap" options={gapOptions} />},
+          {tags: ["width", "size"], CSSKeys: ["width"], node: <StyleRange label='Width' options={widthOptions} />},
+          {tags: ["height", "size"], CSSKeys: ["height"], node: <StyleRange label='Height' options={heightOptions} />},
         ]
       },
       {
         title: "Border",
         showCards: true,
         items: [
-          {CSSKeys: ["borderWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth", "borderBottomWidth", ["borderLeftWidth", "borderRightWidth"], ["borderTopWidth", "borderBottomWidth"]], 
+          {tags: ["border", "width"], CSSKeys: ["borderWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth", "borderBottomWidth", ["borderLeftWidth", "borderRightWidth"], ["borderTopWidth", "borderBottomWidth"]], 
           node: <TailwindBorderWidth />},
-          {CSSKeys: ["borderRadius"], node: <StyleRange label='Border Radius' placeholder="radius" options={borderRadiusOptions} />}
+          {tags: ["border", "radius"], CSSKeys: ["borderRadius"], node: <StyleRange label='Border Radius' placeholder="radius" options={borderRadiusOptions} />}
+        ]
+      },
+      {
+        title: "Attributes",
+        showCards: true,
+        items: [
+          {tags: ["inner", "text", 'content'], 
+          node: <AttributeMenu />},
         ]
       },
       

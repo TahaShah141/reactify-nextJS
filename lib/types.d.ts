@@ -79,7 +79,8 @@ export type Section = {
   title: string
   items: ({
     CSSKeys?: string[] | (string | string[])[], 
-    node: React.ReactNode
+    node: React.ReactNode,
+    tags?: string[]
   } | undefined)[]
   showCards: boolean
 } 

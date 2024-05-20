@@ -11,19 +11,13 @@ import { removeFromSelectedStyle, updateSelectedStyle } from "@/lib/redux/slices
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { ComponentType, Section } from "@/lib/types"
-<<<<<<< HEAD
 import { AttributeMenu } from "./AttributeMenu"
 import { Input } from "@/components/ui/input"
+import fuzzysort from 'fuzzysort';
 
 export const StyleMenu = () => {
-  const [ query, setQuery] = useState('');
-  const { tabs, selectedPath, currentTab, customClasses } = useAppSelector(selectComponents)
-=======
-
-export const StyleMenu = () => {
-
+  const [query, setQuery] = useState('');
   const { tabs, selectedPath, currentTab, customClasses } = useAppSelector(selectProject)
->>>>>>> ec1090f832b1c3f1045f3b1f859e66b370254c45
   const dispatch = useAppDispatch()
 
   const component = getParentChild(tabs[currentTab].root, selectedPath!).child as ComponentType
@@ -41,17 +35,25 @@ export const StyleMenu = () => {
     return component ? getStylingSections(component, customClassButtons) : []
   }, [component, customClasses])
 
-  const matchingSections = sections.filter(section => 
-    query == "" || section.title.includes(query) || section.items.some(item => item?.CSSKeys?.flat().some(key => key.includes(query)))
-  )
+  // const matchingSections = sections.filter(section => 
+  //   query == "" || section.title.includes(query) || section.items.some(item => item?.CSSKeys?.flat().some(key => key.includes(query)))
+  // )
 
-  console.log({query, matchingSections})
+  let matchingSections = sections;
+
+  if (query !== '') {
+    const results = fuzzysort.go(query, sections, {
+      keys: ['title', obj => obj.items.map(o => o?.tags?.flat().join(' ') || '').join(' ')]
+    });
+    matchingSections = results.map(res => res.obj);
+  }
+
+  // console.log({ query, matchingSections })
 
   return (
     <div className="">
-      <Input className="text-md my-4" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search ..."/>
+      <Input className="text-md my-4" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search ..." />
 
-<<<<<<< HEAD
       <div className="flex flex-col gap-6">
         {/* {sections.map(section => */}
         {matchingSections.map(section =>
@@ -110,20 +112,5 @@ export const StyleMenu = () => {
     //   </AccordionItem> */}
 
     // </Accordion>
-=======
-              <>
-                {item !== undefined && <>
-                  {section.showCards ?
-                    <Card key={i} className="relative group p-3 rounded-sm">
-                      {item.node}
-                      <Button onClick={() => dispatch(removeFromSelectedStyle({ CSSKeys: item.CSSKeys !== undefined ? item.CSSKeys : [""] }))} className="absolute hidden group-hover:flex top-1 right-1 size-4 p-1 rounded-sm" size={"icon"} variant="destructive"><Cross1Icon /></Button>
-                    </Card> : <>{item.node}</>}
-                </>}
-              </>)}
-          </AccordionContent>
-        </AccordionItem>
-      )}
-    </Accordion>
->>>>>>> ec1090f832b1c3f1045f3b1f859e66b370254c45
   )
 }

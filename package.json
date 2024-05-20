@@ -35,6 +35,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "codemirror": "^6.0.1",
+    "fuzzysort": "^3.0.1",
     "jszip": "^3.10.1",
     "mongoose": "^8.3.5",
     "next": "14.2.3",
