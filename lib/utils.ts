@@ -54,9 +54,8 @@ export const generateCode = (
     : "";
 
   // if (component.children)
-
   const classes = component.styleOptions.map((c) => `${c.tailwind}`).join(" ");
-  
+
   if (!innerTextCode && !childrenCode) {
     return `${tabs}<${component.tag} className="${classes}" />`;
     // ${innerTextCode}${childrenCode}${tabs}</${component.tag}>`;
@@ -71,16 +70,27 @@ function capitalizeFirstLetter(x: string) {
   return x[0].toUpperCase() + x.substring(1);
 }
 
-function findForeignComponents(component: ComponentType) {
-  let list: ForeignComponentType[] = [];
-  for (let child of component.children) {
-    if ("children" in child) {
-      list = [...list, ...findForeignComponents(child)];
-    } else {
-      list = [...list, child];
-    }
+function findReactComponents(component: ComponentType | ForeignComponentType) {
+  if (!("children" in component)) return []; // return if foreign component
+  
+  let list = new Set<string>();
+  const reactTagRegex = /[A-Z][a-zA-Z0-9]*/;
+  if (reactTagRegex.test(component.tag)) {
+    // console.log(component)
+    list.add(component.tag);
   }
-  return list;
+  component.children.map(findReactComponents).flat().forEach(x => list.add(x));
+  return Array.from(list);
+}
+
+function findForeignComponents(component: ComponentType | ForeignComponentType) {
+  let list = new Set<string>();
+  if ("children" in component) {
+    component.children.map(findForeignComponents).flat().forEach(x => list.add(x));
+  } else {
+    list.add(component.data.tabID);
+  }
+  return Array.from(list);
 }
 
 export const generateComponentCode = (
@@ -88,17 +98,30 @@ export const generateComponentCode = (
   name: string
 ): string => {
   const upperCaseName = capitalizeFirstLetter(name);
-  const foreignComponents = findForeignComponents(component);
-  const foreignComponentTabs = foreignComponents
-    .map((component) => component.data.tabID)
-    .concat(["card"]);
-  const imports = Array.from(new Set(foreignComponentTabs))
-    .map((tab) => `import ${capitalizeFirstLetter(tab)} from "./${tab}";`)
-    .join("\n");
+  // const foreignComponents = findForeignComponents(component);
+  // const foreignComponentTabs = foreignComponents
+  //   .map((component) => component.data.tabID)
+  //   .concat(["card"]);
+  // const imports = Array.from(new Set(foreignComponentTabs))
+  //   .map(
+  //     (tab) =>
+  //       `import ${capitalizeFirstLetter(tab)} from "@/components/${tab}";`
+  //   )
+  //   .join("\n");
+  // console.log(findForeignComponents(component))
+  console.log(findReactComponents(component))
+    const foreignImports = findForeignComponents(component).map(tag => 
+      `import ${capitalizeFirstLetter(tag)} from "@/components/${tag}";`
+    ).join('\n');
+    const shadImports = findReactComponents(component).map(tag => 
+      `import ${tag} from "@/components/ui/${tag}";`
+    ).join('\n');
 
-  return `
-${imports}
+    const imports = [foreignImports, shadImports].filter(x => !!x).join("\n\n");
 
+  return `${imports}
+
+  
 function ${upperCaseName}() {
   return (
 ${generateCode(component, 2)}
@@ -111,7 +134,6 @@ export default ${upperCaseName};`;
 export const generateRootString = async (
   root: ComponentType | ForeignComponentType
 ): Promise<string> => {
-
   if (!("styleOptions" in root)) return JSON.stringify(root);
 
   const styleOptionPromises = root.styleOptions.map((styleOption) =>
@@ -144,18 +166,18 @@ export const generateRootString = async (
   return JSON.stringify(newRoot);
 };
 
-
 export const parseRoot = async (
-  root: string, 
+  root: string,
   isSnippet: boolean,
   memo: Record<string, StyleType> = {}
 ): Promise<{
-  root: ComponentType | ForeignComponentType, 
-  newMemos: Record<string, StyleType>
+  root: ComponentType | ForeignComponentType;
+  newMemos: Record<string, StyleType>;
 }> => {
   const parsedRoot = JSON.parse(root);
 
-  if (!('styleOptions' in parsedRoot)) return {root: parsedRoot, newMemos: {}}
+  if (!("styleOptions" in parsedRoot))
+    return { root: parsedRoot, newMemos: {} };
 
   const { memoizedStyles, stylesToFetch } = (
     parsedRoot.styleOptions as Array<string>
@@ -212,4 +234,4 @@ export const parseRoot = async (
   );
 
   return { root: parsedRoot, newMemos };
-}
+};

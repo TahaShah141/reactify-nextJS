@@ -1,5 +1,45 @@
 export const packageJSON = `{
-    "name": "test-app",
+  "name": "base-shad-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "postinstall": "npx shadcn-ui@latest add button input"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.378.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.0"
+  }
+}
+`;
+
+export function getPackageJSON(shadComponents: string[]) {
+  return `{
+    "name": "base-shad-react",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -7,13 +47,21 @@ export const packageJSON = `{
       "dev": "vite",
       "build": "vite build",
       "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-      "preview": "vite preview"
+      "preview": "vite preview",
+      "postinstall": "npx shadcn-ui@latest add ${shadComponents.join(' ')}"
     },
     "dependencies": {
+      "@radix-ui/react-slot": "^1.0.2",
+      "class-variance-authority": "^0.7.0",
+      "clsx": "^2.1.1",
+      "lucide-react": "^0.378.0",
       "react": "^18.2.0",
-      "react-dom": "^18.2.0"
+      "react-dom": "^18.2.0",
+      "tailwind-merge": "^2.3.0",
+      "tailwindcss-animate": "^1.0.7"
     },
     "devDependencies": {
+      "@types/node": "^20.12.12",
       "@types/react": "^18.2.66",
       "@types/react-dom": "^18.2.22",
       "@vitejs/plugin-react": "^4.2.1",
@@ -28,6 +76,7 @@ export const packageJSON = `{
     }
   }
   `;
+} 
 
 export const indexHTML = `<!doctype html>
 <html lang="en">
