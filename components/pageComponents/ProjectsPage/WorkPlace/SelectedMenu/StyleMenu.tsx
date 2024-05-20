@@ -45,7 +45,7 @@ export const StyleMenu = () => {
       keys: ['title', obj => obj.items.map(o => o?.tags?.flat().join(' ') || '').join(' ')]
     });
     setMatchingSections(results.map(res => res.obj))
-  }, [query])
+  }, [query, sections])
 
   //add debouncing to query
   const debouncedSetQuery = useMemo(() => {

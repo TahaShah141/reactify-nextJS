@@ -21,8 +21,8 @@ export const fontSizeOptions: StyleType[] = (() => {
 
   for (const key of Object.keys(fontSizes)) {
     toReturn.push({
-      label: `font-${key}`,
-      tailwind: `font-${key}`,
+      label: `text-${key}`,
+      tailwind: `text-${key}`,
       CSSKey: ["fontSize", "lineHeight"],
       CSSValue: fontSizes[key]
     })
