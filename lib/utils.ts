@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ComponentType, ForeignComponentType, StyleType } from "@/lib/types";
 import mongoose from "mongoose";
+import { shadComponentsFileName } from "@/components/pageComponents/ProjectsPage/WorkPlace/Sidebar/CodePreview/codeUtils";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -70,7 +71,7 @@ function capitalizeFirstLetter(x: string) {
   return x[0].toUpperCase() + x.substring(1);
 }
 
-function findReactComponents(component: ComponentType | ForeignComponentType) {
+export function findReactComponents(component: ComponentType | ForeignComponentType) {
   if (!("children" in component)) return []; // return if foreign component
   
   let list = new Set<string>();
@@ -98,30 +99,20 @@ export const generateComponentCode = (
   name: string
 ): string => {
   const upperCaseName = capitalizeFirstLetter(name);
-  // const foreignComponents = findForeignComponents(component);
-  // const foreignComponentTabs = foreignComponents
-  //   .map((component) => component.data.tabID)
-  //   .concat(["card"]);
-  // const imports = Array.from(new Set(foreignComponentTabs))
-  //   .map(
-  //     (tab) =>
-  //       `import ${capitalizeFirstLetter(tab)} from "@/components/${tab}";`
-  //   )
-  //   .join("\n");
-  // console.log(findForeignComponents(component))
+
   console.log(findReactComponents(component))
     const foreignImports = findForeignComponents(component).map(tag => 
       `import ${capitalizeFirstLetter(tag)} from "@/components/${tag}";`
     ).join('\n');
     const shadImports = findReactComponents(component).map(tag => 
-      `import ${tag} from "@/components/ui/${tag}";`
+      `import { ${tag} } from "@/components/ui/${shadComponentsFileName(tag)}";`
     ).join('\n');
 
     const imports = [foreignImports, shadImports].filter(x => !!x).join("\n\n");
 
   return `${imports}
 
-  
+
 function ${upperCaseName}() {
   return (
 ${generateCode(component, 2)}

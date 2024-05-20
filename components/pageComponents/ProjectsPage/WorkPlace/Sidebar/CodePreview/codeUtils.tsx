@@ -13,6 +13,27 @@ export function downloadBlob(blob: Blob) {
   a.remove();
 }
 
+export function shadComponentsToInstallArg(shadComponents: string[]) {
+  const map: Record<string, string> = {
+    "Card": 'card',
+    "Input": 'input',
+    "Label": 'label',
+    "Button": 'button',
+  }
+  return shadComponents.reduce((arg, component) => arg + ' ' + map[component], '');
+}
+
+export function shadComponentsFileName(shadComponent: string) {
+  const map: Record<string, string> = {
+    "Card": 'card',
+    "Input": 'input',
+    "Label": 'label',
+    "Button": 'button',
+  }
+  return map[shadComponent];
+}
+
+// Deprecated
 export function downloadZip(tabNames: string[], codes: string[]) {
   const zip = new JSzip();
   const srcZip = zip.folder('src');
@@ -37,3 +58,4 @@ export function downloadZip(tabNames: string[], codes: string[]) {
     console.log(blob)
   })
 }
+

@@ -1,3 +1,5 @@
+import { shadComponentsToInstallArg } from "./codeUtils";
+
 export const packageJSON = `{
   "name": "base-shad-react",
   "private": true,
@@ -48,7 +50,7 @@ export function getPackageJSON(shadComponents: string[]) {
       "build": "vite build",
       "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
       "preview": "vite preview",
-      "postinstall": "npx shadcn-ui@latest add ${shadComponents.join(' ')}"
+      "postinstall": "npx shadcn-ui@latest add ${shadComponentsToInstallArg(shadComponents)}"
     },
     "dependencies": {
       "@radix-ui/react-slot": "^1.0.2",

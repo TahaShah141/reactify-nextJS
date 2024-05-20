@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/lib/redux/hooks"
 import { selectProject } from "@/lib/redux/store"
-import { generateComponentCode } from "@/lib/utils"
+import { findReactComponents, generateComponentCode } from "@/lib/utils"
 // import { downloadZip } from "./codeUtils";
 
 import CodeMirror from "@uiw/react-codemirror";
@@ -20,15 +20,16 @@ export const CodePreview = () => {
   const index = tabNames.findIndex(name => name === selected);
   const code = codes[index];
   const className = `px-4 min-w-48 w-48 h-9 flex items-center justify-center border rounded-sm hover:bg-foreground/10`
-
+  
   async function DownloadZip(filenames: string[], codes: string[]) {
+    const shadComponents = Array.from(new Set(tabNames.map(name => findReactComponents(tabs[name].root)).flat()))
     const res = await fetch('http://localhost:3000/api/code', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        codes, filenames
+        codes, filenames, shadComponents
       })
     })
     const blob = await res.blob();
