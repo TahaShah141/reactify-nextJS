@@ -24,7 +24,7 @@ export const CodePreview = () => {
   async function DownloadZip(filenames: string[], codes: string[]) {
     try {
       const shadComponents = Array.from(new Set(tabNames.map(name => findReactComponents(tabs[name].root)).flat()))
-      const res = await fetch('http://localhost:3000/api/code', { 
+      const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/code`, { 
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
