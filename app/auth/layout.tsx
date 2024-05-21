@@ -41,7 +41,7 @@ export default function AuthLayout({
 
   useEffect(() => {
     if (user?.email) {
-      router.push("/project?tab=Layers")
+      router.push("/project?tab=layers")
     }
   }, [user, router])
 

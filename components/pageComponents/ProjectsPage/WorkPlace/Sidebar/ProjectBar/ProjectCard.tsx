@@ -107,7 +107,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
       <p className="text-sm text-muted-foreground">{description}</p>
       {error && <p className="text-sm text-red-600">{error}</p>}
       {isCurrent ?
-      <Button disabled={error !== "" || loading} onClick={() => {if (project._id) {setLoading(true); saveProject()} else router.push("/project?tab=Save")}} variant={"outline"} className="flex items-center gap-2 flex-1">
+      <Button disabled={error !== "" || loading} onClick={() => {if (project._id) {setLoading(true); saveProject()} else router.push("/project?tab=save")}} variant={"outline"} className="flex items-center gap-2 flex-1">
         <p>Save Project</p>
         <Pencil1Icon />
       </Button>:

@@ -53,7 +53,7 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
     dispatch(addStyleOptions({styleOptions: newMemos}))
     dispatch(openSnippetAsProject({snippet: root as ComponentType}))
     setLoading(false)
-    router.push("/project?tab=Layers")
+    router.push("/project?tab=layers")
   }
 
   return (
