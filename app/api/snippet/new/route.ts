@@ -1,7 +1,6 @@
 import connectMongo from "@/lib/connectMongo"
 import { NextRequest, NextResponse } from "next/server"
 import Snippet from "@/models/SnippetModel"
-import { generateRootString } from "@/lib/utils"
 import { revalidateTag } from "next/cache"
 
 export async function POST(request: NextRequest) {
@@ -11,9 +10,7 @@ export async function POST(request: NextRequest) {
   try {
     await connectMongo()
 
-    const newRoot = await generateRootString(root)
-
-    const snippet = await Snippet.create({ creator, name, description, root: newRoot })
+    const snippet = await Snippet.create({ creator, name, description, root })
     await snippet.save()
     revalidateTag('all_snippets');
 

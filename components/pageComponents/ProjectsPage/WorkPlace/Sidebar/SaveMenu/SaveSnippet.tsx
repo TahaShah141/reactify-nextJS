@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { fetchSnippets } from "@/lib/redux/slices/snippetsSlice";
 import { selectProject, selectUser } from "@/lib/redux/store"
 import { ComponentType } from "@/lib/types"
+import { generateRootString } from "@/lib/utils";
 import { useState } from "react"
 
 export const SaveSnippet = () => {
@@ -28,10 +29,12 @@ export const SaveSnippet = () => {
 
   const saveSnippet = async (email: string, name: string, description: string, root: ComponentType) => {
 
+    const newRoot = await generateRootString(root)
+
     const { snippet, error } = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/new", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({email, name, description, root})
+      body: JSON.stringify({email, name, description, root: newRoot})
     })).json()
     dispatch(fetchSnippets());
 

@@ -8,7 +8,7 @@ import { openProject } from "@/lib/redux/slices/projectSlice"
 import { deleteProject } from "@/lib/redux/slices/userSlice"
 import { selectMemo, selectUser } from "@/lib/redux/store"
 import { FetchedProjectType, ProjectType, TabType } from "@/lib/types"
-import { deepCopy, parseRoot } from "@/lib/utils"
+import { deepCopy, generateRootString, parseRoot } from "@/lib/utils"
 import { DotsVerticalIcon, OpenInNewWindowIcon, Pencil1Icon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -50,6 +50,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
 
   const saveProject = async () => {
     const {tabs, _id} = project as ProjectType
+
+    const newTabs: Record<string, {imports: string[], root: string}> = {}
+
+    //TODO: change to promise.all for performance
+    for (const key of Object.keys(tabs)) {
+      newTabs[key] = {
+        ...tabs[key],
+        root: await generateRootString(tabs[key].root)
+      }
+    }
+
+    const finalTabs = JSON.stringify(newTabs)
+
     const { project: proj, error } = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/project/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
