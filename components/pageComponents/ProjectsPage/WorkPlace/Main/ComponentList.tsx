@@ -11,6 +11,7 @@ import { ComponentType } from "@/lib/types"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { Loading } from "@/components/custom/Loading"
 import { upsertSnippets } from "@/lib/redux/slices/projectSlice"
+import { upsertFavorites } from "@/lib/redux/slices/userSlice"
 
 const maxListWidth = `max-w-[calc(100vw-40rem-40px)]`
 
@@ -36,6 +37,8 @@ export const ComponentList = () => {
       })).json()
 
       if (!fetchedSnippets) return;
+
+      dispatch(upsertFavorites({favoriteSnippets: fetchedSnippets.map((snippet: {_id: string}) => snippet._id)}))
 
       setFetchedOnce(true)
 
