@@ -33,15 +33,15 @@ export const CodePreview = () => {
           codes, filenames, shadComponents
         })
       })
-      console.log(res);
-      console.log(await res.blob());
+      // console.log(res);
+      // console.log(await res.blob());
+      const blob = await res.blob();
+      console.log(blob)
+      downloadBlob(blob);
     } catch (e) { console.error(e) }
     finally {
       console.log("Done")
     }
-    // const blob = await res.blob();
-    // console.log(blob)
-    // downloadBlob(blob);
   }
 
 

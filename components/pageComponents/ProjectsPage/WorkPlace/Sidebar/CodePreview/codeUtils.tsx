@@ -19,6 +19,7 @@ export function shadComponentsToInstallArg(shadComponents: string[]) {
     "Input": 'input',
     "Label": 'label',
     "Button": 'button',
+    "Separator": 'seperator'
   }
   return shadComponents.reduce((arg, component) => arg + ' ' + map[component], '');
 }
