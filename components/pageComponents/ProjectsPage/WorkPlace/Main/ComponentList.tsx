@@ -51,13 +51,8 @@ export const ComponentList = () => {
       dispatch(addStyleOptions({styleOptions: memosToAdd}))
     }
     fetchSnippets()
+    setLoading(false)
   }, [user, dispatch, styleOptionsMemo])
-
-  useEffect(() => {
-    if (snippets.children.length > 0) {
-      setLoading(false)
-    }
-  }, [snippets])
 
   const tabList: Record<string, JSX.Element[]> = useMemo(() => ({
     "Basic": (supply.children[0] as ComponentType).children.map(child => <SupplyComponent key={child.id} component={child as ComponentType} />),
