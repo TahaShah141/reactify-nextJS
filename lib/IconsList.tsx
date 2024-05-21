@@ -93,6 +93,7 @@ import {
   CursorArrowIcon,
   CursorTextIcon,
   DashIcon,
+  DashboardIcon,
   DesktopIcon,
   DimensionsIcon,
   DiscIcon,
@@ -405,6 +406,7 @@ export const IconsList: Record<string, Record<string, JSX.Element>> =
   },
   "D": {
     "DashIcon": <DashIcon />,
+    "DashboardIcon": <DashboardIcon />,
     "DesktopIcon": <DesktopIcon />,
     "DimensionsIcon": <DimensionsIcon />,
     "DiscIcon": <DiscIcon />,
