@@ -13,7 +13,7 @@ const websiteName = "Reactify"
 
 const routes: NavLinksType[] = [
   { name: "Snippets", href: "/snippets", isProtected: false },
-  { name: "Project", href: "/project", isProtected: true },
+  { name: "Project", href: "/project?tab=layers", isProtected: true },
 ]
 
 export const mainHeightClass = "h-[calc(100vh-4rem)]"
