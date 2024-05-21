@@ -68,7 +68,7 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         items: [
           {tags: ["font", "family"], CSSKeys: ["fontFamily"], node: <StyleRadio rows={1} cols={3} label="Font Family" options={fontFamilyOptions} />},
           {tags: ["letter", "spacing"], CSSKeys: ["letterSpacing"], node: <StyleRadio rows={2} cols={3} label="Tracking" options={trackingOptions} />}, 
-          {tags: ["font", "size"], CSSKeys: ["fontSize"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
+          {tags: ["font", "size"], CSSKeys: ["fontSize", "lineHeight"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
           {tags: ["font", "weight"], CSSKeys: ["fontWeight"], node: <StyleRange label="Font Weight" options={fontWeightOptions} />},
         ]
       },
