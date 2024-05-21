@@ -141,8 +141,10 @@ export const generateComponentCode = (
         )}";`
     )
     .join("\n");
-  const icons = findReactIconComponents(component).join(", ");
-  const iconImports = icons ? `import { ${icons} } from "@radix-ui/react-icons";` : "";
+  const icons = findReactIconComponents(component).join(",\n  ");
+  const iconImports = icons ? `import {
+  ${icons},
+} from "@radix-ui/react-icons";` : "";
   console.log({ icons });
 
   const imports = [foreignImports, shadImports, iconImports]
