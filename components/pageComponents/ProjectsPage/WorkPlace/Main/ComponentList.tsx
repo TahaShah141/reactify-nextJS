@@ -27,13 +27,13 @@ export const ComponentList = () => {
   useEffect(() => {
     const fetchSnippets = async () => {
 
-      if (!user) return;
+      if (!user || snippets.children.length > 0) return;
       const {snippets: fetchedSnippets} = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/snippet/favorite/${user._id}`, {
         method: "GET",
         // next: {revalidate: 10}        
       })).json()
 
-      if (!snippets) return;
+      if (!fetchedSnippets) return;
 
       let memosToAdd = {}
       const newSnippets: ComponentType[] = []
@@ -47,7 +47,7 @@ export const ComponentList = () => {
       dispatch(addStyleOptions({styleOptions: memosToAdd}))
     }
     fetchSnippets()
-  }, [user, dispatch, styleOptionsMemo, snippets])
+  }, [user, dispatch, styleOptionsMemo])
 
   useEffect(() => {
     if (snippets.children.length > 0) {
