@@ -66,7 +66,7 @@ export const Sidebar = ({ tab }: { tab: string }) => {
         <div className="flex flex-col items-center h-full">
           {sidebarTabs.map((t, i) => (
             t.name === "gap" ? t.toRender :
-              <Link
+              <Link key={t.name}
                 className={` size-14 relative hover:bg-secondary rounded-lg  flex justify-center group items-center ${tab === t.name ? "text-primary" : "text-muted-foreground"}`}
                 href={{ query: { tab: t.name } }}>
                 {t.icon}

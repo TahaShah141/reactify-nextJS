@@ -145,7 +145,6 @@ export const generateComponentCode = (
   const iconImports = icons ? `import {
   ${icons},
 } from "@radix-ui/react-icons";` : "";
-  console.log({ icons });
 
   const imports = [foreignImports, shadImports, iconImports]
     .filter((x) => !!x)

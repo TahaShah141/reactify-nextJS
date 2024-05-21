@@ -48,7 +48,7 @@ export const Layer: React.FC<{component: ComponentType}> = ({component}) => {
   const layerClicked = useCallback(() => {
     if (!controlPressed) return;
     dispatch(updateSelected({selectedID: id}))
-  }, [controlPressed])
+  }, [controlPressed, id, dispatch])
 
   return (
     <Accordion {...props} type='single' collapsible>

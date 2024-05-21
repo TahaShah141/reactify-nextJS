@@ -28,7 +28,7 @@ export const TailwindGridSize = () => {
     if (component && hoverIndex[0] !== rows && hoverIndex[1] !== cols) {
       setHoverIndex([rows, cols])
     }
-  }, [rows, cols])
+  }, [rows, cols, component, hoverIndex])
 
   return (
     <div className='flex flex-col gap-2'>
@@ -44,9 +44,9 @@ export const TailwindGridSize = () => {
           <div onMouseLeave={() => setHoverIndex([rows, cols])} className='flex flex-col gap-2'>
             <div className='flex flex-col gap-0.5'>
               {Array.from({ length: 12 }).map((_, row) => (
-                <div className='flex gap-0.5'>
+                <div className='flex gap-0.5' key={row}>
                   {Array.from({ length: 12 }).map((_, col) => (
-                    <div className={`size-5 rounded-sm ${row <= hoverIndex[0] && col <= hoverIndex[1] ? "bg-foreground" : "bg-secondary" } ${
+                    <div key={col} className={`size-5 rounded-sm ${row <= hoverIndex[0] && col <= hoverIndex[1] ? "bg-foreground" : "bg-secondary" } ${
                       row <= rows && col <= cols ? "bg-foreground" : ""
                     } ${row === hoverIndex[0] && col === hoverIndex[1] ? "bg-foreground" : ""
                     }`}

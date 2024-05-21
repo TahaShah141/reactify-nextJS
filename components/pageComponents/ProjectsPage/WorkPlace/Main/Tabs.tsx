@@ -18,7 +18,7 @@ export const Tabs = () => {
       <ScrollArea className={`w-full h-full ${maxWorkTabsWidth}`}>
         <div className={`flex-1 items-center flex gap-2 overflow-hidden`}>
         {Object.keys(tabs).map(tab =>
-          <ContextMenu>
+          <ContextMenu key={tab}>
             <ContextMenuTrigger asChild>
               <button className={`px-4 min-w-48 w-48 h-9 flex items-center justify-center border rounded-sm hover:bg-foreground/10 ${currentTab === tab ? "text-primary bg-foreground/5" : "text-muted-foreground"}`} onClick={() => dispatch(switchTab({newTab: tab}))}>{`${tab.substring(0, 15)}${tab.length >= 15 ? "..." : ""}`}</button>
             </ContextMenuTrigger>

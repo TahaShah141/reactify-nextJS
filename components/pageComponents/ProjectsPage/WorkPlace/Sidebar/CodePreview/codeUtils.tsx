@@ -57,7 +57,6 @@ export function downloadZip(tabNames: string[], codes: string[]) {
 
   zip.generateAsync({ type: 'blob' }).then(blob => {
     downloadBlob(blob);
-    console.log(blob)
   })
 }
 

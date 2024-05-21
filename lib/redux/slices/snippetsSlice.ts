@@ -6,7 +6,6 @@ export const fetchSnippets = createAsyncThunk(
   async (_, api) => {
     api.dispatch(setLoading(true));
     try {
-      console.log("fetchig all snippets");
       const res = await fetch(
         process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/all"
         , {

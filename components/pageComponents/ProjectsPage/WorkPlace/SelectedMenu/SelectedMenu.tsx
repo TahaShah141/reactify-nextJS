@@ -28,7 +28,7 @@ export const SelectedMenu = () => {
     return (
       <div className={`flex flex-col w-full gap-2 justify-center items-center`} style={{ height: 'calc(100vh - 60px)' }}>
         <p className="text-lg font-bold">Style Menu</p>
-        <p className="text-sm text-muted-foreground">Can't change imported component's style</p>
+        <p className="text-sm text-muted-foreground">{"Can't change imported component's style"}</p>
       </div>
     )
 

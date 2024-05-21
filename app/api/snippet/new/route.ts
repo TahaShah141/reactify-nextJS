@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
 
     const snippet = await Snippet.create({ creator, name, description, root: newRoot })
     await snippet.save()
-    console.log("Revalidating all_snippets");
     revalidateTag('all_snippets');
 
     return NextResponse.json({snippet})
