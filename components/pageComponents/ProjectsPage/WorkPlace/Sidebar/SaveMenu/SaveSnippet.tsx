@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { getParentChild, populateComponent } from "@/lib/componentType"
-import { useAppSelector } from "@/lib/redux/hooks"
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { fetchSnippets } from "@/lib/redux/slices/snippetsSlice";
 import { selectProject, selectUser } from "@/lib/redux/store"
 import { ComponentType } from "@/lib/types"
 import { useState } from "react"
@@ -15,7 +16,7 @@ export const SaveSnippet = () => {
 
   const {tabs, currentTab, selectedPath} = useAppSelector(selectProject)
   const component = selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child : undefined
-
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false)
   const [state, setState] = useState({
     name: "",
@@ -32,6 +33,7 @@ export const SaveSnippet = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({email, name, description, root})
     })).json()
+    dispatch(fetchSnippets());
 
     
     if (error) {
