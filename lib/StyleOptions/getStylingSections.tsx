@@ -55,24 +55,6 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         ] 
       },
       {
-        title: "Attributes",
-        showCards: true,
-        items: [
-          {tags: ["inner", "text", 'content'], 
-          node: <AttributeMenu />},
-        ]
-      },
-      {
-        title: 'Font',
-        showCards: true,
-        items: [
-          {tags: ["font", "family"], CSSKeys: ["fontFamily"], node: <StyleRadio rows={1} cols={3} label="Font Family" options={fontFamilyOptions} />},
-          {tags: ["letter", "spacing"], CSSKeys: ["letterSpacing"], node: <StyleRadio rows={2} cols={3} label="Tracking" options={trackingOptions} />}, 
-          {tags: ["font", "size"], CSSKeys: ["fontSize", "lineHeight"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
-          {tags: ["font", "weight"], CSSKeys: ["fontWeight"], node: <StyleRange label="Font Weight" options={fontWeightOptions} />},
-        ]
-      },
-      {
         title: 'Layout',
         showCards: true,
         items: [
@@ -97,6 +79,24 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
           {tags: ["margin", "spacing"], CSSKeys: ["margin", "marginLeft", "marginRight", "marginTop", "marginBottom", ["marginLeft", "marginRight"], ["marginTop", "marginBottom"]], 
           node: <TailwindMargin />},
           {tags: ["aspect", "ratio"], CSSKeys: ["aspectRatio"], node: <StyleRadio rows={1} cols={3} label='Aspect Ratio' options={aspectRatioOptions} />},
+        ]
+      },
+      {
+        title: "Attributes",
+        showCards: true,
+        items: [
+          {tags: ["inner", "text", 'content'], 
+          node: <AttributeMenu />},
+        ]
+      },
+      {
+        title: 'Font',
+        showCards: true,
+        items: [
+          {tags: ["font", "family"], CSSKeys: ["fontFamily"], node: <StyleRadio rows={1} cols={3} label="Font Family" options={fontFamilyOptions} />},
+          {tags: ["letter", "spacing"], CSSKeys: ["letterSpacing"], node: <StyleRadio rows={2} cols={3} label="Tracking" options={trackingOptions} />}, 
+          {tags: ["font", "size"], CSSKeys: ["fontSize", "lineHeight"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
+          {tags: ["font", "weight"], CSSKeys: ["fontWeight"], node: <StyleRange label="Font Weight" options={fontWeightOptions} />},
         ]
       },
       {
