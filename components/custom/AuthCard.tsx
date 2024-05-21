@@ -43,7 +43,6 @@ export const AuthCard: React.FC<AuthCardProps> = ({title, desc, buttonText, altT
     setLoading(false)
 
     if (user) {
-      console.log("LOGGING IN", {user})
       dispatch(SignIn({user}))
     }
   }

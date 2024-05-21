@@ -30,7 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({name, routes}) => {
     if (currentRoute.isProtected && !user) {
       router.push("/auth/login")
     }
-  }, [pathname])
+  }, [pathname, user, router])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

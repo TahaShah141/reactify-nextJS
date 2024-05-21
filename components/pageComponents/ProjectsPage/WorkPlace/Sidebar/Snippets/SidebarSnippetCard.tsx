@@ -30,7 +30,7 @@ export const SidebarSnippetCard: React.FC<Props> = ({snippet}) => {
       dispatch(addStyleOptions({styleOptions: newMemos}))
       dispatch(copyIntoClipboard({component}))
       setLoading(false)
-    }, [styleOptionsMemo])
+    }, [styleOptionsMemo, dispatch, snippet])
 
   const toggleFavorite = async () => {
 

@@ -24,7 +24,6 @@ export const AttributeMenu = () => {
 
     function handler(e: KeyboardEvent) {
       if (e.ctrlKey && e.key === 'i' && component) {
-        console.log("first");
         (inputRef.current as HTMLInputElement).focus();
       }
     }
@@ -32,12 +31,15 @@ export const AttributeMenu = () => {
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler);
     
-  }, [inputRef.current]);
+  }, [component]);
 
   return (
     <div className="flex flex-col gap-2 p-2">
       <Label className="text-md">Inner Text:</Label>
-      <Input ref={inputRef} placeholder={"Inner Text"} value={(component as ComponentType).innerText || ""} onChange={(e) => dispatch(setSelectedInnerText({ text: e.target.value }))} className="w-full" />
+      <Input 
+      //@ts-ignore 
+      ref={inputRef} 
+      placeholder={"Inner Text"} value={(component as ComponentType).innerText || ""} onChange={(e) => dispatch(setSelectedInnerText({ text: e.target.value }))} className="w-full" />
     </div>
   )
 }

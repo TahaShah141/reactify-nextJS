@@ -47,7 +47,7 @@ export const ComponentList = () => {
       dispatch(addStyleOptions({styleOptions: memosToAdd}))
     }
     fetchSnippets()
-  }, [user, user?.favoriteSnippets])
+  }, [user, dispatch, styleOptionsMemo, snippets])
 
   useEffect(() => {
     if (snippets.children.length > 0) {
@@ -62,7 +62,7 @@ export const ComponentList = () => {
     "Custom": Object.keys(tabs).map(tab => <Tab key={tab} id={tab} />),
     "Snippets":  snippets.children.map(child => <SupplyComponent key={child.id} component={child as ComponentType} />
   )
-  }), [tabs, snippets])
+  }), [tabs, snippets, supply])
 
   const [tab, setTab] = useState<string>("Basic")
 
@@ -101,7 +101,7 @@ export const ComponentList = () => {
           <Button size={"icon"} variant={"ghost"} onClick={incrementIndex}><ChevronRightIcon /></Button>
         </div>
         <Card className="flex-1 w-full rounded-sm max-w-3xl p-1 flex gap-1 justify-center items-center">
-          {Object.keys(tabList).map(type => <Button className="flex-1 rounded-sm" variant={type === tab ? "secondary" : "ghost"} onClick={() => setTab(type)}>{type}</Button>)}
+          {Object.keys(tabList).map(type => <Button className="flex-1 rounded-sm" key={type} variant={type === tab ? "secondary" : "ghost"} onClick={() => setTab(type)}>{type}</Button>)}
         </Card>
       </div>    
     </div>

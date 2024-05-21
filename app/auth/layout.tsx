@@ -37,13 +37,13 @@ export default function AuthLayout({
       }
     }
     verifyUser()
-  }, [data])
+  }, [data, user, dispatch])
 
   useEffect(() => {
     if (user?.email) {
       router.push("/project?tab=Layers")
     }
-  }, [user])
+  }, [user, router])
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">

@@ -13,7 +13,7 @@ export const AllSnippets = memo(() => {
     if (snippets.length === 0) {
       dispatch(fetchSnippets());
     }
-  }, [snippets.length])
+  }, [snippets.length, dispatch])
     
   return (
     <div className="flex flex-wrap gap-4">
@@ -21,5 +21,6 @@ export const AllSnippets = memo(() => {
       {loading && <Loading />}
     </div>
   )
-}
-)
+})
+
+AllSnippets.displayName = "AllSnippets"

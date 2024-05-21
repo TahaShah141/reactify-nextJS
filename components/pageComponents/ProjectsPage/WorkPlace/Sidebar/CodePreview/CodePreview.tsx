@@ -33,10 +33,7 @@ export const CodePreview = () => {
           codes, filenames, shadComponents
         })
       })
-      // console.log(res);
-      // console.log(await res.blob());
       const blob = await res.blob();
-      console.log(blob)
       downloadBlob(blob);
     } catch (e) { console.error(e) }
     finally {
@@ -51,7 +48,7 @@ export const CodePreview = () => {
     }} className=" flex p-2 gap-4 flex-col">
       <div className="flex gap-4">
         {tabNames.map((name) =>
-          <button
+          <button key={name}
             onClick={() => setSelected(name)}
             className={`${className} ${selected === name ? "text-primary bg-foreground/5" : "text-muted-foreground"}`}>{name}.jsx</button>
         )}

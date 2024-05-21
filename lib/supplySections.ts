@@ -384,8 +384,8 @@ export const ShadCnSection: ComponentType =
       }
     },
     {
-      id: "H-Separator",
-      tag: "H-Separator",
+      id: "Separator",
+      tag: "Separator",
       innerText: "",
       className: ``,
       styleOptions: [],

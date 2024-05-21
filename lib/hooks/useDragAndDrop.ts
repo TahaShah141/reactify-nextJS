@@ -19,8 +19,7 @@ export const useDragAndDrop: () => DragAndDropType = () => {
   const dispatch = useAppDispatch()
   const { controlPressed } = useControlPressed()
 
-  const supplies = ["SNIPPETS", "SUPPLY"]
-
+  
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -28,9 +27,10 @@ export const useDragAndDrop: () => DragAndDropType = () => {
       }
     })
   )
-
+  
   const handleDragEnd = useCallback((e: DragEndEvent) => {
-
+    
+    const supplies = ["SNIPPETS", "SUPPLY"]
     const {active, over} = e
 
     if (!over) return;
@@ -138,7 +138,7 @@ export const useDragAndDrop: () => DragAndDropType = () => {
       dispatch(moveComponent({oldParentPath: draggedParent.data.path, newParentPath: newParent.data.path, child: newChild, adding, removing}))
     }
     
-  }, [tabs, controlPressed, snippets.children.length, supply.children.length])
+  }, [tabs, controlPressed, snippets, supply, currentTab, dispatch])
 
   return {
     sensors,

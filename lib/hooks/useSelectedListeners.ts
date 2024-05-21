@@ -15,7 +15,7 @@ export const useSelectedListeners = (component: ComponentType | ForeignComponent
     window.addEventListener('keydown', deleteComponentOnDelete)
 
     return () => window.removeEventListener('keydown', deleteComponentOnDelete)
-  }, [component])
+  }, [component, dispatch])
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const useSelectedListeners = (component: ComponentType | ForeignComponent
     window.addEventListener('keydown', copyComponentOnCtrlC)
 
     return () => window.removeEventListener('keydown', copyComponentOnCtrlC)
-  }, [component])
+  }, [component, dispatch])
 
   useEffect(() => {
     const copyComponentOnCtrlV = (e: KeyboardEvent) => {
@@ -36,5 +36,5 @@ export const useSelectedListeners = (component: ComponentType | ForeignComponent
     window.addEventListener('keydown', copyComponentOnCtrlV)
 
     return () => window.removeEventListener('keydown', copyComponentOnCtrlV)
-  }, [component])
+  }, [component, dispatch])
 }

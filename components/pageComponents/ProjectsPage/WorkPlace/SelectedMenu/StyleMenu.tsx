@@ -25,7 +25,7 @@ export const StyleMenu = () => {
   const sections: Section[] = useMemo(() => {
     const customClassButtons =
       customClasses.map(Class =>
-        <Button className="w-full" variant="outline"
+        <Button className="w-full" variant="outline" key={Class.name}
           onClick={() =>
             Class.styles.forEach(style =>
               dispatch(updateSelectedStyle({ newStyle: style }))
@@ -33,7 +33,7 @@ export const StyleMenu = () => {
           }>{Class.name}</Button>)
 
     return component ? getStylingSections(component, customClassButtons) : []
-  }, [component, customClasses])
+  }, [component, customClasses, dispatch])
 
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export const StyleMenu = () => {
 
       <div className="flex flex-col gap-6">
         {matchingSections.map(section =>
-          <div className="">
+          <div className="" key={section.title}>
             <h2 className="text-lg">{section.title}</h2>
             <div className="flex w-full h-fit flex-col gap-2">
               {section.items.map((item, i) =>

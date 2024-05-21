@@ -27,7 +27,7 @@ export const componentsToClone: Record<string, JSX.Element> = {
   "Card": <Card></Card>,
   "Input": <Input />,
   "Label": <Label></Label>,
-  "H-Separator": <Separator />,
+  "Separator": <Separator />,
   
   //Typography
   "p": <p></p>,

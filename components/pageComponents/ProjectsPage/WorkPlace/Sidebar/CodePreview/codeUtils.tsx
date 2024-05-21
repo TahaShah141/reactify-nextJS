@@ -19,7 +19,7 @@ export function shadComponentsToInstallArg(shadComponents: string[]) {
     "Input": 'input',
     "Label": 'label',
     "Button": 'button',
-    "Separator": 'seperator'
+    "Separator": 'separator'
   }
   return shadComponents.reduce((arg, component) => arg + ' ' + map[component], '');
 }
@@ -30,6 +30,7 @@ export function shadComponentsFileName(shadComponent: string) {
     "Input": 'input',
     "Label": 'label',
     "Button": 'button',
+    "Separator": 'separator'
   }
   return map[shadComponent];
 }
@@ -56,7 +57,6 @@ export function downloadZip(tabNames: string[], codes: string[]) {
 
   zip.generateAsync({ type: 'blob' }).then(blob => {
     downloadBlob(blob);
-    console.log(blob)
   })
 }
 

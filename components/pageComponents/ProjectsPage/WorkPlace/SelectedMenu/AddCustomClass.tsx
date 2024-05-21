@@ -30,7 +30,7 @@ export const AddCustomClass = () => {
           <div className="flex flex-col gap-2">
             <h4 className="font-medium leading-none">Add Custom Class</h4>
             <p className="text-sm text-muted-foreground">
-              Save Selected Component's style to class
+              {"Save Selected Component's style to class"}
             </p>
           </div>
           <div className="flex gap-2">

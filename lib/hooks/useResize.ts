@@ -22,7 +22,7 @@ export function useResize(tab: string) {
       selectMenuRef.current.resize(saved[0]);
       mainRef.current.resize(saved[1]);
     }
-  }, [selectMenuRef.current, mainRef.current, tab]);
+  }, [selectMenuRef.current, mainRef.current, tab, fullWidthTabs, saved]);
 
   return {sidebarRef, mainRef, selectMenuRef};
 }

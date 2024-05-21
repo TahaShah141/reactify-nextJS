@@ -265,7 +265,6 @@ export const projectSlice = createSlice({
       if (!('children' in child)) {
         const tabName = child.data.tabID
         if (!containsTab(root, tabName)) {
-          console.log("REMOVED", tabName)
           tabs[currentTab].imports = tabs[currentTab].imports.filter((tab) => tab !== tabName)
         }
       }
