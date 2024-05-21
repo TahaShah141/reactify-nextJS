@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server"
 import Project from "@/models/ProjectModel"
 import User from "@/models/UserModel"
 
+export const dynamic = 'force-dynamic' // defaults to auto
+
 type RouteParams = {
   params: {
     id: string
