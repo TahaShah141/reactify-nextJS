@@ -19,6 +19,8 @@ export const ComponentList = () => {
   const { supply, tabs, snippets } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
 
+  const [fetchedOnce, setFetchedOnce] = useState(false)
+
   const { user } = useAppSelector(selectUser)
   const { styleOptionsMemo } = useAppSelector(selectMemo)
 
@@ -27,13 +29,15 @@ export const ComponentList = () => {
   useEffect(() => {
     const fetchSnippets = async () => {
 
-      if (!user || snippets.children.length > 0) return;
+      if (!user || fetchedOnce) return;
       const {snippets: fetchedSnippets} = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/snippet/favorite/${user._id}`, {
         method: "GET",
         // next: {revalidate: 10}        
       })).json()
 
       if (!fetchedSnippets) return;
+
+      setFetchedOnce(true)
 
       let memosToAdd = {}
       const newSnippets: ComponentType[] = []
