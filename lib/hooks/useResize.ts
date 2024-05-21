@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ImperativePanelHandle } from "react-resizable-panels";
 
 export function useResize(tab: string) {
-  const fullWidthTabs = ["Code Preview", "Settings"];
+  const fullWidthTabs = ["Code Preview"];
   const sidebarRef = useRef<ImperativePanelHandle>();
   const mainRef = useRef<ImperativePanelHandle>();
   const selectMenuRef = useRef<ImperativePanelHandle>();
