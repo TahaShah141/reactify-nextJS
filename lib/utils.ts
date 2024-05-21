@@ -71,22 +71,49 @@ function capitalizeFirstLetter(x: string) {
   return x[0].toUpperCase() + x.substring(1);
 }
 
-export function findReactComponents(component: ComponentType | ForeignComponentType) {
+export function findReactComponents(
+  component: ComponentType | ForeignComponentType
+) {
   if (!("children" in component)) return []; // return if foreign component
-  
+
   let list = new Set<string>();
-  const reactTagRegex = /[A-Z][a-zA-Z0-9]*/;
-  if (reactTagRegex.test(component.tag)) {
+  const reactTagRegex = /^[A-Z][a-zA-Z0-9]*/; // Match react tags not ending with "Icon".
+  if (reactTagRegex.test(component.tag) && !component.tag.endsWith("Icon")) {
     list.add(component.tag);
   }
-  component.children.map(findReactComponents).flat().forEach(x => list.add(x));
+  component.children
+    .map(findReactComponents)
+    .flat()
+    .forEach((x) => list.add(x));
   return Array.from(list);
 }
 
-function findForeignComponents(component: ComponentType | ForeignComponentType) {
+export function findReactIconComponents(
+  component: ComponentType | ForeignComponentType
+) {
+  if (!("children" in component)) return []; // return if foreign component
+
+  let list = new Set<string>();
+  const reactTagRegex = /[A-Z][a-zA-Z0-9]*Icon/;
+  if (reactTagRegex.test(component.tag)) {
+    list.add(component.tag);
+  }
+  component.children
+    .map(findReactIconComponents)
+    .flat()
+    .forEach((x) => list.add(x));
+  return Array.from(list);
+}
+
+function findForeignComponents(
+  component: ComponentType | ForeignComponentType
+) {
   let list = new Set<string>();
   if ("children" in component) {
-    component.children.map(findForeignComponents).flat().forEach(x => list.add(x));
+    component.children
+      .map(findForeignComponents)
+      .flat()
+      .forEach((x) => list.add(x));
   } else {
     list.add(component.data.tabID);
   }
@@ -99,15 +126,28 @@ export const generateComponentCode = (
 ): string => {
   const upperCaseName = capitalizeFirstLetter(name);
 
-  console.log(findReactComponents(component))
-    const foreignImports = findForeignComponents(component).map(tag => 
-      `import ${capitalizeFirstLetter(tag)} from "@/components/${tag}";`
-    ).join('\n');
-    const shadImports = findReactComponents(component).map(tag => 
-      `import { ${tag} } from "@/components/ui/${shadComponentsFileName(tag)}";`
-    ).join('\n');
+  console.log(findReactComponents(component));
+  const foreignImports = findForeignComponents(component)
+    .map(
+      (tag) =>
+        `import ${capitalizeFirstLetter(tag)} from "@/components/${tag}";`
+    )
+    .join("\n");
+  const shadImports = findReactComponents(component)
+    .map(
+      (tag) =>
+        `import { ${tag} } from "@/components/ui/${shadComponentsFileName(
+          tag
+        )}";`
+    )
+    .join("\n");
+  const icons = findReactIconComponents(component).join(", ");
+  const iconImports = icons ? `import { ${icons} } from "@radix-ui/react-icons";` : "";
+  console.log({ icons });
 
-    const imports = [foreignImports, shadImports].filter(x => !!x).join("\n\n");
+  const imports = [foreignImports, shadImports, iconImports]
+    .filter((x) => !!x)
+    .join("\n\n");
 
   return `${imports}
 
