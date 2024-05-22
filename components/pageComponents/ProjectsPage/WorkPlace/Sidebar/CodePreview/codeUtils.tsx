@@ -1,6 +1,6 @@
 
 import JSzip from "jszip"
-import { cardJSX, eslintrcCJS, gitignore, indexHTML, mainJSX, packageJSON, postcssConfigJS, tailwindConfigJS, viteConfigJS, viteSVG } from "./fileConstants";
+import { cardJSX, eslintrcCJS, gitignore, getIndexHTML, mainJSX, packageJSON, postcssConfigJS, tailwindConfigJS, viteConfigJS, viteSVG } from "./fileConstants";
 
 export function downloadBlob(projectName: string, blob: Blob) {
   var a = document.createElement("a");
