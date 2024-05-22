@@ -16,6 +16,24 @@ export const heightOptions: StyleType[] =
     CSSKey: 'height',
     CSSValue: '100%',
   },
+  {
+    label: 'min',
+    tailwind: 'h-min',
+    CSSKey: 'height',
+    CSSValue: 'min-content',
+  },
+  {
+    label: 'max',
+    tailwind: 'h-max',
+    CSSKey: 'height',
+    CSSValue: 'max-content',
+  },
+  {
+    label: 'fit',
+    tailwind: 'h-fit',
+    CSSKey: 'height',
+    CSSValue: 'fit-content',
+  },
   // {
   //   label: "Screen",
   //   tailwind: 'h-screen',

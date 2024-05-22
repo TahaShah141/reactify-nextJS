@@ -2,6 +2,9 @@ import connectMongo from "@/lib/connectMongo"
 import { NextResponse } from "next/server"
 import Snippet from "@/models/SnippetModel"
 
+export const dynamic = 'force-dynamic' // defaults to auto
+
+
 export async function GET() {
 
   try {

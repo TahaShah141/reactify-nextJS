@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/custom/themeProvider";
 import SessionProvider from "@/components/SessionProvider"
 import { getServerSession } from "next-auth";
 import { NavLinksType } from "@/lib/types";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +14,7 @@ const websiteName = "Reactify"
 
 const routes: NavLinksType[] = [
   { name: "Snippets", href: "/snippets", isProtected: false },
-  { name: "Project", href: "/project", isProtected: true },
+  { name: "Project", href: "/project?tab=layers", isProtected: true },
 ]
 
 export const mainHeightClass = "h-[calc(100vh-4rem)]"
@@ -36,6 +37,7 @@ export default async function RootLayout({
                 <div className={`w-screen ${mainHeightClass}`}>
                   {children}
                 </div>
+                <Toaster />
               </ThemeProvider>
             </SessionProvider>
           </StoreProvider>

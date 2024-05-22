@@ -11,6 +11,7 @@ import { ComponentType } from "@/lib/types"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { Loading } from "@/components/custom/Loading"
 import { upsertSnippets } from "@/lib/redux/slices/projectSlice"
+import { upsertFavorites } from "@/lib/redux/slices/userSlice"
 
 const maxListWidth = `max-w-[calc(100vw-40rem-40px)]`
 
@@ -18,6 +19,8 @@ export const ComponentList = () => {
 
   const { supply, tabs, snippets } = useAppSelector(selectProject)
   const dispatch = useAppDispatch()
+
+  const [fetchedOnce, setFetchedOnce] = useState(false)
 
   const { user } = useAppSelector(selectUser)
   const { styleOptionsMemo } = useAppSelector(selectMemo)
@@ -27,13 +30,17 @@ export const ComponentList = () => {
   useEffect(() => {
     const fetchSnippets = async () => {
 
-      if (!user) return;
+      if (!user || fetchedOnce) return;
       const {snippets: fetchedSnippets} = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/snippet/favorite/${user._id}`, {
         method: "GET",
         // next: {revalidate: 10}        
       })).json()
 
-      if (!snippets) return;
+      if (!fetchedSnippets) return;
+
+      dispatch(upsertFavorites({favoriteSnippets: fetchedSnippets.map((snippet: {_id: string}) => snippet._id)}))
+
+      setFetchedOnce(true)
 
       let memosToAdd = {}
       const newSnippets: ComponentType[] = []
@@ -47,13 +54,8 @@ export const ComponentList = () => {
       dispatch(addStyleOptions({styleOptions: memosToAdd}))
     }
     fetchSnippets()
-  }, [user, dispatch, styleOptionsMemo, snippets])
-
-  useEffect(() => {
-    if (snippets.children.length > 0) {
-      setLoading(false)
-    }
-  }, [snippets])
+    setLoading(false)
+  }, [user, dispatch, styleOptionsMemo])
 
   const tabList: Record<string, JSX.Element[]> = useMemo(() => ({
     "Basic": (supply.children[0] as ComponentType).children.map(child => <SupplyComponent key={child.id} component={child as ComponentType} />),

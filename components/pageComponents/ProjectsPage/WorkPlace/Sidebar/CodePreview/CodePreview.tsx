@@ -10,21 +10,25 @@ import { javascript } from "@codemirror/lang-javascript";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { useState } from "react";
 import { downloadBlob } from "./codeUtils";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { PopoverClose } from "@radix-ui/react-popover";
+import { Input } from "@/components/ui/input";
 
 export const CodePreview = () => {
   const [selected, setSelected] = useState("App");
   const { tabs } = useAppSelector(selectProject);
+  const [zipName, setZipName] = useState("project");
 
   const tabNames = Object.keys(tabs);
   const codes = tabNames.map(name => generateComponentCode(tabs[name].root, name));
   const index = tabNames.findIndex(name => name === selected);
   const code = codes[index];
-  const className = `px-4 min-w-48 w-48 h-9 flex items-center justify-center border rounded-sm hover:bg-foreground/10`
 
-  async function DownloadZip(filenames: string[], codes: string[]) {
+  async function DownloadZip(projectName: string, filenames: string[], codes: string[]) {
     try {
       const shadComponents = Array.from(new Set(tabNames.map(name => findReactComponents(tabs[name].root)).flat()))
-      const res = await fetch('http://localhost:3000/api/code', { 
+      const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `/code`, { 
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -34,12 +38,14 @@ export const CodePreview = () => {
         })
       })
       const blob = await res.blob();
-      downloadBlob(blob);
+      downloadBlob(projectName, blob);
     } catch (e) { console.error(e) }
     finally {
       console.log("Done")
     }
   }
+
+  const isNameAvailable = zipName.length > 0 && !zipName.includes(" ");
 
 
   return (
@@ -48,13 +54,27 @@ export const CodePreview = () => {
     }} className=" flex p-2 gap-4 flex-col">
       <div className="flex gap-4">
         {tabNames.map((name) =>
-          <button key={name}
+          <Button variant={"outline"} key={name}
             onClick={() => setSelected(name)}
-            className={`${className} ${selected === name ? "text-primary bg-foreground/5" : "text-muted-foreground"}`}>{name}.jsx</button>
+            className={`${selected === name ? "text-primary bg-foreground/5" : "text-muted-foreground"}`}>{name}.jsx</Button>
         )}
-        <button
-          onClick={() => DownloadZip(tabNames, codes)}
-          className={`${className} text-muted-foreground`}>Download as Zip</button>
+        <Popover>
+          <PopoverTrigger asChild><Button>Download as Zip</Button></PopoverTrigger>
+          <PopoverContent className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
+            <h4 className="font-medium leading-none">Name Project</h4>
+            <p className="text-sm text-muted-foreground">
+              Choose a name for your project
+            </p>
+          </div>
+          <form className="flex gap-2">
+            <Input value={zipName} onChange={(e) => setZipName(e.target.value)} placeholder="Project Name" />
+            <PopoverClose>  
+              <Button disabled={!isNameAvailable} onClick={() => {setZipName("project"); DownloadZip(zipName, tabNames, codes)}} >Zip</Button>
+            </PopoverClose>
+          </form>
+        </PopoverContent>
+        </Popover>
       </div>
       <div className="  flex-1 flex items-stretch">
 

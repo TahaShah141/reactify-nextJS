@@ -243,7 +243,7 @@ export const projectSlice = createSlice({
       //ignore ForeignComponent
       if (!('styleOptions' in selected)) return;
 
-      selected.styleOptions = selected.styleOptions.filter((option) => getSingularValue(option.tailwind) !== getSingularValue(tailwind))
+      selected.styleOptions = selected.styleOptions.filter((option) => option.tailwind !== tailwind)
     },
 
     deleteSelected: (state) => {

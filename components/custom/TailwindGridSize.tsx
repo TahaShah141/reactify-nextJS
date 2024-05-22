@@ -28,7 +28,7 @@ export const TailwindGridSize = () => {
     if (component && hoverIndex[0] !== rows && hoverIndex[1] !== cols) {
       setHoverIndex([rows, cols])
     }
-  }, [rows, cols, component, hoverIndex])
+  }, [rows, cols])
 
   return (
     <div className='flex flex-col gap-2'>

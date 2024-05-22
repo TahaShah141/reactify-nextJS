@@ -31,7 +31,7 @@ export const StyleRange: React.FC<RangeProps> = ({ label, placeholder, options }
     <div className='flex flex-1 justify-between items-center'>
       {label && <Label className="text-sm">{label}</Label>}
       <Select 
-      value={index === -1 ? undefined : getSingularValue(options[index].tailwind)}
+      value={index === -1 ? undefined : options[index].tailwind}
       onValueChange={(value) => {
         const newStyle = options.find((option) => option.tailwind === value);
         if (newStyle) dispatch(updateSelectedStyle({ newStyle }))
@@ -41,7 +41,7 @@ export const StyleRange: React.FC<RangeProps> = ({ label, placeholder, options }
         </SelectTrigger>
         <SelectContent>
           {options.map((option) => (
-            <SelectItem key={getSingularValue(option.tailwind)} value={getSingularValue(option.tailwind)}>
+            <SelectItem key={option.tailwind} value={option.tailwind}>
               {option.label}
             </SelectItem>
           ))}

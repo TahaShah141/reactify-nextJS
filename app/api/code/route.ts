@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     shadComponents: string[];
   };
 
-  const res = await fetch("http://localhost:3000/base-shad.zip");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/base-shad.zip`);
   const baseZip = await res.arrayBuffer();
 
   const zip = await JSzip.loadAsync(baseZip);

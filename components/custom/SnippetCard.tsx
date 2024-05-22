@@ -12,6 +12,7 @@ import { deepCopy, parseRoot } from "@/lib/utils"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { openSnippetAsProject } from "@/lib/redux/slices/projectSlice"
 import { useRouter } from "next/navigation"
+import { useToast } from "../ui/use-toast"
 
 type SnippetCardProps = {
   snippet: SnippetType
@@ -28,6 +29,7 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
   const isFavorite = (user?.favoriteSnippets.findIndex((fav: string) => fav === snippet._id) !== -1) 
 
   const [loading, setLoading] = useState(false)
+  const { toast } = useToast()
 
   const toggleFavorite = async () => {
 
@@ -46,6 +48,9 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
     }
 
     setLoading(false)
+    toast({
+      description: isFavorite ? "Removed from favorites" : "Added to favorites",
+    })
   }
 
   const openInEditor = async () => {
@@ -53,7 +58,7 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
     dispatch(addStyleOptions({styleOptions: newMemos}))
     dispatch(openSnippetAsProject({snippet: root as ComponentType}))
     setLoading(false)
-    router.push("/project?tab=Layers")
+    router.push("/project?tab=layers")
   }
 
   return (

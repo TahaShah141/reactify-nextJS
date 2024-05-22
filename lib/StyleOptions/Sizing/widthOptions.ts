@@ -16,6 +16,24 @@ export const widthOptions: StyleType[] =
     CSSKey: 'width',
     CSSValue: '100%',
   },
+  {
+    label: 'min',
+    tailwind: 'w-min',
+    CSSKey: 'width',
+    CSSValue: 'min-content',
+  },
+  {
+    label: 'max',
+    tailwind: 'w-max',
+    CSSKey: 'width',
+    CSSValue: 'max-content',
+  },
+  {
+    label: 'fit',
+    tailwind: 'w-fit',
+    CSSKey: 'width',
+    CSSValue: 'fit-content',
+  },
   // {
   //   label: "Screen",
   //   tailwind: 'w-screen',

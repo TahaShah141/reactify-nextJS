@@ -5,11 +5,13 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast";
 import { getParentChild, populateComponent } from "@/lib/componentType"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { fetchSnippets } from "@/lib/redux/slices/snippetsSlice";
 import { selectProject, selectUser } from "@/lib/redux/store"
 import { ComponentType } from "@/lib/types"
+import { generateRootString } from "@/lib/utils";
 import { useState } from "react"
 
 export const SaveSnippet = () => {
@@ -18,6 +20,8 @@ export const SaveSnippet = () => {
   const component = selectedPath ? getParentChild(tabs[currentTab].root, selectedPath).child : undefined
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false)
+
+  const { toast } = useToast()
   const [state, setState] = useState({
     name: "",
     description: "",
@@ -28,10 +32,16 @@ export const SaveSnippet = () => {
 
   const saveSnippet = async (email: string, name: string, description: string, root: ComponentType) => {
 
+    toast({
+      description: "Compiling Code..."
+    })
+
+    const newRoot = await generateRootString(root)
+
     const { snippet, error } = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/new", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({email, name, description, root})
+      body: JSON.stringify({email, name, description, root: newRoot})
     })).json()
     dispatch(fetchSnippets());
 
@@ -41,6 +51,10 @@ export const SaveSnippet = () => {
       setLoading(false)
       return;
     } 
+
+    toast({
+      description: "Snippet Saved!"
+    })
     
     setLoading(false)
     setState({name: "", description: "", error: ""})

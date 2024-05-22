@@ -36,6 +36,13 @@ export const UserSlice = createSlice({
       state.user = user
     },
 
+    upsertFavorites: (state, action: PayloadAction<{favoriteSnippets: string[]}>) => {
+      const { user } = state
+      if (!user) return;
+      user.favoriteSnippets = action.payload.favoriteSnippets
+      state.user = user
+    },
+
     deleteProject: (state, action: PayloadAction<{projectID: string}>) => {
       const { user } = state
       if (!user) return;
@@ -47,6 +54,6 @@ export const UserSlice = createSlice({
 })
 
 
-export const { SignIn, SignOut, updateFavorites, deleteProject } = UserSlice.actions
+export const { SignIn, SignOut, updateFavorites, upsertFavorites, deleteProject } = UserSlice.actions
 
 export default UserSlice.reducer

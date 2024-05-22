@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import { SidebarSnippetCard } from "./SidebarSnippetCard"
 import { SnippetType } from "@/lib/types"
 import { Loading } from "@/components/custom/Loading"
-import { useAppSelector } from "@/lib/redux/hooks"
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { selectUser } from "@/lib/redux/store"
+import { upsertFavorites } from "@/lib/redux/slices/userSlice"
 
 export const FavoriteSnippets = () => {
 
@@ -11,6 +12,8 @@ export const FavoriteSnippets = () => {
   const [loading, setLoading] = useState(true)
 
   const { user } = useAppSelector(selectUser)
+
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const fetchSnippets = async () => {
@@ -20,6 +23,7 @@ export const FavoriteSnippets = () => {
         // next: {revalidate: 10}        
       })).json()
       setSnippets(snippets)
+      dispatch(upsertFavorites({favoriteSnippets: snippets.map((snippet: {_id: string}) => snippet._id)}))
       setLoading(false)
     }
     fetchSnippets()

@@ -5,14 +5,17 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast";
 import { useAppSelector } from "@/lib/redux/hooks"
 import { selectProject, selectUser } from "@/lib/redux/store"
 import { TabType } from "@/lib/types"
+import { generateRootString } from "@/lib/utils";
 import { useState } from "react"
 
 export const SaveNewProject = () => {
 
   const {tabs} = useAppSelector(selectProject)
+  const { toast } = useToast()
 
   const [loading, setLoading] = useState(false)
   const [state, setState] = useState({
@@ -25,10 +28,26 @@ export const SaveNewProject = () => {
 
   const saveProject = async (name: string, description: string, tabs: Record<string, TabType>, _id: string) => {
 
+    const newTabs: Record<string, {imports: string[], root: string}> = {}
+
+    toast({
+      description: "Compiling Code..."
+    })
+
+    //TODO: change to promise.all for performance
+    for (const key of Object.keys(tabs)) {
+      newTabs[key] = {
+        ...tabs[key],
+        root: await generateRootString(tabs[key].root)
+      }
+    }
+
+    const finalTabs = JSON.stringify(newTabs)
+
     const { project, error } = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/project/new", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({name, description, tabs, _id})
+      body: JSON.stringify({name, description, tabs: finalTabs, _id})
     })).json()
 
     
@@ -39,6 +58,9 @@ export const SaveNewProject = () => {
     } 
     
     setLoading(false)
+    toast({
+      description: "Project saved",
+    })
     setState({name: "", description: "", error: ""})
   }
 

@@ -2,13 +2,14 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
+import { useToast } from "@/components/ui/use-toast"
 import { useAppSelector } from "@/lib/redux/hooks"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
-import { openProject } from "@/lib/redux/slices/projectSlice"
+import { openProject, reset } from "@/lib/redux/slices/projectSlice"
 import { deleteProject } from "@/lib/redux/slices/userSlice"
 import { selectMemo, selectUser } from "@/lib/redux/store"
 import { FetchedProjectType, ProjectType, TabType } from "@/lib/types"
-import { deepCopy, parseRoot } from "@/lib/utils"
+import { deepCopy, generateRootString, parseRoot } from "@/lib/utils"
 import { DotsVerticalIcon, OpenInNewWindowIcon, Pencil1Icon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -29,11 +30,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
+  const { toast } = useToast()
+
   const openInEditor = async () => {
 
     const parsedTabs = await JSON.parse((project as FetchedProjectType).tabs)
 
     const tabsToLoad: Record<string, TabType> = {}
+
+    toast({
+      description: "Compiling Code..."
+    })
 
     //TODO: change to promise.all for efficiency
     for (const key of Object.keys(parsedTabs)) {
@@ -46,14 +53,30 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
     }
     dispatch(openProject({_id: (project as FetchedProjectType)._id, name: (project as FetchedProjectType).name, tabs: tabsToLoad}))
     setLoading(false)
+    toast({
+      description: "Project loaded"
+    })
   }
 
   const saveProject = async () => {
     const {tabs, _id} = project as ProjectType
+
+    const newTabs: Record<string, {imports: string[], root: string}> = {}
+
+    //TODO: change to promise.all for performance
+    for (const key of Object.keys(tabs)) {
+      newTabs[key] = {
+        ...tabs[key],
+        root: await generateRootString(tabs[key].root)
+      }
+    }
+
+    const finalTabs = JSON.stringify(newTabs)
+
     const { project: proj, error } = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/project/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({tabs, _id})
+      body: JSON.stringify({tabs: finalTabs, _id})
     })).json()
 
     if (error) {
@@ -62,6 +85,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
       return
     }
     setLoading(false)
+    toast({
+      description: "Project saved",
+    })
     dispatch(deleteProject({projectID: project._id as string}))
   }
 
@@ -72,6 +98,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
     if (error) {
       setError(error)
     }
+    dispatch(reset())
+    toast({
+      variant: "destructive",
+      description: "Project deleted",
+    })
     setLoading(false)
   }
 
@@ -107,7 +138,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
       <p className="text-sm text-muted-foreground">{description}</p>
       {error && <p className="text-sm text-red-600">{error}</p>}
       {isCurrent ?
-      <Button disabled={error !== "" || loading} onClick={() => {if (project._id) {setLoading(true); saveProject()} else router.push("/project?tab=Save")}} variant={"outline"} className="flex items-center gap-2 flex-1">
+      <Button disabled={error !== "" || loading} onClick={() => {if (project._id) {setLoading(true); saveProject()} else router.push("/project?tab=save")}} variant={"outline"} className="flex items-center gap-2 flex-1">
         <p>Save Project</p>
         <Pencil1Icon />
       </Button>:
