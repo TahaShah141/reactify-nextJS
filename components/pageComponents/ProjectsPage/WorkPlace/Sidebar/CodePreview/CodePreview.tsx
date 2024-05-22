@@ -34,7 +34,7 @@ export const CodePreview = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          codes, filenames, shadComponents
+          codes, filenames, shadComponents, projectName
         })
       })
       const blob = await res.blob();

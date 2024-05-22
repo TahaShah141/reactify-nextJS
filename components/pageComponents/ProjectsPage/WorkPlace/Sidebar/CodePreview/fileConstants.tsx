@@ -39,9 +39,9 @@ export const packageJSON = `{
 }
 `;
 
-export function getPackageJSON(shadComponents: string[]) {
+export function getPackageJSON(shadComponents: string[], projectName: string) {
   return `{
-    "name": "base-shad-react",
+    "name": "${projectName}",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -54,6 +54,7 @@ export function getPackageJSON(shadComponents: string[]) {
     },
     "dependencies": {
       "@radix-ui/react-slot": "^1.0.2",
+      "@radix-ui/react-icons": "^1.3.0",
       "class-variance-authority": "^0.7.0",
       "clsx": "^2.1.1",
       "lucide-react": "^0.378.0",
@@ -78,15 +79,16 @@ export function getPackageJSON(shadComponents: string[]) {
     }
   }
   `;
-} 
+}
 
-export const indexHTML = `<!doctype html>
+export function getIndexHTML(projectName: string) {
+  return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>${projectName}</title>
   </head>
   <body>
     <div id="root"></div>
@@ -94,6 +96,7 @@ export const indexHTML = `<!doctype html>
   </body>
 </html>
 `;
+}
 
 export const mainJSX = `import React from 'react'
 import ReactDOM from 'react-dom/client'
