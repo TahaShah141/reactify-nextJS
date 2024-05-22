@@ -21,7 +21,7 @@ export const CodePreview = () => {
   const [selected, setSelected] = useState("App");
   const { tabs } = useAppSelector(selectProject);
   const [zipName, setZipName] = useState("project");
-  const {theme} = useTheme();
+  const {resolvedTheme :theme} = useTheme();
   // console.log({theme})
   const tabNames = Object.keys(tabs);
   const codes = tabNames.map(name => generateComponentCode(tabs[name].root, name));
