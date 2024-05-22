@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
+import { useToast } from "@/components/ui/use-toast"
 import { useAppSelector } from "@/lib/redux/hooks"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
-import { openProject } from "@/lib/redux/slices/projectSlice"
+import { openProject, reset } from "@/lib/redux/slices/projectSlice"
 import { deleteProject } from "@/lib/redux/slices/userSlice"
 import { selectMemo, selectUser } from "@/lib/redux/store"
 import { FetchedProjectType, ProjectType, TabType } from "@/lib/types"
@@ -29,11 +30,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
+  const { toast } = useToast()
+
   const openInEditor = async () => {
 
     const parsedTabs = await JSON.parse((project as FetchedProjectType).tabs)
 
     const tabsToLoad: Record<string, TabType> = {}
+
+    toast({
+      description: "Compiling Code..."
+    })
 
     //TODO: change to promise.all for efficiency
     for (const key of Object.keys(parsedTabs)) {
@@ -46,6 +53,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
     }
     dispatch(openProject({_id: (project as FetchedProjectType)._id, name: (project as FetchedProjectType).name, tabs: tabsToLoad}))
     setLoading(false)
+    toast({
+      description: "Project loaded"
+    })
   }
 
   const saveProject = async () => {
@@ -75,6 +85,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
       return
     }
     setLoading(false)
+    toast({
+      description: "Project saved",
+    })
     dispatch(deleteProject({projectID: project._id as string}))
   }
 
@@ -85,6 +98,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
     if (error) {
       setError(error)
     }
+    dispatch(reset())
+    toast({
+      variant: "destructive",
+      description: "Project deleted",
+    })
     setLoading(false)
   }
 
