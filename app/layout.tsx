@@ -17,8 +17,6 @@ const routes: NavLinksType[] = [
   { name: "Project", href: "/project?tab=layers", isProtected: true },
 ]
 
-export const mainHeightClass = "h-[calc(100vh-4rem)]"
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -34,9 +32,8 @@ export default async function RootLayout({
             <SessionProvider session={session}>
               <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
                 <Navbar name={websiteName} routes={routes} />
-                <div className={`w-screen ${mainHeightClass}`}>
                   {children}
-                </div>
+                {/* </div> */}
                 <Toaster />
               </ThemeProvider>
             </SessionProvider>

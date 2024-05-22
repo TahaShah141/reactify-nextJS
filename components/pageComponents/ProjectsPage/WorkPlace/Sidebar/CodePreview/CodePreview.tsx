@@ -14,12 +14,15 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Input } from "@/components/ui/input";
+import { dracula, rosePineDawn } from 'thememirror';
+import { useTheme } from "next-themes";
 
 export const CodePreview = () => {
   const [selected, setSelected] = useState("App");
   const { tabs } = useAppSelector(selectProject);
   const [zipName, setZipName] = useState("project");
-
+  const {resolvedTheme :theme} = useTheme();
+  // console.log({theme})
   const tabNames = Object.keys(tabs);
   const codes = tabNames.map(name => generateComponentCode(tabs[name].root, name));
   const index = tabNames.findIndex(name => name === selected);
@@ -34,7 +37,7 @@ export const CodePreview = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          codes, filenames, shadComponents
+          codes, filenames, shadComponents, projectName
         })
       })
       const blob = await res.blob();
@@ -81,7 +84,7 @@ export const CodePreview = () => {
         <CodeMirror
           className={`text-lg w-full  overflow-auto`}
           value={code}
-          theme={vscodeDark}
+          theme={theme == 'light' ? rosePineDawn : vscodeDark}
           height="100%"
           extensions={[javascript({
             jsx: true,

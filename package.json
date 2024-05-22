@@ -38,6 +38,7 @@
     "codemirror": "^6.0.1",
     "fuzzysort": "^3.0.1",
     "jszip": "^3.10.1",
+    "lucide-react": "^0.379.0",
     "mongoose": "^8.3.5",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
@@ -52,6 +53,7 @@
     "redux-thunk": "^3.1.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "thememirror": "^2.0.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
