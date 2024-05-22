@@ -70,7 +70,9 @@ export const CodePreview = () => {
               Choose a name for your project
             </p>
           </div>
-          <form className="flex gap-2">
+          <form onSubmit={(e) => {
+            e.preventDefault();
+          }} className="flex gap-2">
             <Input value={zipName} onChange={(e) => setZipName(e.target.value)} placeholder="Project Name" />
             <PopoverClose>  
               <Button disabled={!isNameAvailable} onClick={() => {setZipName("project"); DownloadZip(zipName, tabNames, codes)}} >Zip</Button>
