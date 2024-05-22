@@ -83,11 +83,12 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
           <Pencil2Icon />
           <p>Open in Editor</p>
         </Button>}
+        
         <Button onClick={async () => {
           toast({
             description: "Compiling Code..."
           })
-          navigator.clipboard.writeText(generateComponentCode((await parseRoot(snippet.root as string, true, styleOptionsMemo)).root as ComponentType, 'Component'))
+          navigator.clipboard.writeText(generateComponentCode((await parseRoot(snippet.root as string, true, styleOptionsMemo)).root as ComponentType, 'Snippet'))
           toast({
             description: "Copied Code into Clipboard."
           })

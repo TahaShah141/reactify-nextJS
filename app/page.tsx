@@ -13,13 +13,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import hero from '../public/assets/hero.png'
+import { SnippetCard } from '@/components/custom/SnippetCard'
+import { SnippetType } from '@/lib/types'
+import { CarouselWithIndicators } from '@/components/custom/CarouselWithIndicators'
+import { Button } from '@/components/ui/button'
 
 
 export default async function Home() {
 
+  const { snippets } = await(await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/snippet/top")).json()
 
   return (
-    <>
+    <main className='flex flex-col gap-6 p-8'>
       <section className="h-full w-full md:pt-44 mt-[-70px] relative flex items-center justify-center flex-col ">
      
 
@@ -42,6 +47,26 @@ export default async function Home() {
           <div className="bottom-0 top-[50%] bg-gradient-to-t dark:from-background left-0 right-0 absolute z-10"></div>
         </div>
       </section>
+
+      <section className='flex flex-col gap-6 justify-center items-center w-full'>
+        <h1 className='text-7xl font-bold'>Featured Snippets</h1>
+        <div className='max-w-7xl'>
+          <CarouselWithIndicators
+          itemClassName='basis-1/3 flex justify-center'
+          contentClassName=''
+          indicatorClassName=''
+          items={snippets.map((snippet: SnippetType) => 
+            <SnippetCard key={snippet._id} snippet={snippet} />
+          )} />
+        </div>
+      </section>
+
+      {/* <div className='flex flex-wrap gap-2 items-center'>
+        {snippets.map((snippet: SnippetType) => 
+          <SnippetCard key={snippet._id} snippet={snippet} />
+        )}
+      </div> */}
+
       <section className="flex justify-center items-center flex-col gap-4 md:!mt-20 mt-[-60px]">
         <h2 className="text-4xl text-center"> Choose what fits you right</h2>
         <p className="text-muted-foreground text-center">
@@ -79,17 +104,7 @@ export default async function Home() {
                       </div>
                     ))}
                   </div>
-                  <Link
-                    href="/"
-                    className={clsx(
-                      'w-full text-center bg-primary p-2 rounded-md',
-                      {
-                        '!bg-muted-foreground': true,
-                      }
-                    )}
-                  >
-                    Get Started
-                  </Link>
+                  <Button className='w-full'> Get Started </Button>
                 </CardFooter>
               </Card>
             )) 
@@ -97,7 +112,7 @@ export default async function Home() {
           
         </div>
       </section>
-    </>
+    </main>
   )
 }
 
