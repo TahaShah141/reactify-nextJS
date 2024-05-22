@@ -10,6 +10,7 @@ import { SnippetType } from "@/lib/types"
 import { deepCopy, parseRoot } from "@/lib/utils"
 import { CopyIcon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
 import { useCallback, useState } from "react"
+import { useToast } from "@/components/ui/use-toast"
 
 type Props = {
   snippet: SnippetType
@@ -20,6 +21,7 @@ export const SidebarSnippetCard: React.FC<Props> = ({snippet}) => {
   const { styleOptionsMemo } = useAppSelector(selectMemo)
   const dispatch = useAppDispatch()
   const [loading, setLoading] = useState(false)
+  const { toast } = useToast()
 
   const { user } = useAppSelector(selectUser)
 
@@ -44,6 +46,9 @@ export const SidebarSnippetCard: React.FC<Props> = ({snippet}) => {
 
     if (!error) {
       dispatch(updateFavorites({snippetID: snippet._id}))
+      toast({
+        description: isFavorite ? "Removed from favorites" : "Added to favorites",
+      })
     } else {
       console.log(error)
     }

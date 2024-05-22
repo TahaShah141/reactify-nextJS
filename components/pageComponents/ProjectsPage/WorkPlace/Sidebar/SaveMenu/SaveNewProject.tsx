@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast";
 import { useAppSelector } from "@/lib/redux/hooks"
 import { selectProject, selectUser } from "@/lib/redux/store"
 import { TabType } from "@/lib/types"
@@ -14,6 +15,7 @@ import { useState } from "react"
 export const SaveNewProject = () => {
 
   const {tabs} = useAppSelector(selectProject)
+  const { toast } = useToast()
 
   const [loading, setLoading] = useState(false)
   const [state, setState] = useState({
@@ -27,6 +29,10 @@ export const SaveNewProject = () => {
   const saveProject = async (name: string, description: string, tabs: Record<string, TabType>, _id: string) => {
 
     const newTabs: Record<string, {imports: string[], root: string}> = {}
+
+    toast({
+      description: "Compiling Code..."
+    })
 
     //TODO: change to promise.all for performance
     for (const key of Object.keys(tabs)) {
@@ -52,6 +58,9 @@ export const SaveNewProject = () => {
     } 
     
     setLoading(false)
+    toast({
+      description: "Project saved",
+    })
     setState({name: "", description: "", error: ""})
   }
 

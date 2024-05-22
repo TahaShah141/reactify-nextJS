@@ -7,6 +7,7 @@ import { ComponentType } from "@/lib/types"
 import { useRef, useState } from "react"
 
 import { CheckIcon, CopyIcon } from '@radix-ui/react-icons';
+import { useToast } from "@/components/ui/use-toast"
 
 const getComponent = (name: string): ComponentType => {
   return {
@@ -34,13 +35,18 @@ export const Icons = () => {
 
   const [showCopied, setShowCopied] = useState('');
   const timeoutRef = useRef<NodeJS.Timeout>();
+  const {toast} = useToast(); 
 
   function handleClick(iconName: string) {
     dispatch(copyIntoClipboard({component: getComponent(iconName)}))
     setShowCopied(iconName);
     clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => setShowCopied(''), 1000);
+    toast({
+      description: `Copied ${iconName}!`
+    })
   } 
+
 
   return (
     <div className="w-full flex flex-col gap-4">

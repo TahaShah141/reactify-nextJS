@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/custom/themeProvider";
 import SessionProvider from "@/components/SessionProvider"
 import { getServerSession } from "next-auth";
 import { NavLinksType } from "@/lib/types";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,8 @@ export default async function RootLayout({
               <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
                 <Navbar name={websiteName} routes={routes} />
                   {children}
+                {/* </div> */}
+                <Toaster />
               </ThemeProvider>
             </SessionProvider>
           </StoreProvider>
