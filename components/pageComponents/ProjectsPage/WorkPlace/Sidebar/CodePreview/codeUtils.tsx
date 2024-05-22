@@ -8,6 +8,7 @@ export function downloadBlob(projectName: string, blob: Blob) {
   const url = window.URL.createObjectURL(blob);
   a.href = url;
   a.download = projectName+".zip";
+  a.target = '_blank';
   a.click();
   window.URL.revokeObjectURL(url);
   a.remove();
