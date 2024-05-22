@@ -1,5 +1,5 @@
 
-export const mainHeightClass = "h-[calc(100vh-4rem)]"
+const mainHeightClass = "h-[calc(100vh-4rem)]"
 
 export default function Layout({
   children,
