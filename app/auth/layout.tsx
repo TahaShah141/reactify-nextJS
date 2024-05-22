@@ -42,11 +42,13 @@ export default function AuthLayout({
   useEffect(() => {
     if (user?.email) {
       router.push("/project?tab=layers")
-    }
+    } 
   }, [user, router])
 
+  const mainHeightClass = "h-[calc(100vh-4rem)]"
+
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center">
+    <div className={`${mainHeightClass} flex flex-col justify-center items-center`}>
       {children}
     </div>
   )
