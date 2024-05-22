@@ -66,7 +66,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({project, isCurrent=fals
     const { project: proj, error } = await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/project/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({tabs, _id})
+      body: JSON.stringify({tabs: finalTabs, _id})
     })).json()
 
     if (error) {
