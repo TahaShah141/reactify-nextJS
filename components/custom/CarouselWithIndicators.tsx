@@ -54,8 +54,8 @@ export const CarouselWithIndicators: React.FC<Props> = ({itemClassName, contentC
           <CarouselNext />
         </div>
       </Carousel>
-      {count !== 1 && <div className={self-center justify-self-center flex gap-2 ${indicatorClassName}}>
-        {[...Array(count)].map((_, i) => <div key={i} className={w-1 h-1 sm:h-2 sm:w-2 rounded-full bg-primary ${current === i ? "opacity-100" : "opacity-30"}}></div>)}
+      {count !== 1 && <div className={`self-center justify-self-center flex gap-2 ${indicatorClassName}`}>
+        {[...Array(count)].map((_, i) => <div key={i} className={`w-1 h-1 sm:h-2 sm:w-2 rounded-full bg-primary ${current === i ? "opacity-100" : "opacity-30"}`}></div>)}
       </div>}
     </div>
   )
