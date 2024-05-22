@@ -8,7 +8,7 @@ import { Button } from "../ui/button"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { selectMemo, selectUser } from "@/lib/redux/store"
 import { updateFavorites } from "@/lib/redux/slices/userSlice"
-import { deepCopy, parseRoot } from "@/lib/utils"
+import { deepCopy, generateCode, generateComponentCode, parseRoot } from "@/lib/utils"
 import { addStyleOptions } from "@/lib/redux/slices/memoSlice"
 import { openSnippetAsProject } from "@/lib/redux/slices/projectSlice"
 import { useRouter } from "next/navigation"
@@ -83,7 +83,15 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
           <Pencil2Icon />
           <p>Open in Editor</p>
         </Button>}
-        <Button variant={"outline"} className="flex items-center gap-2 flex-1">
+        <Button onClick={async () => {
+          toast({
+            description: "Compiling Code..."
+          })
+          navigator.clipboard.writeText(generateComponentCode((await parseRoot(snippet.root as string, true, styleOptionsMemo)).root as ComponentType, 'Component'))
+          toast({
+            description: "Copied Code into Clipboard."
+          })
+        }} variant={"outline"} className="flex items-center gap-2 flex-1">
           <CopyIcon />
           <p>Copy Code</p>
         </Button>
@@ -91,3 +99,4 @@ export const SnippetCard: React.FC<SnippetCardProps> = ({snippet}) => {
     </Card>
   )
 }
+
