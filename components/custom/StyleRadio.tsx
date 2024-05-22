@@ -34,13 +34,13 @@ export const StyleRadio: React.FC<RadioProps> = ({label, options, rows, cols}) =
       <ToggleGroup className="grid gap-1" type="single" 
       style={{gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`}}
       variant={"outline"} 
-      value={index === -1 ? undefined : getSingularValue(options[index].tailwind)}
+      value={index === -1 ? undefined : options[index].tailwind}
       onValueChange={(value) => {
         const newStyle = options.find((option) => option.tailwind === value);
         if (newStyle) dispatch(updateSelectedStyle({newStyle}))
       }}>
         {options.map((option) => (
-          <ToggleGroupItem className="" key={getSingularValue(option.tailwind)} value={getSingularValue(option.tailwind)}>
+          <ToggleGroupItem className="" key={option.tailwind} value={option.tailwind}>
             {option.label}
           </ToggleGroupItem>
         ))}

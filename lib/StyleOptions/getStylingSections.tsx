@@ -27,6 +27,13 @@ import { aspectRatioOptions } from "./Sizing/aspectRatioOptions"
 import { getSingularValue } from "../utils"
 import { ComponentType, Section } from "@/lib/types"
 import { AttributeMenu } from "@/components/pageComponents/ProjectsPage/WorkPlace/SelectedMenu/AttributeMenu"
+import { sizeOptions } from "./Sizing/sizeOptions"
+import { textAlignOptions } from "./Typography/textAlignOptions"
+import { textDecorationOptions } from "./Typography/textDecorationOptions"
+import { whiteSpaceOptions } from "./Typography/whitespaceOptions"
+import { wordBreakOptions } from "./Typography/wordbreakOptions"
+import { fontStyleOptions } from "./Typography/fontStyleOptions"
+import { textTransformOptions } from "./Typography/textTransfromOptions"
 
 export const getStylingSections = (component: ComponentType, customClasses: React.ReactNode[]): Section[] => {
 
@@ -72,6 +79,7 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         title: "Sizing",
         showCards: true,
         items: [
+          {tags: ["size"], CSSKeys: [["width", "height"]], node: <StyleRange label='Size' options={sizeOptions} />},
           {tags: ["width", "size"], CSSKeys: ["width"], node: <StyleRange label='Width' options={widthOptions} />},
           {tags: ["height", "size"], CSSKeys: ["height"], node: <StyleRange label='Height' options={heightOptions} />},
           {tags: ["padding", "spacing"], CSSKeys: ["padding", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", ["paddingLeft", "paddingRight"], ["paddingTop", "paddingBottom"]], 
@@ -90,13 +98,19 @@ export const getStylingSections = (component: ComponentType, customClasses: Reac
         ]
       },
       {
-        title: 'Font',
+        title: 'Typography',
         showCards: true,
         items: [
-          {tags: ["font", "family"], CSSKeys: ["fontFamily"], node: <StyleRadio rows={1} cols={3} label="Font Family" options={fontFamilyOptions} />},
+          {tags: ["font", "text", "size"], CSSKeys: ["fontSize", "lineHeight"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
+          {tags: ["font", "text", "weight"], CSSKeys: ["fontWeight"], node: <StyleRange label="Font Weight" options={fontWeightOptions} />},
+          {tags: ["font", "text", "align"], CSSKeys: ["textAlign"], node: <StyleRadio rows={2} cols={3} label="Text Align" options={textAlignOptions} />},
+          {tags: ["font", "text", "family"], CSSKeys: ["fontFamily"], node: <StyleRadio rows={1} cols={3} label="Font Family" options={fontFamilyOptions} />},
+          {tags: ["font", "text", "style"], CSSKeys: ["fontStyle"], node: <StyleRadio rows={1} cols={2} label="Font Style" options={fontStyleOptions} />},
+          {tags: ["font", "text", "transform"], CSSKeys: ["textTransform"], node: <StyleRadio rows={2} cols={2} label="Text Transform" options={textTransformOptions} />},
           {tags: ["letter", "spacing"], CSSKeys: ["letterSpacing"], node: <StyleRadio rows={2} cols={3} label="Tracking" options={trackingOptions} />}, 
-          {tags: ["font", "size"], CSSKeys: ["fontSize", "lineHeight"], node: <StyleRange label="Font Size" options={fontSizeOptions} />},
-          {tags: ["font", "weight"], CSSKeys: ["fontWeight"], node: <StyleRange label="Font Weight" options={fontWeightOptions} />},
+          {tags: ["font", "text", "decoration"], CSSKeys: ["textDecorationLine"], node: <StyleRadio rows={2} cols={2} label="Text Decoration" options={textDecorationOptions} />},
+          {tags: ["font", "text", "white", "space"], CSSKeys: ["whiteSpace"], node: <StyleRadio rows={3} cols={2} label="WhiteSpace" options={whiteSpaceOptions} />},
+          {tags: ["font", "text", "word", "break"], CSSKeys: ["wordBreak", "overflowWrap", ["wordBreak", "overflowWrap"]], node: <StyleRadio rows={2} cols={2} label="Word Break" options={wordBreakOptions} />},
         ]
       },
       {
