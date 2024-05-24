@@ -15,6 +15,7 @@ const websiteName = "Reactify"
 const routes: NavLinksType[] = [
   { name: "Snippets", href: "/snippets", isProtected: false },
   { name: "Project", href: "/project?tab=layers", isProtected: true },
+  { name: "About", href: "/about", isProtected: false}
 ]
 
 export default async function RootLayout({
