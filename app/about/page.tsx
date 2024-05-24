@@ -14,7 +14,7 @@ export default function AboutPage() {
         </div>
         <div className="flex flex-col gap-10 justify-center items-center pb-20">
           <Card className="flex flex-col gap-10 justify-center items-center w-11/12 p-10">
-            <div className="w-full flex gap-4 justify-center">
+            <div className="w-full flex gap-10 justify-center items-center">
               <div className="flex flex-col gap-4 flex-1">
                 <Label className="text-5xl font-semibold">Authentication</Label>
                 <div className="flex flex-col gap-2">
@@ -23,17 +23,19 @@ export default function AboutPage() {
                   <p className="text-xl">The Snippets and About pages are a public pages that even unauthenticated users can access. But to access the editor and projects, you need to Login or Signup. This is to ensure that only serious users can contribute to the public snippets and create their own projects.</p>
                 </div>
               </div>
-              <Image
-              src="/assets/login.png"
-              alt="login page"
-              width={600}
-              height={340}
-              className="rounded-md border-2 border-muted"
-              />
+              <div>
+                <Image
+                src="/assets/login.png"
+                alt="login page"
+                width={600}
+                height={340}
+                className="rounded-md border-2 border-muted"
+                />
+              </div>
             </div>
           </Card>
           <Card className="flex flex-col gap-4 justify-center items-center w-11/12 p-10">
-            <div className="w-full flex flex-row-reverse gap-10 justify-center">
+            <div className="w-full flex flex-row-reverse gap-10 justify-center items-center">
               <div className="flex flex-col gap-4 flex-1">
                 <Label className="text-5xl font-semibold">Snippets</Label>
                 <div className="flex flex-col gap-2">
@@ -43,17 +45,19 @@ export default function AboutPage() {
                   <p className="text-xl">Open in Editor Button allows logged in users to start off a new project with that snippet already present in the project for use. This way you can build on top of the works of others and dont have to start anew each time.</p>
                 </div>
               </div>
-              <Image
-              src="/assets/snippetsPage.png"
-              alt="login page"
-              width={600}
-              height={340}
-              className="rounded-md border-2 border-muted"
-              />
+              <div>
+                <Image
+                src="/assets/snippetsPage.png"
+                alt="login page"
+                width={600}
+                height={340}
+                className="rounded-md border-2 border-muted"
+                />
+              </div>
             </div>
           </Card>
           <Card className="flex flex-col gap-4 justify-center items-center w-11/12 p-10">
-            <div className="w-full flex gap-10 justify-center">
+            <div className="w-full flex gap-10 justify-center items-center">
               <div className="flex flex-col gap-6 flex-1">
                 <Label className="text-5xl font-semibold">Projects</Label>
                 <div className="flex flex-col gap-4">
@@ -84,7 +88,7 @@ export default function AboutPage() {
             </div>
           </Card>
           <Card className="flex flex-col gap-4 justify-center items-center w-11/12 p-10">
-            <div className="w-full flex flex-row-reverse gap-10 justify-center">
+            <div className="w-full flex flex-row-reverse gap-10 justify-center items-center">
               <div className="flex flex-col gap-6 flex-1">
                 <Label className="text-5xl font-semibold">Project: Sidebar</Label>
                 <div className="flex flex-col gap-4">
