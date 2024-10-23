@@ -10,7 +10,7 @@ export const packageJSON = `{
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "postinstall": "npx shadcn-ui@latest add button input"
+    "postinstall": "npx shadcn@latest add button input"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
@@ -50,7 +50,7 @@ export function getPackageJSON(shadComponents: string[], projectName: string) {
       "build": "vite build",
       "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
       "preview": "vite preview",
-      "postinstall": "npx shadcn-ui@latest add ${shadComponentsToInstallArg(shadComponents)}"
+      "postinstall": "npx shadcn@latest add ${shadComponentsToInstallArg(shadComponents)}"
     },
     "dependencies": {
       "@radix-ui/react-slot": "^1.0.2",
