@@ -1,7 +1,8 @@
 import { ComponentType, ForeignComponentType } from "@/lib/types"
-import { useEffect } from "react"
-import { useAppDispatch } from "../redux/hooks"
 import { copySelected, deleteSelected, pasteIntoSelected } from "../redux/slices/projectSlice"
+
+import { useAppDispatch } from "../redux/hooks"
+import { useEffect } from "react"
 
 export const useSelectedListeners = (component: ComponentType | ForeignComponentType | undefined) => {
 
@@ -9,7 +10,7 @@ export const useSelectedListeners = (component: ComponentType | ForeignComponent
 
   useEffect(() => {
     const deleteComponentOnDelete = (e: KeyboardEvent) => {
-      if (e.key === "Delete" && component) dispatch(deleteSelected())
+      if ((e.key === "Delete" || e.key === "x") && component) dispatch(deleteSelected())
     }
 
     window.addEventListener('keydown', deleteComponentOnDelete)
